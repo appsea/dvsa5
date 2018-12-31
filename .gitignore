@@ -2,6 +2,7 @@
 hooks/
 node_modules/
 platforms/
+*.apk
 
 # NativeScript Template
 *.js.map
@@ -9,6 +10,7 @@ platforms/
 !webpack.config.js
 *.css
 !ads.js
+!admob-common.js
 
 # Logs
 logs
