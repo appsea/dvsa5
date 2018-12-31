@@ -1,0 +1,149 @@
+<Page
+        class="page"
+        navigatingTo="onNavigatingTo"
+        loaded="onPageLoaded"
+        xmlns:nsDrawer="nativescript-ui-sidedrawer"
+        xmlns:myDrawer="shared/my-drawer"
+        xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <ActionItem tap="onDrawerButtonTap">
+            <ActionItem.actionView>
+                <StackLayout orientation="horizontal">
+                    <Label class="action-bar-title fa" text="&#xf044;" tap="goToEditPage"></Label>
+                    <Label class="{{ (question.flagged)? 'action-bar-title fa flagged': 'action-bar-title fa' }}" text="&#xf024;" tap="flag"></Label>
+                </StackLayout>
+            </ActionItem.actionView>
+        </ActionItem>
+
+        <Label class="action-bar-title">
+            <label.formattedText>
+                <formattedString>
+                    <formattedString.spans>
+                        <span text="Question "/>
+                        <span text="{{ questionNumber }}"/>
+                    </formattedString.spans>
+                </formattedString>
+            </label.formattedText>
+        </Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="category"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" height="20dpi">
+                </StackLayout>
+                <StackLayout dock="bottom">
+                    <StackLayout class="margin" orientation="horizontal" horizontalAlignment="center"  visibility="{{ question? 'visible': 'collapsed' }}">
+                        <Button class="btn btn-primary btn-rounded-lg" text="<<" tap="previous" margin="10dpi" width="30%"/>
+                        <Button class="btn btn-primary btn-rounded-lg" text=">>" tap="next" margin="10dpi" width="30%"/>
+                        <Button class="btn btn-primary btn-rounded-lg"
+                                visibility="{{ question.show ? 'collapsed' : 'visible' }}" text="Answer" tap="showAnswer"
+                                margin="10dpi" width="30%"/>
+                        <Button class="btn btn-primary btn-rounded-lg"
+                                visibility="{{ question.show ? 'visible' : 'collapsed' }}" text="Explain" tap="moveToLast"
+                                margin="10dpi" width="30%"/>
+                    </StackLayout>
+                    <StackLayout id="banner">
+                    </StackLayout>
+                </StackLayout>
+                <ScrollView id="scrollView" onswipe="handleSwipe">
+                    <StackLayout class="margin" onswipe="handleSwipe">
+                        <Label text="{{ question.prashna.text }}" textWrap="true" onswipe="handleSwipe"/>
+                        <image src="{{ question.prashna.image }}" height="200" width="400" onswipe="handleSwipe" class="m-t-10"
+                               visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
+                        <GridLayout columns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}">
+                            <StackLayout row="0" col="0"
+                                         class="{{ (options[0].show && options[0].correct)? 'correct' : (options[0].show && options[0].selected && !options[0].correct)? 'incorrect': 'not-selected-image' }}"
+                                         tap="selectOption" onswipe="handleSwipe">
+                                <image src="{{ options[0].image }}" tap="firstOption" class="m-5"
+                                       onswipe="handleSwipe"
+                                       visibility="{{ options[0].image ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                            <StackLayout row="0" col="1"
+                                         class="{{ (options[1].show && options[1].correct)? 'correct' : (options[1].show && options[1].selected && !options[1].correct)? 'incorrect': 'not-selected-image' }}"
+                                         tap="selectOption" onswipe="handleSwipe">
+                                <image src="{{ options[1].image }}" tap="secondOption" class="m-5"
+                                       onswipe="handleSwipe"
+                                       visibility="{{ options[1].image ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                            <StackLayout row="1" col="0"
+                                         class="{{ (options[2].show && options[2].correct)? 'correct' : (options[2].show && options[2].selected && !options[2].correct)? 'incorrect': 'not-selected-image' }}"
+                                         tap="selectOption" onswipe="handleSwipe">
+                                <image src="{{ options[2].image }}" tap="thirdOption" class="m-5"
+                                       onswipe="handleSwipe"
+                                       visibility="{{ options[2].image ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                            <StackLayout row="1" col="1"
+                                         class="{{ (options[3].show && options[3].correct)? 'correct' : (options[3].show && options[3].selected && !options[3].correct)? 'incorrect': 'not-selected-image' }}"
+                                         tap="selectOption" onswipe="handleSwipe">
+                                <image src="{{ options[3].image }}" tap="fourthOption" class="m-5"
+                                       onswipe="handleSwipe"
+                                       visibility="{{ options[3].image ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                        </GridLayout>
+
+                        <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe" visibility="{{ options[0].description ? 'visible' : 'collapsed' }}">
+                            <Repeater.itemTemplate>
+                                <StackLayout
+                                        class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
+                                        tap="selectOption" onswipe="handleSwipe">
+                                    <Label text="{{ description}}"
+                                           class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
+                                           textWrap="true" marginTop="10dpi" marginBottom="5dpi" tap="selectOption"
+                                           onswipe="handleSwipe"/>
+                                </StackLayout>
+                            </Repeater.itemTemplate>
+                        </Repeater>
+                        <Label id="explanationHeader" text="Explanation: " marginTop="20dpi"
+                               visibility="{{ question && question.show ? 'visible' : 'collapsed' }}" style="font-weight: bold"
+                               textWrap="true" onswipe="handleSwipe"/>
+                        <Label id="explanation" text="{{ question && question.explanation}}" marginBottom="10dpi"
+                               textWrap="true"
+                               onswipe="handleSwipe" visibility="{{ question.show ? 'visible' : 'collapsed' }}"/>
+                        <Label id="defaultExplanation"
+                               text="Explanation Coming Soon. Feel free to update it yourself by clicking on following button:)"
+                               marginBottom="5dpi" textWrap="true" onswipe="handleSwipe"
+                               visibility="{{ question && question.show && !question.explanation ? 'visible' : 'collapsed' }}"/>
+                        <Button id="suggestionButton" text="Improve Question" class="btn btn-primary" tap="goToEditPage"
+                                visibility="{{ question && question.show ? 'visible' : 'collapsed' }}"/>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

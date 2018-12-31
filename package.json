@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "com.exuberant.quiz.sas",
+    "id": "exuberant.dvsa.cttk",
     "tns-ios": {
       "version": "5.0.0"
     },
@@ -8,7 +8,7 @@
       "version": "5.1.0"
     }
   },
-  "description": "Base Sas Quiz",
+  "description": "Dvsa Theory Test Kit",
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
   "scripts": {
