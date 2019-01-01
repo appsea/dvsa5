@@ -13,7 +13,7 @@ import { CategoryListViewModel } from "./category-list-view-model";
 
 let vm: CategoryListViewModel;
 let _page: any;
-const banner: any;
+const banner: any = {};
 let categoryList: Repeater;
 
 export function onPageLoaded(args: EventData): void {

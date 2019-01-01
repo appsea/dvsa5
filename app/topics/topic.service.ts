@@ -1,5 +1,5 @@
 import { PersistenceService } from "~/services/persistence.service";
-import { ISubTopic } from "~/shared/questions.model";
+import {ISubTopic, ITopic, ITopicStatus} from "~/shared/questions.model";
 
 export class TopicService {
 
@@ -8,7 +8,7 @@ export class TopicService {
     }
 
     private static _instance: TopicService = new TopicService();
-    private _topics: Array<Topic>;
+    private _topics: Array<ITopic>;
 
     constructor() {
         this._topics = !PersistenceService.getInstance().hasTopics() ? this.createSubTopics()
@@ -22,18 +22,18 @@ export class TopicService {
     }
 
     findSubTopicFromLink(link: string): ISubTopic {
-        const topic: Topic = this._topics.filter((t) => t.subTopics.filter((sub) => sub.link === link).length > 0)[0];
+        const topic: ITopic = this._topics.filter((t) => t.subTopics.filter((sub) => sub.link === link).length > 0)[0];
         const subTopic: ISubTopic = topic.subTopics.filter((sub) => sub.link === link)[0];
 
         return subTopic;
     }
 
-    getTopicStatus(): Array<TopicStatus> {
+    getTopicStatus(): Array<ITopicStatus> {
         return this.readTopicStatus();
     }
 
-    readTopicStatus(): Array<TopicStatus> {
-        const status: Array<TopicStatus> = this._topics.map((t) => {
+    readTopicStatus(): Array<ITopicStatus> {
+        const status: Array<ITopicStatus> = this._topics.map((t) => {
             const attempted = t.subTopics.filter((s) => s.complete).length;
             const percentage = (attempted * 100 / t.subTopics.length).toFixed(0);
 
@@ -47,8 +47,8 @@ export class TopicService {
         return this._topics.filter((t) => t.name === topic)[0].subTopics;
     }
 
-    /*public createDefaultList(): Array<TopicStatus> {
-        let list: Array<TopicStatus> = [];
+    /*public createDefaultList(): Array<ITopicStatus> {
+        let list: Array<ITopicStatus> = [];
         let first: TopicStatus = {
             name: "Vulnerable road users",
             attempted: 0,
@@ -150,61 +150,61 @@ export class TopicService {
         return list;
     }*/
 
-    createSubTopics(): Array<Topic> {
-        const list: Array<Topic> = [];
-        const first: Topic = {
+    createSubTopics(): Array<ITopic> {
+        const list: Array<ITopic> = [];
+        const first: ITopic = {
             name: "Vulnerable road users",
             subTopics: this.createSubTopicsForVulnerableRoadUsers()
         };
-        const second: Topic = {
+        const second: ITopic = {
             name: "Incidents",
             subTopics: this.createSubTopicsForIncidents()
         };
-        const third: Topic = {
+        const third: ITopic = {
             name: "Safety and your vehicle",
             subTopics: this.createSubTopicsForSafetyAndYourVehicle()
         };
-        const fourth: Topic = {
+        const fourth: ITopic = {
             name: "Attitude",
             subTopics: this.createSubTopicsForAttitude()
         };
-        const fifth: Topic = {
+        const fifth: ITopic = {
             name: "Alertness",
             subTopics: this.createSubTopicsForAlertness()
         };
-        const sixth: Topic = {
+        const sixth: ITopic = {
             name: "Documents",
             subTopics: this.createSubTopicsForDocuments()
         };
-        const seventh: Topic = {
+        const seventh: ITopic = {
             name: "Safety margins",
             subTopics: this.createSubTopicsForSafetyMargins()
         };
-        const eighth: Topic = {
+        const eighth: ITopic = {
             name: "Rules of the road",
             subTopics: this.createSubTopicsForRulesOfTheRoad()
         };
-        const nineth: Topic = {
+        const nineth: ITopic = {
             name: "Road and traffic sign",
             subTopics: this.createSubTopicsForRoadAndTrafficSign()
         };
-        const tenth: Topic = {
+        const tenth: ITopic = {
             name: "Other types of vehicles",
             subTopics: this.createSubTopicsForOtherTypesOfVehicles()
         };
-        const eleventh: Topic = {
+        const eleventh: ITopic = {
             name: "Hazard awareness",
             subTopics: this.createSubTopicsForHazzardAwareness()
         };
-        const twelveth: Topic = {
+        const twelveth: ITopic = {
             name: "Vehicle loading",
             subTopics: this.createSubTopicsForVehicleLoading()
         };
-        const thirteenth: Topic = {
+        const thirteenth: ITopic = {
             name: "Vehicle handling",
             subTopics: this.createSubTopicsForVehicleHandling()
         };
-        const fourteenth: Topic = {
+        const fourteenth: ITopic = {
             name: "Motorway driving",
             subTopics: this.createSubTopicsForMotorwayDriving()
         };

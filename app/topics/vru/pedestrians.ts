@@ -36,13 +36,13 @@ export function onNavigatingTo(args: NavigatedData) {
     banner = page.getViewById("banner");
     const mySwitch: Switch = <Switch>page.getViewById("my-switch");
     mySwitch.on("checkedChange", (swargs) => {
-        _subTopic.complete = (<Switch>swargs.object).checked;
-        pageData.set("complete", _subTopic.complete);
+        this._subTopic.complete = (<Switch>swargs.object).checked;
+        pageData.set("complete", this._subTopic.complete);
         TopicService.getInstance().saveSubTopic(_subTopic);
     });
     _subTopic = <ISubTopic>page.navigationContext;
     page.bindingContext = pageData;
-    pageData.set("complete", _subTopic.complete ? _subTopic.complete : false);
+    pageData.set("complete", this._subTopic.complete ? this._subTopic.complete : false);
 }
 
 export function onDrawerButtonTap(args: EventData) {

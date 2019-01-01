@@ -4,7 +4,7 @@ import { isAndroid } from "platform";
 import { NavigatedData, Page } from "ui/page";
 import { CreateViewEventData } from "ui/placeholder";
 import * as navigationModule from "../shared/navigation";
-import { Topic } from "../shared/questions.model";
+import { ITopic } from "~/shared/questions.model";
 import { StudyListViewModel } from "./study-list-view-model";
 
 let vm: StudyListViewModel;
@@ -58,6 +58,6 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function selectTopic(args) {
-    const selectedTopic: Topic = args.view.bindingContext;
+    const selectedTopic: ITopic = args.view.bindingContext;
     navigationModule.gotoSubtopics(selectedTopic.name);
 }

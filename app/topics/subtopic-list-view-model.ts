@@ -1,7 +1,7 @@
 import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { topmost } from "ui/frame";
-import { TopicStatus } from "../shared/questions.model";
+import { ISubTopic } from "~/shared/questions.model";
 import { TopicService } from "./topic.service";
 
 export class SubtopicListViewModel extends Observable {

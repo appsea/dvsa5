@@ -1,12 +1,12 @@
 import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { topmost } from "ui/frame";
-import { TopicStatus } from "../shared/questions.model";
+import { ITopicStatus } from "~/shared/questions.model";
 import { TopicService } from "./topic.service";
 
 export class StudyListViewModel extends Observable {
 
-    private _topicStatus: Array<TopicStatus>;
+    private _topicStatus: Array<ITopicStatus>;
 
     constructor() {
         super();

@@ -6,9 +6,9 @@ import { Switch } from "tns-core-modules/ui/switch";
 import { topmost } from "ui/frame";
 import { NavigatedData, Page } from "ui/page";
 import { CreateViewEventData } from "ui/placeholder";
+import { ISubTopic } from "~/shared/questions.model";
 import * as navigationModule from "../../shared/navigation";
 import { TopicService } from "../topic.service";
-import { ISubTopic, SubTopic } from "./../../shared/questions.model";
 
 let banner: any;
 const pageData = new Observable();
@@ -36,13 +36,13 @@ export function onNavigatingTo(args: NavigatedData) {
     banner = page.getViewById("banner");
     const mySwitch: Switch = <Switch>page.getViewById("my-switch");
     mySwitch.on("checkedChange", (swargs) => {
-        subTopic.complete = (<Switch>swargs.object).checked;
-        pageData.set("complete", subTopic.complete);
-        TopicService.getInstance().saveSubTopic(subTopic);
+        this._subTopic.complete = (<Switch>swargs.object).checked;
+        pageData.set("complete" , this._subTopic.complete);
+        TopicService.getInstance().saveSubTopic(this._subTopic);
     });
-    subTopic = <ISubTopic>page.navigationContext;
+    this._subTopic = <ISubTopic>page.navigationContext;
     page.bindingContext = pageData;
-    pageData.set("complete", subTopic.complete ? subTopic.complete : false);
+    pageData.set("complete" , this._subTopic.complete ? this._subTopic.complete : false);
 }
 
 export function onDrawerButtonTap(args: EventData) {

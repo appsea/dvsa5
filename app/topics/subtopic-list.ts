@@ -3,8 +3,8 @@ import { EventData } from "data/observable";
 import { isAndroid } from "platform";
 import { NavigatedData, Page } from "ui/page";
 import { CreateViewEventData } from "ui/placeholder";
+import { ISubTopic } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
-import { SubTopic } from "../shared/questions.model";
 import { SubtopicListViewModel } from "./subtopic-list-view-model";
 
 let vm: SubtopicListViewModel;
