@@ -8,6 +8,7 @@ import { IOption, IQuestion, IState } from "~/shared/questions.model";
 import { QuizUtil } from "~/shared/quiz.util";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
+import {QuestionViewModel} from "~/question/question-view-model";
 
 export class CategoryPracticeViewModel extends Observable {
     private _questionService: QuestionService;
@@ -54,8 +55,7 @@ export class CategoryPracticeViewModel extends Observable {
     }
 
     showDrawer() {
-        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-        sideDrawer.showDrawer();
+        QuestionViewModel.showDrawer();
         AdService.getInstance().hideAd();
     }
 
@@ -102,6 +102,12 @@ export class CategoryPracticeViewModel extends Observable {
             propertyName: "options",
             value: this._question.options
         });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "totalQuestions",
+            value: this._numbers.length
+        });
     }
 
     showAnswer(): void {
@@ -122,6 +128,10 @@ export class CategoryPracticeViewModel extends Observable {
             this.question.skipped = false;
         }
         QuestionService.getInstance().handleWrongQuestions(this.question);
+    }
+
+    getTotalQuestions() : number {
+        return this._numbers.length;
     }
 
     goToEditPage() {

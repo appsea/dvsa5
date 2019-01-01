@@ -6,6 +6,7 @@ import { AdService } from "~/services/ad.service";
 import { CategoryService } from "~/services/category.service";
 import { ICategory } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
+import {QuestionViewModel} from "~/question/question-view-model";
 
 export class CategoryListViewModel extends Observable {
 
@@ -26,8 +27,7 @@ export class CategoryListViewModel extends Observable {
     }
 
     showDrawer() {
-        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-        sideDrawer.showDrawer();
+        QuestionViewModel.showDrawer();
         AdService.getInstance().hideAd();
     }
 

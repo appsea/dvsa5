@@ -3,6 +3,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { topmost } from "ui/frame";
 import { ISubTopic } from "~/shared/questions.model";
 import { TopicService } from "./topic.service";
+import {QuestionViewModel} from "~/question/question-view-model";
 
 export class SubtopicListViewModel extends Observable {
 
@@ -17,8 +18,7 @@ export class SubtopicListViewModel extends Observable {
     }
 
     showDrawer() {
-        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-        sideDrawer.showDrawer();
+        QuestionViewModel.showDrawer();
     }
 
     private publish() {

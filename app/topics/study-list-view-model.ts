@@ -3,6 +3,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { topmost } from "ui/frame";
 import { ITopicStatus } from "~/shared/questions.model";
 import { TopicService } from "./topic.service";
+import {QuestionViewModel} from "~/question/question-view-model";
 
 export class StudyListViewModel extends Observable {
 
@@ -15,8 +16,7 @@ export class StudyListViewModel extends Observable {
     }
 
     showDrawer() {
-        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-        sideDrawer.showDrawer();
+        QuestionViewModel.showDrawer();
     }
 
     private publish() {

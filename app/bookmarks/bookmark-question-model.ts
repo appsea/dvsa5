@@ -7,6 +7,7 @@ import { QuestionService } from "~/services/question.service";
 import { IOption, IQuestion, IState } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
+import {QuestionViewModel} from "~/question/question-view-model";
 
 export class BookmarkQuestionModel extends Observable {
 
@@ -61,10 +62,7 @@ export class BookmarkQuestionModel extends Observable {
     }
 
     showDrawer() {
-        const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
-        if (sideDrawer) {
-            sideDrawer.showDrawer();
-        }
+        QuestionViewModel.showDrawer();
         AdService.getInstance().hideAd();
     }
 

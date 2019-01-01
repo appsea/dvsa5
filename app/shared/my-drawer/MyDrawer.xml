@@ -5,7 +5,7 @@ Feel free to customize layouts and components to change how your app drawer look
 <GridLayout rows="auto, *" class="sidedrawer sidedrawer-left" loaded="onLoaded">
     <StackLayout class="sidedrawer-header">
         <Image class="sidedrawer-header-image" src="~/images/icon.png" />
-        <Label class="sidedrawer-header-brand" text="Base Sas Quiz" />
+        <Label class="sidedrawer-header-brand" text="DVSA Theory Kit" />
     </StackLayout>
 
     <ScrollView row="1">
