@@ -136,8 +136,8 @@ export class SummaryViewModel extends Observable {
             iosTestDeviceIds: ["ce97330130c9047ce0d4430d37d713b2"],
             keywords: ["games", "education"] // add keywords for ad targeting
         }, (reward) => { console.log("reward", reward);
-                         QuestionService.getInstance().findPremiumRange((this._questionSize + 1),
-                (this._questionSize + this._rewards)).then(this.load());
+                         /*QuestionService.getInstance().findPremiumRange((this._questionSize + 1),
+                (this._questionSize + this._rewards)).then(this.load());*/
             }, () => this.preloadVideoAd(), () => {
             this.setAdLoadedTrue();
             this.calculate();

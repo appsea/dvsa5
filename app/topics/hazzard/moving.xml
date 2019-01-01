@@ -1,0 +1,115 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Hazard awareness"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="Moving Hazards" class="c-white font-weight-bold"/>
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph" text="You need to look out for other road users: pedestrians, cyclists, horse riders, large vehicle drivers, slow-moving vehicles, motorcyclists, disabled people using a powered vehicle, and other car drivers."/>
+                        <Label textWrap="true" class="paragraph" text="In built-up areas, you may come across pedestrians in the road; be patient and wait for them to finish crossing."/>
+                        <Label textWrap="true" class="paragraph" text="On country roads, there may be no pavement, so look out for pedestrians in the road. They may be walking towards you on your side of the road."/>
+                        <Label textWrap="true" class="paragraph" text="Be aware of cyclists and give them plenty of room."/>
+
+                        <GridLayout columns="auto *" rows="auto auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="They may wobble or swerve to avoid drains or potholes." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="At junctions or traffic lights, give them time to turn or pull away." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="2" col="1" text="Before you turn left, check for cyclists filtering on your left." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="If you see a bus at a bus stop, think."/>
+
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="People may get off the bus and cross the road." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="The bus may be about to move off. School buses might stop at places other than bus stops." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="At some bridges, high vehicles may need to use the centre of the road to be able to pass underneath."/>
+                        <Label textWrap="true" class="paragraph" text="Watch out for other vehicles, especially motorcyclists, overtaking and cutting in front of you. If you need to, drop back to retain a safe separation distance."/>
+                        <Label textWrap="true" class="paragraph" text="Older drivers may not react very quickly, so be patient with them."/>
+                        <Label textWrap="true" class="paragraph" text="Some vehicles have signs on the back; for example, road maintenance vehicles, large goods vehicles over 13 metres long, and vehicles carrying hazardous chemicals. Learn what the signs mean."/>
+                        <Label textWrap="true" class="paragraph" text="Don't overtake:"/>
+
+                        <GridLayout columns="auto *" rows="auto auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="If you're turning left shortly afterwards" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="If signs and road markings prohibit this" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="2" col="1" text="When approaching a junction" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="3" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="3" col="1" text="When the view ahead is blocked." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}"
+                                   textWrap="true"/>
+                            <Switch id="my-switch" checked="{{complete}}"
+                                    class="{{complete? 'switch-complete': 'switch-incomplete'}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

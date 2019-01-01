@@ -1,14 +1,13 @@
-import {EventData, Observable} from "data/observable";
-import {IOption, IQuestion, State} from "../shared/questions.model";
-import {QuestionService} from "../services/question.service";
-import {SettingsService} from "../services/settings.service";
-import {AdService} from "../services/ad.service";
-import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
-import {QuizUtil} from "../shared/quiz.util";
-import * as navigationModule from '../shared/navigation';
+import { EventData, Observable } from "data/observable";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as dialogs from "ui/dialogs";
-import * as constantsModule from '../shared/constants';
+import { topmost } from "ui/frame";
+import { AdService } from "~/services/ad.service";
+import { QuestionService } from "~/services/question.service";
+import { IOption, IQuestion, IState } from "~/shared/questions.model";
+import { QuizUtil } from "~/shared/quiz.util";
+import * as constantsModule from "../shared/constants";
+import * as navigationModule from "../shared/navigation";
 
 export class CategoryPracticeViewModel extends Observable {
     private _questionService: QuestionService;
@@ -27,8 +26,8 @@ export class CategoryPracticeViewModel extends Observable {
         this.next();
     }
 
-    public next(): void {
-        if (this._cache.length == 0 || this._questionNumber >= this._cache.length) {
+    next(): void {
+        if (this._cache.length === 0 || this._questionNumber >= this._cache.length) {
             this.fetchUniqueQuestion();
         } else {
             this._questionNumber = this._questionNumber + 1;
@@ -37,11 +36,11 @@ export class CategoryPracticeViewModel extends Observable {
         }
     }
 
-    public previous(): void {
+    previous(): void {
         this.goPrevious();
     }
 
-    public goPrevious() {
+    goPrevious() {
         if (this._questionNumber > 1) {
             this._questionNumber = this._questionNumber - 1;
             this._question = this._cache[this._questionNumber - 1];
@@ -54,7 +53,7 @@ export class CategoryPracticeViewModel extends Observable {
         this.publish();
     }
 
-    public showDrawer() {
+    showDrawer() {
         const sideDrawer = <RadSideDrawer>topmost().getViewById("sideDrawer");
         sideDrawer.showDrawer();
         AdService.getInstance().hideAd();
@@ -62,8 +61,9 @@ export class CategoryPracticeViewModel extends Observable {
 
     get question() {
         if (!this._question) {
-            this._question = {options: [], explanation: '', show: false}
+            this._question = {options: [], explanation: "", show: false};
         }
+
         return this._question;
     }
 
@@ -83,53 +83,49 @@ export class CategoryPracticeViewModel extends Observable {
         return this._questionNumber;
     }
 
-    public publish() {
+    publish() {
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'question',
+            propertyName: "question",
             value: this._question
         });
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'questionNumber',
+            propertyName: "questionNumber",
             value: this._questionNumber
         });
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: 'options',
+            propertyName: "options",
             value: this._question.options
         });
     }
 
     showAnswer(): void {
-        this.question.options.forEach(option => option.show = true);
+        this.question.options.forEach((option) => option.show = true);
         this.question.show = true;
         this.publish();
     }
 
     selectOption(args: any) {
-        let selectedOption: IOption = args.view.bindingContext;
+        const selectedOption: IOption = args.view.bindingContext;
         if (selectedOption.selected) {
             selectedOption.selected = false;
             this.question.skipped = true;
         } else {
             this.question.options.forEach((item, index) => {
-                if (item.tag === selectedOption.tag) {
-                    item.selected = true;
-                } else {
-                    item.selected = false;
-                }
+                item.selected = item.tag === selectedOption.tag;
             });
             this.question.skipped = false;
         }
         QuestionService.getInstance().handleWrongQuestions(this.question);
     }
 
-    public goToEditPage() {
-        let state: State = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
+    goToEditPage() {
+        const state: IState = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
         navigationModule.gotoEditPage(state);
     }
 
@@ -152,14 +148,14 @@ export class CategoryPracticeViewModel extends Observable {
         } else {
             dialogs.confirm("Hurray!! All questions are attempted. Click Ok to go to categories.").then((proceed) => {
                 if (proceed) {
-                    navigationModule.toPage("category/category")
+                    navigationModule.toPage("category/category");
                 }
             });
         }
     }
 
     private isAlreadyAsked(questionNumber: number): boolean {
-        return this._cache.filter(que => +que.number === questionNumber).length > 0;
-        //return false;
+        return this._cache.filter((que) => +que.number === questionNumber).length > 0;
+        // return false;
     }
 }

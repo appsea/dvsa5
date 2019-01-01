@@ -1,0 +1,83 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Vulnerable road users"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="Cyclists" class="c-white font-weight-bold" textWrap="true"/>
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph" text="Cyclists should normally follow the same rules as drivers, but they're slower and more vulnerable. In some areas, signs may indicate special cycle or shared cycle and pedestrian routes."/>
+                        <Label textWrap="true" class="paragraph" text="Advanced stop lines are provided to allow cyclists to position themselves in front of other traffic. When the lights are red or about to become red, you should stop at the first white line."/>
+                        <Label textWrap="true" class="paragraph" text="If you're overtaking a cyclist, give them as much room as you would a car. They may need to swerve"/>
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="To avoid a drain or an uneven road surface." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="If they're affected by the wind." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+                        <Label textWrap="true" class="paragraph" text="A cyclist going slowly, or glancing over their shoulder to check for traffic, may be planning to turn right. Stay behind and give them plenty of room."/>
+                        <Label textWrap="true" class="paragraph" text="Never overtake a cyclist (or moped) just before you turn left. Hold back and wait until they've passed the junction before you turn."/>
+                        <Label textWrap="true" class="paragraph" text="When you're emerging from a junction, look carefully for cyclists. They're not as easy to see as larger vehicles. Also look out for cyclists emerging from junctions."/>
+                        <Label textWrap="true" class="paragraph" text="Be aware of cyclists at a roundabout. They're slower and more vulnerable than other road users, and may decide to stay in the left-hand lane whatever direction they're planning to take. Hold back and give them plenty of room."/>
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}"
+                                   textWrap="true"/>
+                            <Switch checked="{{complete}}" class="{{complete? 'switch-complete': 'switch-incomplete'}}"
+                                    id="my-switch"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

@@ -1,0 +1,137 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Vehicle handling"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="Weather conditions" class="c-white font-weight-bold"/>
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph font-weight-bold" text="Rain or wet conditions"/>
+                        <Label textWrap="true" class="paragraph" text="When it's raining or the road is wet, leave at least double the normal stopping distance. If you're following a vehicle at a safe distance and another vehicle pulls into the gap you've left, drop back to regain a safe distance."/>
+                        <Label textWrap="true" class="paragraph" text="On wet roads, watch out for motorcyclists, who may suddenly change direction to avoid slippery drain covers."/>
+                        <Label textWrap="true" class="paragraph" text="When visibility is poor but not seriously reduced during the day, use dipped headlights to help other road users to see you."/>
+                        <Label textWrap="true" class="paragraph" text="In winter, a ford is more likely to flood, making it difficult to cross. There may be a depth gauge, which will help you decide whether you should go through. If you decide to continue"/>
+
+                        <GridLayout columns="auto *" rows="auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="Use a low gear" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="Drive through slowly" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="Test your brakes afterwards: wet brakes are less effective." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph font-weight-bold" text="Fog"/>
+                        <Label textWrap="true" class="paragraph" text="When visibility is seriously reduced, you MUST use headlights. You may also use fog lights if you have them. 'Seriously reduced' generally means you can't see for more than 100 metres (328 feet)."/>
+                        <Label textWrap="true" class="paragraph" text="Never use front or rear fog lights unless visibility is seriously reduced. If you've been using them and conditions improve, remember to switch them off. Don't use fog lights when they're not needed, because"/>
+
+                        <GridLayout columns="auto *" rows="auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="You may be breaking the law" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="They can dazzle other drivers" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="Drivers behind you won't be able to see your brake lights as clearly, or they may think you're braking when you're not." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="Always keep your speed down in foggy weather, as it's harder to see what's happening ahead. Increase your distance from the vehicle in front, in case it stops or slows suddenly. Allow plenty of time for your journey."/>
+                        <Label textWrap="true" class="paragraph" text="Be especially careful when driving on motorways in fog. Reflective studs will help you to see the road ahead. In particular"/>
+
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="Red studs mark the left-hand edge of the carriageway" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="Amber studs mark the central reservation." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph font-weight-bold" text="Very bad weather"/>
+                        <Label textWrap="true" class="paragraph" text="If it's very foggy or snow is falling heavily, don't travel unless your journey is essential. If you must travel, take great care and allow plenty of time."/>
+                        <Label textWrap="true" class="paragraph" text="Before you start out, make sure that"/>
+
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="Your lights are working" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="Your windows are clean." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="In deep snow, consider fitting chains to your wheels to help grip and prevent skidding."/>
+                        <Label textWrap="true" class="paragraph" text="When on the road, keep well back – increase the gap between your vehicle and the one in front in case it stops suddenly. In icy conditions, your stopping distance can be 10 times what it would be on a dry road."/>
+                        <Label textWrap="true" class="paragraph font-weight-bold" text="Windy weather"/>
+                        <Label textWrap="true" class="paragraph" text="Wind can affect all vehicles. A sudden gust may catch your vehicle"/>
+
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="When passing a high-sided vehicle on the motorway" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="When driving on an exposed stretch of road." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}"
+                                   textWrap="true"/>
+                            <Switch id="my-switch" checked="{{complete}}"
+                                    class="{{complete? 'switch-complete': 'switch-incomplete'}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

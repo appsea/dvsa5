@@ -46,7 +46,7 @@ export function showChart(args: EventData) {
 export function resetExamStats(): void {
     dialogs.confirm("Are you sure you want to clear your test statistics?").then((proceed) => {
         if (proceed) {
-            vm.resetExamStats();
+            vm.resetMockExamStats();
             navigationModule.toPage("stats/progress");
             Toast.makeText("Cleared Exam Stats!!!", "long").show();
         }

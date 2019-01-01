@@ -11,6 +11,18 @@ Feel free to customize layouts and components to change how your app drawer look
     <ScrollView row="1">
         <StackLayout class="sidedrawer-content" row="1">
 
+            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'study' ? ' selected': '') }}"
+                        route="topics/study-list" params="study" tap="onNavigationItemTap">
+                <Label row="0" col="0" text="&#xf1ea;" class="fa t-14"/>
+                <Label row="0" col="1" text="Study" class="p-r-10" />
+            </GridLayout>
+
+            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'category' ? ' selected': '') }}"
+                        route="category/category" params="category" tap="onNavigationItemTap">
+                <Label row="0" col="0" text="&#xf0c9;" class="fa t-14"/>
+                <Label row="0" col="1" text="Categories" class="p-r-10" />
+            </GridLayout>
+
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'practice' ? ' selected': '') }}"
                         route="question/practice" params="practice" tap="onNavigationItemTap">
                 <Label row="0" col="0" text="&#xf005;" class="fa t-14"/>

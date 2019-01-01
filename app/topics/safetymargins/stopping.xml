@@ -1,0 +1,99 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Safety margins"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="Stopping distances" class="c-white font-weight-bold"/>
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph" text="Leave enough room between your vehicle and the one in front so you can pull up safely if it slows down or stops suddenly. Your overall stopping distance is the distance your car travels:"/>
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="From the moment you realise you must brake" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="To the moment the vehicle stops." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="This is made up of thinking distance and braking distance."/>
+                        <Label textWrap="true" class="paragraph" text="Study the typical thinking, braking and stopping distances given in The Highway Code. The figures given are the stopping distances if you're travelling in a vehicle with good tyres and brakes:"/>
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="on a dry road" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="In good conditions." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+
+                        <Label textWrap="true" class="paragraph" text="Don't just learn the figures – you need to be able to judge the distance. A useful method is to leave a two-second time gap between your vehicle and the one in front."/>
+                        <Label textWrap="true" class="paragraph" text="In other conditions, you need to increase these distances."/>
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="When it's raining or the road is wet – double the distance." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="When it's icy – 10 times the distance." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="In faster conditions, such as on motorways, increasing the distance between vehicles helps to lower the risk of collision."/>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}" textWrap="true"/>
+                            <Switch id="my-switch" checked="{{complete}}" class="{{complete? 'switch-complete': 'switch-incomplete'}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

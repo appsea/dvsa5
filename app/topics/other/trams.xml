@@ -1,0 +1,83 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Other types of vehicles"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="Trams" class="c-white font-weight-bold"/>
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph" text="Trams operate in some cities. Take extra care because they."/>
+
+
+                        <GridLayout columns="auto *" rows="auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="are silent" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="move quickly." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="2" col="1" text="can't steer to avoid you." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="In these cities, there may be additional white light signals at some traffic lights. These are especially for tram drivers."/>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}" textWrap="true"/>
+                            <Switch id="my-switch" checked="{{complete}}" class="{{complete? 'switch-complete': 'switch-incomplete'}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

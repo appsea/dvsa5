@@ -48,9 +48,8 @@ export class SettingsService {
     readSettings(): ISetting {
         let setting: ISetting;
         try {
-            setting = appSettings.hasKey(constantsModule.SETTINGS)
-                ? JSON.parse(appSettings.getString(constantsModule.SETTINGS))
-                : this.getDefaultSetting();
+            setting = appSettings.hasKey(constantsModule.SETTINGS) ?
+                JSON.parse(appSettings.getString(constantsModule.SETTINGS)) : this.getDefaultSetting();
         } catch (error) {
             setting = this.getDefaultSetting();
         }
@@ -86,9 +85,8 @@ export class SettingsService {
         this.clearCache(constantsModule.MAIN);
         this.clearCache(constantsModule.QUICK1);
         this.clearCache(constantsModule.TICK);
-        if (constantsModule.CLEAR
-            || !appSettings.hasKey(constantsModule.VERSION)
-            || appSettings.getNumber(constantsModule.VERSION) < constantsModule.VERSION_NUMBER) {
+        if (constantsModule.CLEAR || !appSettings.hasKey(constantsModule.VERSION) ||
+            appSettings.getNumber(constantsModule.VERSION) < constantsModule.VERSION_NUMBER) {
             this.clearCache(constantsModule.MAIN);
             this.clearCache(constantsModule.QUICK);
             this.clearCache(constantsModule.QUESTIONS);
@@ -106,6 +104,32 @@ export class SettingsService {
         appSettings.setString(constantsModule.SETTINGS, newSetting);
     }
 
+    saveQuestions(questions: Array<IQuestion>): void {
+        const json: string = JSON.stringify(questions);
+        appSettings.setString(constantsModule.QUESTIONS, json);
+        appSettings.setNumber(constantsModule.QUESTIONS_SIZE, questions.length);
+    }
+
+    saveQuestionVersion(questionVersion: number): void {
+        appSettings.setNumber(constantsModule.QUESTION_VERSION, questionVersion);
+    }
+
+    readQuestionVersion(): number {
+        return appSettings.hasKey(constantsModule.QUESTION_VERSION) ?
+            appSettings.getNumber(constantsModule.QUESTION_VERSION) : 0;
+    }
+
+    readQuestions(): Array<IQuestion> {
+        let questions: Array<IQuestion>;
+        try {
+            questions = this.hasQuestions() ? JSON.parse(appSettings.getString(constantsModule.QUESTIONS)) : [];
+        } catch (error) {
+            questions = [];
+        }
+
+        return questions;
+    }
+
     saveRoute(path: string): void {
         appSettings.setString(constantsModule.ROUTE, path);
     }
@@ -116,6 +140,19 @@ export class SettingsService {
         }
 
         return "question/practice";
+    }
+
+    hasQuestions(): boolean {
+        return appSettings.hasKey(constantsModule.QUESTIONS);
+    }
+
+    hasSize(): boolean {
+        return appSettings.hasKey(constantsModule.QUESTIONS_SIZE);
+    }
+
+    hasMoreQuestions(questionsLength: number): boolean {
+        return this.hasSize() ? questionsLength < appSettings.getNumber(constantsModule.QUESTIONS_SIZE)
+            : questionsLength < 500;
     }
 
     private getDefaultQuick() {
@@ -136,8 +173,7 @@ export class SettingsService {
     }
 
     private handleStructureChange() {
-        if (appSettings.hasKey(constantsModule.SETTINGS)
-            && !appSettings.hasKey(constantsModule.ADDTICK)) {
+        if (appSettings.hasKey(constantsModule.SETTINGS) && !appSettings.hasKey(constantsModule.ADDTICK)) {
             const setting: ISetting = JSON.parse(appSettings.getString(constantsModule.SETTINGS));
             setting.totalTime = this.getDefaultSetting().totalTime;
             appSettings.setString(constantsModule.SETTINGS, JSON.stringify(setting));

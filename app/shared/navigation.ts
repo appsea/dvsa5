@@ -1,5 +1,5 @@
 import * as frameModule from "tns-core-modules/ui/frame";
-import { IState } from "./questions.model";
+import { IState, ISubTopic } from "./questions.model";
 
 export function	gotoResultPage(state: IState) {
     frameModule.topmost().navigate({
@@ -53,4 +53,34 @@ export function	gotoDetailsPage(state: IState) {
 
 export function	goBack() {
     frameModule.topmost().goBack();
+}
+
+export function	gotoCategoryPractice(numbers: Array<number>) {
+    frameModule.topmost().navigate({
+        moduleName: "category/category-practice",
+        context: numbers,
+        transition: {
+            name: "fade"
+        }
+    });
+}
+
+export function	gotoSubtopics(topic: string) {
+    frameModule.topmost().navigate({
+        moduleName: "topics/subtopic-list",
+        context: topic,
+        transition: {
+            name: "fade"
+        }
+    });
+}
+
+export function	gotoChapters(subTopic: ISubTopic) {
+    frameModule.topmost().navigate({
+        moduleName: subTopic.link,
+        context: subTopic,
+        transition: {
+            name: "fade"
+        }
+    });
 }

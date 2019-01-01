@@ -1,0 +1,119 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Safety and your vehicle"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="Environment" class="c-white font-weight-bold"/>
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph" text="Motor vehicles can harm the environment, resulting in:"/>
+                        <GridLayout columns="auto *" rows="auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="Air pollution" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="Damage to buildings" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="2" col="1" text="using up of natural resources." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+                        <Label textWrap="true" class="paragraph" text="Road transport accounts for 20% of all emissions. Help the environment by driving in an ecosafe manner; you'll improve road safety, reduce exhaust emissions and improve your fuel consumption."/>
+
+                        <Label textWrap="true" class="paragraph" text="You should:"/>
+                        <GridLayout columns="auto *" rows="auto auto auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="Reduce your speed – vehicles travelling at 70 mph use up to 30% more fuel than those travelling at 50 mph." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="Plan well ahead so that you can drive smoothly – avoiding rapid acceleration and heavy braking can cut your fuel bill by up to 15%" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="2" col="1" text="Use selective gear changing – missing out some gears can help by reducing the amount of time you're accelerating, which is when your vehicle uses the most fuel." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="3" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="3" col="1" text="Have your vehicle serviced and tuned properly." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="4" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="4" col="1" text="Make sure your tyres are correctly inflated." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="Dont:"/>
+                        <GridLayout columns="auto *" rows="auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="Carry unnecessary weight or leave an empty roof rack on your car." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="Over-rev in lower gears" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="2" col="1" text="Leave the engine running unnecessarily – if your vehicle is stationary and likely to remain so for some time, switch off the engine." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="Never leave your vehicle unattended with the engine running. Always switch off the engine and secure the vehicle before leaving it."/>
+                        <Label textWrap="true" class="paragraph" text="If you'll be waiting for some time for a passenger, switch off the engine while parked."/>
+                        <Label textWrap="true" class="paragraph" text="Try not to use your car to make a lot of short journeys; think about walking or cycling instead. Using public transport or sharing a car can reduce the volume of traffic and the emissions it creates. For example, modern trams use electric power. They reduce traffic and noise pollution."/>
+                        <Label textWrap="true" class="paragraph" text="At all times, and especially when refuelling, make sure your filler cap is securely fastened. If it's loose, it could spill fuel, which wastes both fuel and money. Spilt diesel fuel also makes the road slippery for other road users."/>
+                        <Label textWrap="true" class="paragraph" text="Having your car serviced regularly will give better fuel economy and your exhaust emissions will be cleaner. If your vehicle is over three years old (over four years old in Northern Ireland), it will have to pass an emissions test as part of the MOT test."/>
+                        <Label textWrap="true" class="paragraph" text="If you service your own vehicle, dispose of old engine oil and batteries responsibly. Take them to a local-authority site or a garage. Don't pour oil down the drain."/>
+                        <Label textWrap="true" class="paragraph" text="Also bear in mind noise pollution. In built-up areas, don't use your car horn between 11.30 pm and 7.00 am, unless another vehicle poses a danger."/>
+                        <Label textWrap="true" class="paragraph" text="Continuous high speeds could increase the risk of breakdown. Make sure you check your vehicle before making a long motorway journey; particularly oil, water and tyre pressure."/>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}" textWrap="true"/>
+                            <Switch id="my-switch" checked="{{complete}}" class="{{complete? 'switch-complete': 'switch-incomplete'}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

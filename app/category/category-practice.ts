@@ -1,26 +1,24 @@
-import {CreateViewEventData} from "ui/placeholder";
-import {EventData, Observable} from "data/observable";
-import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
-import {NavigatedData, Page} from "ui/page";
-import {ScrollView} from "tns-core-modules/ui/scroll-view";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
+import { EventData, Observable } from "data/observable";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { isAndroid, screen } from "platform";
 import * as ButtonModule from "tns-core-modules/ui/button";
-import {TextView} from "ui/text-view";
-import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
-import {isAndroid, screen} from "platform";
-import {Repeater} from 'ui/repeater';
-import {Label} from 'ui/label';
+import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import * as dialogs from "ui/dialogs";
-import {AdService} from "../services/ad.service";
-import {ConnectionService} from "../shared/connection.service";
-import {CategoryPracticeViewModel} from "./category-practice-view-model";
+import { topmost } from "ui/frame";
+import { Label } from "ui/label";
+import { NavigatedData, Page } from "ui/page";
+import { CreateViewEventData } from "ui/placeholder";
+import { Repeater } from "ui/repeater";
+import { TextView } from "ui/text-view";
+import { AdService } from "../services/ad.service";
+import { ConnectionService } from "../shared/connection.service";
+import { CategoryPracticeViewModel } from "./category-practice-view-model";
 
 let vm: CategoryPracticeViewModel;
 let optionList: Repeater;
 let suggestionButton: ButtonModule.Button;
-let defaultExplanation: Label;
-let explanationHeader: Label;
-var numbers: Array<number>;
+let numbers: Array<number>;
 let _page: any;
 let scrollView: ScrollView;
 let banner: any;
@@ -70,9 +68,9 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function handleSwipe(args) {
-    if (args.direction == 1) {
+    if (args.direction === 1) {
         previous();
-    } else if (args.direction == 2) {
+    } else if (args.direction === 2) {
         next();
     }
 }
@@ -80,7 +78,7 @@ export function handleSwipe(args) {
 export function moveToLast() {
     suggestionButton = _page.getViewById("suggestionButton");
     if (suggestionButton) {
-        let locationRelativeTo = suggestionButton.getLocationRelativeTo(scrollView);
+        const locationRelativeTo = suggestionButton.getLocationRelativeTo(scrollView);
         if (scrollView && locationRelativeTo) {
             scrollView.scrollToVerticalOffset(locationRelativeTo.y, false);
         }
@@ -111,7 +109,7 @@ export function next(): void {
     } else {
         vm.next();
         if (AdService.getInstance().showAd) {
-            banner.height = AdService.getInstance().getAdHeight() + 'dpi';
+            banner.height = AdService.getInstance().getAdHeight() + "dpi";
             AdService.getInstance().showSmartBanner();
         }
         if (scrollView) {

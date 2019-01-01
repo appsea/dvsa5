@@ -1,0 +1,104 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Hazard awareness"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="Static hazards" class="c-white font-weight-bold"/>
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph" text="There are numerous types of static hazard, including bends, junctions, roundabouts, parked vehicles and skips in the road, roadworks, traffic calming, different types of crossing and traffic lights."/>
+                        <Label textWrap="true" class="paragraph" text="All of these may require you to respond in some way, so"/>
+
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="Take a mental note of their existence" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="Slow down and get ready to stop if necessary." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+
+                        <Label textWrap="true" class="paragraph" text="Road signs and markings are there to give you clues. Learn their meanings. Watch out for them so that you can reduce your speed in good time and prepare yourself for any action you may need to take. The same applies to traffic lights, other light signals, level crossings and signals from police officers. If traffic lights are out of order, treat the junction as an unmarked crossroads and proceed with caution."/>
+                        <Label textWrap="true" class="paragraph" text="If you see a sign for a bend, ask yourself 'What if there's a pedestrian or obstruction just around the bend. Could I stop in time? Could I do it safely?'"/>
+                        <Label textWrap="true" class="paragraph" text="In busy areas, parked cars can cause a hazard, especially if parked illegally; for example, on the zigzag lines by a pedestrian crossing. Watch out for"/>
+
+                        <GridLayout columns="auto *" rows="auto auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="0" col="1" text="Children dashing out from between the cars" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="1" col="1" text="Car doors opening" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5"/>
+                            <Label row="2" col="1" text="Cars moving away." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="Would you be able to stop?"/>
+                        <Label textWrap="true" class="paragraph" text="Near schools, watch for the flashing amber lights, indicating children may be crossing the road or using a dedicated school-crossing-patrol point. Slow down and be ready to stop if necessary or when signalled to do so."/>
+                        <Label textWrap="true" class="paragraph" text="There's often reduced visibility at junctions, especially in built-up areas. Take extra care and pull forward slowly until you can see down the road. You may also be able to see reflections of traffic in shop windows."/>
+                        <Label textWrap="true" class="paragraph" text="Don't block a junction; leave it clear to allow vehicles to enter and emerge."/>
+                        <Label textWrap="true" class="paragraph" text="Where lanes are closed, be ready for cars cutting in front of you and keep a safe distance from the vehicle in front. Take extra care on two-way roads that have a third lane in the centre. Traffic from both directions can use this lane for overtaking."/>
+                        <Label textWrap="true" class="paragraph" text="If you're driving on a motorway or dual carriageway and see a hazard or obstruction ahead, briefly use your hazard warning lights to warn the traffic behind."/>
+                        <Label textWrap="true" class="paragraph" text="If your vehicle has broken down and is causing an obstruction, switch on your hazard warning lights to warn other road users."/>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}"
+                                   textWrap="true"/>
+                            <Switch id="my-switch" checked="{{complete}}"
+                                    class="{{complete? 'switch-complete': 'switch-incomplete'}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

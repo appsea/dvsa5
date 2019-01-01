@@ -1,6 +1,6 @@
 import { Observable } from "tns-core-modules/data/observable";
-import { IQuestion } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
+import { IQuestion } from "../shared/questions.model";
 
 const httpModule = require("http");
 
@@ -30,29 +30,10 @@ export class HttpService {
         return httpModule.getJSON(url);
     }
 
-    getPremiumQuestions<T>(): Promise<T> {
-        const url = constantsModule.FIREBASE_URL + "premium.json";
-
-        return httpModule.getJSON(url);
-    }
-
     findLatestQuestionVersion(): Promise<string> {
         const url = constantsModule.FIREBASE_URL + "questionVersion.json";
 
         return httpModule.getString(url);
-    }
-
-    findPremiumQuestionVersion(): Promise<string> {
-        const url = constantsModule.FIREBASE_URL + "premiumVersion.json";
-
-        return httpModule.getString(url);
-    }
-
-    findPremiumRange<T>(orderBy: string, startAt: number, endAt: number): Promise<T> {
-        const url = constantsModule.FIREBASE_URL + "premium.json" + "?orderBy=\"" + orderBy
-            + "\"&startAt=" + startAt + "&endAt=" + endAt;
-
-        return httpModule.getJSON(url);
     }
 
     checkPlayStoreVersion(): Promise<string> {
@@ -65,6 +46,12 @@ export class HttpService {
         const url = constantsModule.FIREBASE_URL + "totalQuestions.json";
 
         return httpModule.getString(url);
+    }
+
+    getCategories<T>(): Promise<T> {
+        const url = constantsModule.FIREBASE_URL + "categories.json";
+
+        return httpModule.getJSON(url);
     }
 
     httpPost(url: string, data: any) {

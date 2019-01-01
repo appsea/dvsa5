@@ -12,7 +12,7 @@ export class BookmarkQuestionModel extends Observable {
 
     get question() {
         if (!this._question) {
-            this._question = {description: "", options: [], explanation: "", show: false};
+            this._question = {options: [], explanation: "", show: false};
         }
 
         return this._question;

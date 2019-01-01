@@ -65,6 +65,7 @@ export class ResultViewModel extends Observable {
             wrong,
             skipped,
             total,
+            totalExams: total,
             percentage: percentageString + "%",
             pass: percentage > constantsModule.PASSING_PERCENTAGE
         };

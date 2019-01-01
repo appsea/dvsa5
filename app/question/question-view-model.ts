@@ -8,16 +8,15 @@ import { QuestionService } from "~/services/question.service";
 import { SettingsService } from "~/services/settings.service";
 import { StatsService } from "~/services/stats.service";
 import { IOption, IQuestion, IState } from "~/shared/questions.model";
+import { QuizUtil } from "~/shared/quiz.util";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 
 export class QuestionViewModel extends Observable {
 
-    static _errorLoading = false;
-
     get question() {
         if (!this._question) {
-            this._question = {description: "", options: [], explanation: "", show: false};
+            this._question = {options: [], explanation: "", show: false};
         }
 
         for (const option of this._question.options) {
@@ -56,10 +55,18 @@ export class QuestionViewModel extends Observable {
         return this._questionNumber;
     }
 
+    get showAdOnNext(): boolean {
+        return !QuestionViewModel._errorLoading && this.questionNumber % constantsModule.AD_COUNT === 0
+            && AdService.getInstance().showAd && (((this.count + 1) % constantsModule.AD_COUNT) === 0);
+    }
+
+    static _errorLoading = false;
+
     static showDrawer() {
         const sideDrawer: RadSideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
     }
+    private _loading = true;
 
     private count: number = 0;
 
@@ -90,11 +97,6 @@ export class QuestionViewModel extends Observable {
         }
     }
 
-    get showAdOnNext(): boolean {
-        return !QuestionViewModel._errorLoading && this.questionNumber % constantsModule.AD_COUNT === 0
-            && AdService.getInstance().showAd && (((this.count + 1) % constantsModule.AD_COUNT) === 0);
-    }
-
     previous(): void {
         this.goPrevious();
     }
@@ -108,12 +110,14 @@ export class QuestionViewModel extends Observable {
     }
 
     next(): void {
+        console.log("Next...");
         if ((this._state.questionNumber < this._state.totalQuestions) || this.isPractice()) {
             if (this._state.questions.length > 0 && this._state.questions.length > this._state.questionNumber) {
                 this._state.questionNumber = this._state.questionNumber + 1;
                 this._question = this._state.questions[this._state.questionNumber - 1];
                 this.saveAndPublish(this._mode, this._state);
             } else {
+                console.log("fetchUniqueQuestion...");
                 this.fetchUniqueQuestion();
             }
         }
@@ -197,6 +201,10 @@ export class QuestionViewModel extends Observable {
         this.publish();
     }
 
+    selectIndex(index: number) {
+        this.selectedOption(this._question.options[index]);
+    }
+
     selectOption(args: any) {
         const selectedOption: IOption = args.view.bindingContext;
         if (selectedOption.selected) {
@@ -235,6 +243,20 @@ export class QuestionViewModel extends Observable {
         StatsService.getInstance().updatePracticeStats(this.question);
     }
 
+    private selectedOption(selectedOption: IOption) {
+        if (selectedOption.selected) {
+            selectedOption.selected = false;
+            this.question.skipped = true;
+        } else {
+            this.question.options.forEach((item, index) => {
+                item.selected = item.tag === selectedOption.tag;
+            });
+            this.question.skipped = false;
+        }
+        this.saveAndPublish(this._mode, this._state);
+        QuestionService.getInstance().handleWrongQuestions(this.question);
+    }
+
     private increment() {
         this.count = this.count + 1;
     }
@@ -250,16 +272,19 @@ export class QuestionViewModel extends Observable {
     }
 
     private fetchUniqueQuestion() {
+        console.log("fetching......");
+        this._loading = true;
         this._questionService.getNextQuestion().then((que: IQuestion) => {
             if (!this.alreadyAsked(que)) {
+                console.log("Not asked...");
                 this._state.questionNumber = this._state.questionNumber + 1;
                 this._question = que;
+                QuizUtil.correctImagePath(this._question);
                 this._state.questions.push(this._question);
-                this.increment();
+                this._loading = false;
                 this.saveAndPublish(this._mode, this._state);
-                this.showInterstitial();
             } else {
-                if (QuestionService.getInstance().allQuestionsAsked(this.state.questions.length)) {
+                if (this._settingsService.hasMoreQuestions(this.state.questions.length)) {
                     this.fetchUniqueQuestion();
                 } else {
                     dialogs.confirm("Hurray!! You are done practicing all the questions. Click Ok to restart.")

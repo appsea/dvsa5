@@ -1,4 +1,4 @@
-export const FIREBASE_URL = "https://base-sasquiz.firebaseio.com/";
+export const FIREBASE_URL = "https://category-quiz.firebaseio.com/";
 export const INTERSTITIAL_AD_ID = "ca-app-pub-9082814869788754/5195869671";
 export const BANNER_AD_ID = "ca-app-pub-9082814869788754/7345143371";
 export const REWARD_AD_ID = "ca-app-pub-9082814869788754/8730675606";
@@ -24,3 +24,5 @@ export const QUESTIONS: string = "questions";
 export const QUESTIONS_SIZE: string = "size";
 export const SETTINGS: string = "SETTINGS";
 export const ADDTICK: string = "ADDTICK";
+export const CATEGORIES: string = "CATEGORIES";
+export const TOPICS: string = "TOPICS";

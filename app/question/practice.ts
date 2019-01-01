@@ -159,3 +159,32 @@ export function selectOption(args): void {
         vm.updatePracticeStats();
     }
 }
+
+export function firstOption(args) {
+    divert(0);
+}
+export function secondOption(args: CreateViewEventData) {
+    divert(1);
+}
+export function thirdOption(args: CreateViewEventData) {
+    divert(2);
+}
+export function fourthOption(args: CreateViewEventData) {
+    divert(3);
+}
+
+export function divert(index: number) {
+    if (!vm.enableSelection()) {
+        vm.showAnswer();
+        vm.selectIndex(index);
+        optionList.refresh();
+        moveToLast();
+    }
+}
+
+export function creatingView(args: CreateViewEventData) {
+    /*console.log("creating view");
+    var bannerView = new com.google.android.gms.ads.AdView(args.object._context);
+    bannerView.setAdSize(com.google.android.gms.ads.AdSize.SMART_BANNER);
+    args.view = bannerView;*/
+}

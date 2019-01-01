@@ -1,0 +1,105 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Road and traffic signs"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="FAQs" class="c-white font-weight-bold" textWrap="true"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="faq-question" text="I've seen some signs with a brown background – does this mean anything in particular?"/>
+                        <Label textWrap="true" class="faq-answer" text="Signs with a brown background give tourist information."/>
+                        <Label textWrap="true" class="faq-answer" text="These are placed on slow-moving or stationary maintenance vehicles which are blocking traffic lanes. They show you which side of the vehicle you should pass."/>
+                        <Label textWrap="true" class="faq-question" text="Sometimes you see lorries with large arrows on the back. What do they mean?"/>
+                        <Label textWrap="true" class="faq-answer" text="If you're driving on a motorway or unrestricted dual carriageway, you can use your hazard warning lights to warn drivers behind you that there's an obstruction ahead."/>
+                        <Label textWrap="true" class="faq-question" text="Can I use my hazard warning lights when I'm moving?"/>
+                        <Label textWrap="true" class="faq-answer" text="You can cross a solid white line if you're"/>
+                        <Label textWrap="true" class="faq-question" text="Can I ever cross double white lines where there's a solid white line on my side of the road?"/>
+                        <Label textWrap="true" class="faq-question" text="Am I allowed to wait in a box junction?"/>
+                        <GridLayout columns="auto *" rows="auto auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="Turning into a side road on the right" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="Entering a property" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="2" col="1" text="Passing a stationary vehicle." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="3" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="3" col="1" text="Overtaking a pedal cycle, horse or road maintenance vehicle, if they're travelling at 10 mph (16 km/h) or less." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="faq-answer" text="Yes, if you want to turn right and your exit's clear but you're prevented from turning by oncoming traffic or by other vehicles waiting to turn right."/>
+                        <Label textWrap="true" class="faq-question" text="In what different ways can traffic be controlled at roadworks?"/>
+                        <Label textWrap="true" class="faq-answer" text="Traffic can be controlled by"/>
+                        <GridLayout columns="auto *" rows="auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="Police officer" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="Traffic lights" class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="2" col="1" text="Stop-go board." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}"
+                                   textWrap="true"/>
+                            <Switch checked="{{complete}}" class="{{complete? 'switch-complete': 'switch-incomplete'}}"
+                                    id="my-switch"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

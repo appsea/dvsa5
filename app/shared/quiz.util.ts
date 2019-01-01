@@ -1,3 +1,5 @@
+import { IQuestion } from "~/shared/questions.model";
+
 export class QuizUtil {
 
     static days: Array<string> = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -21,6 +23,23 @@ export class QuizUtil {
         dateString += ":" + (minutes < 10 ? "0" + minutes : minutes);
 
         return dateString;
+    }
+
+    static getRandomNumber(max: number): number {
+        const randomNumber = Math.floor(Math.random() * (max));
+
+        return randomNumber;
+    }
+
+    static correctImagePath(question: IQuestion) {
+        if (question.prashna.image && !question.prashna.image.startsWith("~/images/")) {
+            question.prashna.image = "~/images/" + question.prashna.image;
+        }
+        for (const option of question.options) {
+            if (option.image && !option.image.startsWith("~/images/")) {
+                option.image = "~/images/" + option.image;
+            }
+        }
     }
 
     private constructor() {

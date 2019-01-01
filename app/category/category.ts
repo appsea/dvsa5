@@ -1,20 +1,19 @@
-import {CreateViewEventData} from "ui/placeholder";
-import {EventData, Observable} from "data/observable";
-import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {topmost} from "ui/frame";
-import {NavigatedData, Page} from "ui/page";
-import {ScrollView} from "tns-core-modules/ui/scroll-view";
-import {TextView} from "ui/text-view";
-import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
-import {isAndroid, screen} from "platform";
-import {Repeater} from 'ui/repeater';
-import {Label} from 'ui/label';
-import {CategoryListViewModel} from "./category-list-view-model";
-import * as dialogs from "ui/dialogs";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
+import { EventData, Observable } from "data/observable";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { isAndroid, screen } from "platform";
+import { ScrollView } from "tns-core-modules/ui/scroll-view";
+import { topmost } from "ui/frame";
+import { Label } from "ui/label";
+import { NavigatedData, Page } from "ui/page";
+import { CreateViewEventData } from "ui/placeholder";
+import { Repeater } from "ui/repeater";
+import { TextView } from "ui/text-view";
+import { CategoryListViewModel } from "./category-list-view-model";
 
 let vm: CategoryListViewModel;
 let _page: any;
-let banner: any;
+const banner: any;
 let categoryList: Repeater;
 
 export function onPageLoaded(args: EventData): void {
@@ -24,7 +23,7 @@ export function onPageLoaded(args: EventData): void {
     resetBanner();
 }
 
-export function resetBanner(){
+export function resetBanner() {
     if (banner) {
         banner.height = "0";
     }
@@ -61,7 +60,7 @@ export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEvent
 * use the showDrawer() function to open the app drawer section.
 *************************************************************/
 export function onDrawerButtonTap(args: EventData) {
-    //resetBanner();
+    // resetBanner();
     vm.showDrawer();
 }
 

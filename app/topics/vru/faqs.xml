@@ -1,0 +1,84 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Vulnerable road users"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="FAQs" class="c-white font-weight-bold" textWrap="true"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="faq-question" text="Reversing seems to be a dangerous manoeuvre. How can I be sure it's safe?"/>
+                        <Label textWrap="true" class="faq-answer" text="Always check the area behind the car very carefully. Look especially for children, who are difficult to see. Get out and check if you're not sure. Stop and give way to any pedestrians crossing the road behind you."/>
+                        <Label textWrap="true" class="faq-question" text="What should I do if parked vehicles restrict my view when emerging from a junction?"/>
+                        <Label textWrap="true" class="faq-answer" text="Stop, then creep forward slowly until you have a clear view."/>
+                        <Label textWrap="true" class="faq-question" text="How can I tell if someone is going to cross the road between parked cars?"/>
+                        <Label textWrap="true" class="faq-answer" text="You can't, but look for tell-tale signs such as a ball bouncing out into the road or a bicycle wheel sticking out between cars. Slow down and be prepared to stop."/>
+                        <Label textWrap="true" class="faq-question" text="Who is most vulnerable at road junctions?"/>
+                        <Label textWrap="true" class="faq-answer" text="Junctions are dangerous places, especially for those who can't be seen as easily, eg pedestrians, cyclists and motorcyclists. Always take extra care."/>
+                        <Label textWrap="true" class="faq-question" text="What does a flashing amber beacon on the top of a vehicle mean?"/>
+                        <Label textWrap="true" class="faq-answer" text="This indicates a slow-moving vehicle. A powered vehicle used by a disabled person MUST have a flashing amber light when travelling on a dual carriageway."/>
+                        <Label textWrap="true" class="faq-question" text="Why do I need to be careful if a bus has stopped on the other side of the road?"/>
+                        <Label textWrap="true" class="faq-answer" text="Pedestrians may come from behind the bus and cross the road, or dash across from your left."/>
+                        <Label textWrap="true" class="faq-question" text="If I have a collision, what's the first thing I have to do?"/>
+                        <Label textWrap="true" class="faq-answer" text="Stop. By law, you MUST stop at the scene of the incident if damage or injury is caused to any other person, vehicle, animal or property."/>
+                        <Label textWrap="true" class="faq-question" text="What can I do if I'm being dazzled by the vehicle behind?"/>
+                        <Label textWrap="true" class="faq-answer" text="Set your interior mirror to anti-dazzle, if you're able. Slow down and stop if you can't see."/>
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}"
+                                   textWrap="true"/>
+                            <Switch checked="{{complete}}" class="{{complete? 'switch-complete': 'switch-incomplete'}}"
+                                    id="my-switch"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

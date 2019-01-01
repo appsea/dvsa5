@@ -3,8 +3,9 @@
  */
 import * as appSettings from "application-settings";
 import { Observable } from "tns-core-modules/data/observable";
-import { FLAG_QUESTION, PRACTICE_STATS, PREMIUM, RESULT, WRONG_QUESTION } from "~/shared/constants";
-import { IPracticeStats, IQuestion, IResult } from "~/shared/questions.model";
+import { PRACTICE_STATS, PREMIUM, RESULT } from "~/shared/constants";
+import { ICategory, IPracticeStats, IQuestion, IResult, ITopic } from "~/shared/questions.model";
+import * as constantsModule from "../shared/constants";
 
 export class PersistenceService {
 
@@ -14,22 +15,12 @@ export class PersistenceService {
 
     private static _instance: PersistenceService = new PersistenceService();
 
-    resetAllStats(): any {
-        this.resetPracticeStats();
-        this.resetMockExamStats();
-    }
-
-    readPracticeStats(): IPracticeStats {
-        return appSettings.hasKey(PRACTICE_STATS) ? JSON.parse(appSettings.getString(PRACTICE_STATS))
-            : {attempted: new Array<number>(), correct: new Array<number>()};
-    }
-
     readWrongQuestions(): Array<IQuestion> {
-        return this.readQuestions(WRONG_QUESTION);
+        return this.readQuestions(constantsModule.WRONG_QUESTION);
     }
 
     readFlaggedQuestions(): Array<IQuestion> {
-        return this.readQuestions(FLAG_QUESTION);
+        return this.readQuestions(constantsModule.FLAG_QUESTION);
     }
 
     addQuestions(key: string, questions: Array<IQuestion>) {
@@ -38,6 +29,24 @@ export class PersistenceService {
 
     addResult(results: Array<IResult>) {
         appSettings.setString(RESULT, JSON.stringify(results));
+    }
+
+    resetAllStats(): any {
+        this.resetPracticeStats();
+        this.resetMockExamStats();
+    }
+
+    resetPracticeStats() {
+        appSettings.remove(PRACTICE_STATS);
+    }
+
+    resetMockExamStats(): void {
+        appSettings.remove(RESULT);
+    }
+
+    readPracticeStats(): IPracticeStats {
+        return appSettings.hasKey(PRACTICE_STATS) ? JSON.parse(appSettings.getString(PRACTICE_STATS))
+            : {attempted: new Array<number>(), correct: new Array<number>()};
     }
 
     getResult(): Array<IResult> {
@@ -61,20 +70,56 @@ export class PersistenceService {
         }
     }
 
-    savePracticeStats(practiceStats: IPracticeStats) {
-        appSettings.setString(PRACTICE_STATS, JSON.stringify(practiceStats));
+    resetExamStats(): void {
+        appSettings.remove(RESULT);
     }
 
-    resetMockExamStats(): void {
-        appSettings.remove(RESULT);
+    readCategories(): Array<ICategory> {
+        let categories: Array<ICategory>;
+        try {
+            const key = constantsModule.CATEGORIES;
+            categories = appSettings.hasKey(key) ? JSON.parse(appSettings.getString(key)) : [];
+        } catch (error) {
+            categories = [];
+        }
+
+        return categories;
+    }
+
+    hasCategories(): boolean {
+        return appSettings.hasKey(constantsModule.CATEGORIES);
+    }
+
+    saveCategories(categories: Array<ICategory>) {
+        appSettings.setString(constantsModule.CATEGORIES, JSON.stringify(categories));
+    }
+
+    hasTopics(): boolean {
+        return appSettings.hasKey(constantsModule.TOPICS);
+    }
+
+    saveTopics(topics: Array<ITopic>) {
+        appSettings.setString(constantsModule.TOPICS, JSON.stringify(topics));
+    }
+
+    readTopics(): Array<ITopic> {
+        let topics: Array<ITopic>;
+        try {
+            const key = constantsModule.TOPICS;
+            topics = appSettings.hasKey(key) ? JSON.parse(appSettings.getString(key)) : [];
+        } catch (error) {
+            topics = [];
+        }
+
+        return topics;
     }
 
     isPremium(): boolean {
         return appSettings.hasKey(PREMIUM);
     }
 
-    private resetPracticeStats() {
-        appSettings.remove(PRACTICE_STATS);
+    savePracticeStats(practiceStats: IPracticeStats) {
+        appSettings.setString(PRACTICE_STATS, JSON.stringify(practiceStats));
     }
 
     private readQuestions(key: string): Array<IQuestion> {
@@ -91,4 +136,5 @@ export class PersistenceService {
     private hasBookmarkedQuestions(key: string): boolean {
         return appSettings.hasKey(key);
     }
+
 }

@@ -23,7 +23,7 @@ export class AdService {
         this._showAd = showAd;
     }
 
-    static _testing = false;
+    static _testing = true;
 
     static getInstance(): AdService {
         return AdService._instance;
@@ -122,7 +122,7 @@ export class AdService {
                 resolve();
             },
             (error) => {
-                console.log("Error preloading interstitial: " + error)
+                console.log("Error preloading interstitial: " + error);
                 reject(error);
             }
         );

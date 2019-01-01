@@ -1,0 +1,140 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Vulnerable road users"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious" />
+                        <Label horizontalAlignment="center" text="Pedestrians" class="c-white font-weight-bold" textWrap="true" />
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext" />
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph"
+                               text="Pedestrians normally use a pavement or footpath. Take extra care if they have to walk in the road:"/>
+
+                        <GridLayout columns="auto *" rows="auto auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="On country roads where there's no pavement." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="When the pavement is closed due to street repairs" class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph"
+                               text="On country roads, pedestrians are advised to walk on the right-hand side of the road so they're facing oncoming traffic. Signs may warn you of people walking in the road."/>
+                        <Label textWrap="true" class="paragraph"
+                               text="A large group of people, such as those on an organised walk, may walk on the left-hand side. At night, delegated people at the front and rear of the group should carry bright lights – white at the front, red at the rear – to warn approaching vehicles of their presence."/>
+                        <Label textWrap="true" class="paragraph"
+                               text="Watch out for pedestrians already crossing when you're turning into a side road. They have priority, so wait for them to cross."/>
+                        <Label textWrap="true" class="paragraph"
+                               text="Be ready to slow down and stop as you approach a pedestrian crossing."/>
+                        <GridLayout columns="auto *" rows="auto auto auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" textWrap="true"/>
+                            <Label row="0" col="1" class="paragraph" textWrap="true">
+                                <label.formattedText>
+                                    <formattedString>
+                                        <formattedString.spans>
+                                            <span text="Zebra crossings" class="bullet"/>
+                                            <span text=" – slow down and prepare to stop if someone is waiting to cross."
+                                                  class="bullet-paragraph"/>
+                                        </formattedString.spans>
+                                    </formattedString>
+                                </label.formattedText>
+                            </Label>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" textWrap="true"/>
+                            <Label row="1" col="1" class="paragraph" textWrap="true">
+                                <label.formattedText>
+                                    <formattedString>
+                                        <formattedString.spans>
+                                            <span text="Pelican crossings" class="bullet"/>
+                                            <span text=" – light-controlled. During the flashing amber phase, give way to pedestrians on the crossing. If the lights change to green while someone is still crossing, be patient and wait until they've finished crossing."
+                                                  class="bullet-paragraph"/>
+                                        </formattedString.spans>
+                                    </formattedString>
+                                </label.formattedText>
+                            </Label>
+
+                            <Label row="2" col="0" text="&#8226;" class="fa paragraph m-r-5" textWrap="true"/>
+                            <Label row="2" col="1" class="paragraph" textWrap="true">
+                                <label.formattedText>
+                                    <formattedString>
+                                        <formattedString.spans>
+                                            <span text="Puffin crossings" class="bullet"/>
+                                            <span text=" – sensors to detect when people are on the crossing. The lights don't change from red until the crossing is clear."
+                                                  class="bullet-paragraph"/>
+                                        </formattedString.spans>
+                                    </formattedString>
+                                </label.formattedText>
+                            </Label>
+
+                            <Label row="3" col="0" text="&#8226;" class="fa paragraph m-r-5" textWrap="true"/>
+                            <Label row="3" col="1" class="paragraph" textWrap="true">
+                                <label.formattedText>
+                                    <formattedString>
+                                        <formattedString.spans>
+                                            <span text="Toucan crossings" class="bullet"/>
+                                            <span text=" – cyclists can cross at the same time as pedestrians. There's no flashing amber phase."
+                                                  class="bullet-paragraph"/>
+                                        </formattedString.spans>
+                                    </formattedString>
+                                </label.formattedText>
+                            </Label>
+                        </GridLayout>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}" textWrap="true"/>
+                            <Switch checked="{{complete}}" class="{{complete? 'switch-complete': 'switch-incomplete'}}"  id="my-switch"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

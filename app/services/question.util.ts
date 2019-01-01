@@ -1,4 +1,4 @@
-import { IQuestion } from "~/shared/questions.model";
+import { IQuestion } from "../shared/questions.model";
 
 export class QuestionUtil {
 

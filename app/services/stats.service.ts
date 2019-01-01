@@ -1,10 +1,12 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
+import * as appSettings from "application-settings";
 import { isAndroid } from "platform";
 import { Observable } from "tns-core-modules/data/observable";
 import { PersistenceService } from "~/services/persistence.service";
 import { QuestionUtil } from "~/services/question.util";
+import { PRACTICE_STATS } from "~/shared/constants";
 import { IPracticeStats, IQuestion } from "~/shared/questions.model";
 
 export class StatsService {
@@ -14,6 +16,11 @@ export class StatsService {
     }
 
     private static _instance: StatsService = new StatsService();
+
+    readPracticeStats(): IPracticeStats {
+        return appSettings.hasKey(PRACTICE_STATS) ? JSON.parse(appSettings.getString(PRACTICE_STATS))
+            : {attempted: new Array<number>(), correct: new Array<number>()};
+    }
 
     updatePracticeStats(question: IQuestion) {
         const practiceStats: IPracticeStats = PersistenceService.getInstance().readPracticeStats();

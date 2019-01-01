@@ -1,17 +1,24 @@
 export interface IQuestion {
     number?: string;
-    description: string;
+    prashna?: IPrashna;
     explanation?: string;
-    options: Array<IOption>;
+    category?: string;
+    options?: Array<IOption>;
     skipped?: boolean;
     flagged?: boolean;
     show?: boolean;
+}
+
+export interface IPrashna {
+    text?: string;
+    image?: string;
 }
 
 export interface IOption {
     tag: string;
     description: string;
     correct: boolean;
+    image?: string;
     selected?: boolean;
     show?: boolean;
 }
@@ -41,11 +48,38 @@ export interface IResult {
     date?: string;
     correct: number;
     wrong?: number;
-    totalExams?: number;
     skipped?: number;
     total: number;
+    totalExams: number;
     percentage: string;
-    pass?: boolean;
+    pass: boolean;
+}
+
+export interface ICategory {
+    name: string;
+    questionNumbers: Array<number>;
+    wronglyAnswered?: Array<number>;
+    attempted?: Array<number>;
+    selected?: boolean;
+    percentage?: string;
+}
+
+export interface ITopicStatus {
+    name?: string;
+    attempted?: number;
+    total?: number;
+    percentage?: string;
+}
+
+export interface ITopic {
+    name?: string;
+    subTopics: Array<ISubTopic>;
+}
+
+export interface ISubTopic {
+    name?: string;
+    link?: string;
+    complete?: boolean;
 }
 
 export interface IPracticeStats {

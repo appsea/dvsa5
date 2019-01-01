@@ -1,0 +1,95 @@
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
+        -->
+        <Label class="action-bar-title" text="Rules of the road"></Label>
+    </ActionBar>
+    <!--
+    RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+    Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+    http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+    The RadSideDrawer component is designed to be used as a root element to the <Page> and
+    it shouldn't have any other siblings other than the <ActionBar> component.
+    -->
+    <nsDrawer:RadSideDrawer id="sideDrawer" showOverNavigation="true" drawerTransition="PushTransition">
+
+        <!--
+        Use the RadSideDrawer.drawerContent component to display the content of the app drawer on this page.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.drawerContent>
+            <StackLayout>
+                <!--
+                Use {N} custom components to reuse UI across your mobile app.
+                The MyDrawer custom component defined in "/shared/my-drawer" holds the contents of the app drawer.
+                Learn more about custom components and how they can be used in this documentation article:
+                http://docs.nativescript.org/ui/basics#custom-components
+                -->
+                <myDrawer:MyDrawer selectedPage="study"/>
+            </StackLayout>
+        </nsDrawer:RadSideDrawer.drawerContent>
+
+        <!--
+        Use the RadSideDrawer.mainContent component to display the content of the page when you have an app drawer.
+        Always wrap content in a layout component.
+        -->
+        <nsDrawer:RadSideDrawer.mainContent>
+            <DockLayout stretchLastChild="true">
+                <StackLayout dock="top" class="{{complete? 'chapter-complete': 'chapter-incomplete'}}">
+                    <GridLayout class="m-x-15 m-y-10" verticalAlignment="center">
+                        <Label horizontalAlignment="left" text="&#xf104;" class="fa t-30 c-white" tap="goPrevious"/>
+                        <Label horizontalAlignment="center" text="Lanes and junctions" class="c-white font-weight-bold"/>
+                        <Label horizontalAlignment="right" text="&#xf105;" class="fa t-30 c-white" tap="goNext"/>
+                    </GridLayout>
+                </StackLayout>
+                <StackLayout dock="bottom">
+                </StackLayout>
+                <ScrollView>
+                    <StackLayout class="m-10" onswipe="handleSwipe">
+                        <Label textWrap="true" class="paragraph" text="Some roads have lanes reserved for specific vehicles, such as cycles, buses, trams or, in some places, motorcycles. These are marked by signs and road markings, and must be used only by those vehicles during the lanes' hours of operation."/>
+                        <Label textWrap="true" class="paragraph" text="Never drive or park in a cycle lane marked by a solid white line during its period of operation. Don't drive or park in one marked by a broken line unless it's unavoidable."/>
+                        <Label textWrap="true" class="paragraph" text="Only drive over a footpath to gain access to a property."/>
+                        <Label textWrap="true" class="paragraph" text="On a dual carriageway, the right-hand lane is only for turning right or overtaking. The same rule applies to three-lane dual carriageways."/>
+                        <Label textWrap="true" class="paragraph" text="Treat junctions with extra care. On approach, move into the appropriate position in good time. If you're going to turn left, keep well to the left as you approach the junction."/>
+                        <Label textWrap="true" class="paragraph" text="If you're turning right at a crossroads when an oncoming driver is also turning right, it's normally safest to keep the other vehicle to your right and turn behind it. If you have to pass in front of the other vehicle, take extra care as your view may be obscured."/>
+                        <Label textWrap="true" class="paragraph" text="A box junction – indicated by yellow hatched lines – should be kept clear. Only enter it if your exit road is clear. You may wait in the box if you want to turn right and are only prevented from doing so by oncoming traffic."/>
+                        <Label textWrap="true" class="paragraph" text="At crossroads where there aren't any signs or markings, no-one has priority. Check very carefully in all directions before you proceed."/>
+                        <Label textWrap="true" class="paragraph" text="Roundabouts are designed to aid the flow of traffic. Follow signs and road markings as you approach and negotiate these. Normally, if you're going straight ahead"/>
+
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="Don't signal as you approach." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="Signal left before you leave the roundabout, just after you pass the exit before the one you want." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <Label textWrap="true" class="paragraph" text="Some vehicles may not follow the normal rules, so:"/>
+
+                        <GridLayout columns="auto *" rows="auto auto">
+                            <Label row="0" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="0" col="1" text="Cyclists and horse riders may stay in the left-hand lane even if they're turning right." class="bullet-paragraph" textWrap="true"/>
+
+                            <Label row="1" col="0" text="&#8226;" class="fa paragraph m-r-5" />
+                            <Label row="1" col="1" text="Long vehicles may take up a different position to stop the rear of the vehicle hitting the kerb." class="bullet-paragraph" textWrap="true"/>
+                        </GridLayout>
+
+                        <StackLayout orientation="horizontal" class="m-y-10">
+                            <Label text="Mark as read!" class="{{complete? 'status-complete': 'status-incomplete'}}" textWrap="true"/>
+                            <Switch id="my-switch" checked="{{complete}}" class="{{complete? 'switch-complete': 'switch-incomplete'}}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ScrollView>
+            </DockLayout>
+        </nsDrawer:RadSideDrawer.mainContent>
+    </nsDrawer:RadSideDrawer>
+</Page>

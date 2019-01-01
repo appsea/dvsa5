@@ -13,6 +13,7 @@
   "repository": "<fill-your-repository-here>",
   "scripts": {
     "lint": "tslint \"app/**/*.ts\"",
+    "lintfix": "tslint --fix app/**/*.ts{,x}",
     "test": "mocha --require ts-node/register app/tests/**/*.ts"
   },
   "dependencies": {
