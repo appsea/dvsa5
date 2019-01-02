@@ -86,6 +86,10 @@ export class PersistenceService {
         return categories;
     }
 
+    clearCategories() {
+        appSettings.remove(constantsModule.CATEGORIES);
+    }
+
     hasCategories(): boolean {
         return appSettings.hasKey(constantsModule.CATEGORIES);
     }

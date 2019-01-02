@@ -32,13 +32,14 @@
                 <Repeater items="{{ categories }}" row="1" id="categoryList" onswipe="handleSwipe"
                           class="category-background">
                     <Repeater.itemTemplate>
-                        <StackLayout tap="selectCategory" onswipe="handleSwipe"
-                                     class="{{ selected? 'category-background-selected': 'category-background'}}">
-                            <Label text="{{name}}"
+                        <GridLayout rows="auto, auto" columns="auto, *"  tap="selectCategory" onswipe="handleSwipe"
+                                    class="{{ selected? 'category-background-selected m-5': 'category-background m-5'}}">
+                            <Label row="0" col="0" rowSpan="2" text="{{ icon }}" backgroundColor="#53beb1" class="fa icon" verticalAlignment="center" horizontalAlignment="center" style="padding-left: 10; padding-top: 10"/>
+                            <Label row="0" col="1" text="{{name}}"
                                    class="{{ attempted.length === questionNumbers.length && percentage > 40  ? 'category-complete-heading':'category-todo-heading' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
                                    onswipe="handleSwipe"/>
-                            <Label visibility="{{ attempted.length>0 ? 'visible' : 'collapsed' }}"
+                            <Label row="1" col="1" visibility="{{ attempted.length>0 ? 'visible' : 'collapsed' }}"
                                    class="category-stats">
                                 <label.formattedText>
                                     <formattedString>
@@ -53,7 +54,7 @@
                                     </formattedString>
                                 </label.formattedText>
                             </Label>
-                            <Label visibility="{{ attempted.length===0 ? 'visible' : 'collapsed' }}"
+                            <Label row="1" col="1" visibility="{{ attempted.length===0 ? 'visible' : 'collapsed' }}"
                                    class="category-stats">
                                 <label.formattedText>
                                     <formattedString>
@@ -65,8 +66,7 @@
                                     </formattedString>
                                 </label.formattedText>
                             </Label>
-                            <StackLayout class="hr-light"></StackLayout>
-                        </StackLayout>
+                        </GridLayout>
                     </Repeater.itemTemplate>
                 </Repeater>
             </StackLayout>

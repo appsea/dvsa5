@@ -2,11 +2,12 @@ import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import * as dialogs from "ui/dialogs";
 import { topmost } from "ui/frame";
+import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
 import { CategoryService } from "~/services/category.service";
+import { PersistenceService } from "~/services/persistence.service";
 import { ICategory } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
-import {QuestionViewModel} from "~/question/question-view-model";
 
 export class CategoryListViewModel extends Observable {
 
@@ -17,7 +18,13 @@ export class CategoryListViewModel extends Observable {
 
     constructor() {
         super();
+        /*PersistenceService.getInstance().clearCategories();
+        CategoryService.getInstance().readCategoriesFromFirebase();*/
         this._categories = CategoryService.getInstance().getCategories();
+        this._categories.forEach((c) => {
+            c.icon = String.fromCharCode(+c.icon);
+        });
+        console.log("c.icon:", this._categories[0]);
         this.publish();
     }
 

@@ -56,6 +56,7 @@ export interface IResult {
 }
 
 export interface ICategory {
+    icon?: any;
     name: string;
     questionNumbers: Array<number>;
     wronglyAnswered?: Array<number>;
