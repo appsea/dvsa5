@@ -69,11 +69,50 @@
                                 </FormattedString>
                             </Label.formattedText>
                         </Label>
-                        <Label text="{{ description }}" textWrap="true"/>
-                        <Label class="{{ (!options[0].selected && !options[0].correct)? 'not-selected': (skipped && options[0].correct)? 'skipped':(options[0].selected && !options[0].correct)?'incorrect': 'correct'}}"  text="{{ options[0].description }}" textWrap="true" marginTop="50px"/>
-                        <Label class="{{ (!options[1].selected && !options[1].correct)? 'not-selected': (skipped && options[1].correct)? 'skipped':(options[1].selected && !options[1].correct)?'incorrect': 'correct'}}"  text="{{ options[1].description }}" textWrap="true" marginTop="50px"/>
-                        <Label class="{{ (!options[2].selected && !options[2].correct)? 'not-selected': (skipped && options[2].correct)? 'skipped':(options[2].selected && !options[2].correct)?'incorrect': 'correct'}}"  text="{{ options[2].description }}" textWrap="true" marginTop="50px"/>
-                        <Label class="{{ (!options[3].selected && !options[3].correct)? 'not-selected': (skipped && options[3].correct)? 'skipped':(options[3].selected && !options[3].correct)?'incorrect': 'correct'}}"  text="{{ options[3].description }}" textWrap="true" marginTop="50px"/>
+                        <Label text="{{ prashna.text }}" textWrap="true" onswipe="handleSwipe"/>
+                        <image src="{{ prashna.image }}" onswipe="handleSwipe" class="m-y-10" visibility="{{ prashna.image ? 'visible' : 'collapsed' }}"/>
+                        <GridLayout columns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}">
+                            <StackLayout row="0" col="0"
+                                         class="{{ (!options[0].selected && !options[0].correct)? 'not-selected-image': (skipped && options[0].correct)? 'skipped':(options[0].selected && !options[0].correct)?'incorrect': 'correct'}}"
+                                         tap="selectOption" onswipe="handleSwipe">
+                                <image src="{{ options[0].image }}" tap="firstOption" class="m-5"
+                                       onswipe="handleSwipe"
+                                       visibility="{{ options[0].image ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                            <StackLayout row="0" col="1"
+                                         class="{{ (!options[1].selected && !options[1].correct)? 'not-selected-image': (skipped && options[1].correct)? 'skipped':(options[1].selected && !options[1].correct)?'incorrect': 'correct'}}"
+                                         tap="selectOption" onswipe="handleSwipe">
+                                <image src="{{ options[1].image }}" tap="secondOption" class="m-5"
+                                       onswipe="handleSwipe"
+                                       visibility="{{ options[1].image ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                            <StackLayout row="1" col="0"
+                                         class="{{ (!options[2].selected && !options[2].correct)? 'not-selected-image': (skipped && options[2].correct)? 'skipped':(options[2].selected && !options[2].correct)?'incorrect': 'correct'}}"
+                                         tap="selectOption" onswipe="handleSwipe">
+                                <image src="{{ options[2].image }}" tap="thirdOption" class="m-5"
+                                       onswipe="handleSwipe"
+                                       visibility="{{ options[2].image ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                            <StackLayout row="1" col="1"
+                                         class="{{ (!options[3].selected && !options[3].correct)? 'not-selected-image': (skipped && options[3].correct)? 'skipped':(options[3].selected && !options[3].correct)?'incorrect': 'correct'}}"
+                                         tap="selectOption" onswipe="handleSwipe">
+                                <image src="{{ options[3].image }}" tap="fourthOption" class="m-5"
+                                       onswipe="handleSwipe"
+                                       visibility="{{ options[3].image ? 'visible' : 'collapsed' }}"/>
+                            </StackLayout>
+                        </GridLayout>
+                        <Repeater items="{{ options }}" row="1">
+                            <Repeater.itemTemplate>
+                                <GridLayout columns="auto,*" class="{{ (!selected && !correct)? 'not-selected': (skipped && correct)? 'skipped':(selected && !correct)?'incorrect': 'correct'}}">
+                                    <Label col="0" text="{{ tag + '. ' }}"
+                                           class="{{ (!selected && !correct)? 'not-selected': (skipped && correct)? 'skipped':(selected && !correct)?'incorrect': 'correct'}}"
+                                           textWrap="true" marginTop="10dpi" marginBottom="10dpi" />
+                                    <Label col="1" text="{{ description }}"
+                                           class="{{ (!selected && !correct)? 'not-selected': (skipped && correct)? 'skipped':(selected && !correct)?'incorrect': 'correct'}}"
+                                           textWrap="true" marginTop="10dpi" marginBottom="10dpi" />
+                                </GridLayout>
+                            </Repeater.itemTemplate>
+                        </Repeater>
                         <Label text="Explanation: " style="font-weight: bold; margin-top: 10dpi"  textWrap="true" visibility="{{ explanation ? 'visible' : 'collapsed' }}"/>
                         <Label text="{{ explanation }}" textWrap="true" visibility="{{ explanation ? 'visible' : 'collapsed' }}"/>
                     </StackLayout>

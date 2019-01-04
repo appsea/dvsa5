@@ -164,7 +164,8 @@ export class QuestionService {
         return new Promise<IQuestion>((resolve, reject) => {
             const randomNumber = this.getRandomNumber(this.questions.length);
             // randomNumber = 54;
-            // randomNumber = 60;
+            // const randomNumber = 26;
+            console.log("randomNumber: ", randomNumber);
             const question = this.questions[randomNumber];
             question.flagged = this.isFlagged(question);
             resolve(question);

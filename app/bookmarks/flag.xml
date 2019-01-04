@@ -60,8 +60,41 @@
         </StackLayout>
         <ScrollView id="scrollView" onswipe="handleSwipe">
             <StackLayout class="margin" onswipe="handleSwipe">
-                <Label text="{{ question.description }}" textWrap="true" onswipe="handleSwipe"/>
-                <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe">
+                <Label text="{{ question.prashna.text }}" textWrap="true" onswipe="handleSwipe"/>
+                <image src="{{ question.prashna.image }}" height="200" width="400" class="not-selected-image m-y-10" onswipe="handleSwipe"  visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
+
+                <GridLayout columns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}">
+                    <StackLayout row="0" col="0"
+                                 class="{{ (options[0].show && options[0].correct)? 'correct' : (options[0].show && options[0].selected && !options[0].correct)? 'incorrect': 'not-selected-image' }}"
+                                 tap="selectOption" onswipe="handleSwipe">
+                        <image src="{{ options[0].image }}" tap="firstOption" class="m-5"
+                               onswipe="handleSwipe"
+                               visibility="{{ options[0].image ? 'visible' : 'collapsed' }}"/>
+                    </StackLayout>
+                    <StackLayout row="0" col="1"
+                                 class="{{ (options[1].show && options[1].correct)? 'correct' : (options[1].show && options[1].selected && !options[1].correct)? 'incorrect': 'not-selected-image' }}"
+                                 tap="selectOption" onswipe="handleSwipe">
+                        <image src="{{ options[1].image }}" tap="secondOption" class="m-5"
+                               onswipe="handleSwipe"
+                               visibility="{{ options[1].image ? 'visible' : 'collapsed' }}"/>
+                    </StackLayout>
+                    <StackLayout row="1" col="0"
+                                 class="{{ (options[2].show && options[2].correct)? 'correct' : (options[2].show && options[2].selected && !options[2].correct)? 'incorrect': 'not-selected-image' }}"
+                                 tap="selectOption" onswipe="handleSwipe">
+                        <image src="{{ options[2].image }}" tap="thirdOption" class="m-5"
+                               onswipe="handleSwipe"
+                               visibility="{{ options[2].image ? 'visible' : 'collapsed' }}"/>
+                    </StackLayout>
+                    <StackLayout row="1" col="1"
+                                 class="{{ (options[3].show && options[3].correct)? 'correct' : (options[3].show && options[3].selected && !options[3].correct)? 'incorrect': 'not-selected-image' }}"
+                                 tap="selectOption" onswipe="handleSwipe">
+                        <image src="{{ options[3].image }}" tap="fourthOption" class="m-5"
+                               onswipe="handleSwipe"
+                               visibility="{{ options[3].image ? 'visible' : 'collapsed' }}"/>
+                    </StackLayout>
+                </GridLayout>
+
+                <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe" visibility="{{ options[0].description ? 'visible' : 'collapsed' }}">
                     <Repeater.itemTemplate>
                         <GridLayout columns="auto,*" class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}">
                             <Label col="0" text="{{ tag + '. ' }}"
@@ -76,17 +109,17 @@
                     </Repeater.itemTemplate>
                 </Repeater>
                 <Label id="explanationHeader" text="Explanation: " marginTop="20dpi"
-                       visibility="{{ question.show ? 'visible' : 'collapsed' }}" style="font-weight: bold"
+                       visibility="{{ question && question.show ? 'visible' : 'collapsed' }}" style="font-weight: bold"
                        textWrap="true" onswipe="handleSwipe"/>
-                <Label id="explanation" text="{{ question && question.explanation}}" marginBottom="5dpi"
+                <Label id="explanation" text="{{ question && question.explanation}}" marginBottom="10dpi"
                        textWrap="true"
                        onswipe="handleSwipe" visibility="{{ question.show ? 'visible' : 'collapsed' }}"/>
                 <Label id="defaultExplanation"
                        text="Explanation Coming Soon. Feel free to update it yourself by clicking on following button:)"
                        marginBottom="5dpi" textWrap="true" onswipe="handleSwipe"
-                       visibility="{{ question.show && !question.explanation ? 'visible' : 'collapsed' }}"/>
+                       visibility="{{ question && question.show && !question.explanation ? 'visible' : 'collapsed' }}"/>
                 <Button id="suggestionButton" text="Improve Question" class="btn btn-primary" tap="goToEditPage"
-                        visibility="{{ question.show ? 'visible' : 'collapsed' }}"/>
+                        visibility="{{ question && question.show ? 'visible' : 'collapsed' }}"/>
             </StackLayout>
         </ScrollView>
     </DockLayout>

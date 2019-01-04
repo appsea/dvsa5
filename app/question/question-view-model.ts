@@ -20,17 +20,16 @@ export class QuestionViewModel extends Observable {
         }
 
         for (const option of this._question.options) {
-            if (option.description.startsWith("A.")) {
-                option.description = option.description.replace("A. ", "").trim();
-            }
-            if (option.description.startsWith("B.")) {
-                option.description = option.description.replace("B. ", "").trim();
-            }
-            if (option.description.startsWith("C.")) {
-                option.description = option.description.replace("C. ", "").trim();
-            }
-            if (option.description.startsWith("D.")) {
-                option.description = option.description.replace("D. ", "").trim();
+            if (option.description) {
+                if (option.description.startsWith("A.")) {
+                    option.description = option.description.replace("A. ", "").trim();
+                } else if (option.description.startsWith("B.")) {
+                    option.description = option.description.replace("B. ", "").trim();
+                } else if (option.description.startsWith("C.")) {
+                    option.description = option.description.replace("C. ", "").trim();
+                } else if (option.description.startsWith("D.")) {
+                    option.description = option.description.replace("D. ", "").trim();
+                }
             }
         }
 

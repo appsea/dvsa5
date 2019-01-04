@@ -56,10 +56,9 @@
         <ScrollView id="scrollView" onswipe="handleSwipe" scrollBarIndicatorVisible="true">
             <StackLayout class="margin" onswipe="handleSwipe">
                 <Label text="{{ question.prashna.text }}" textWrap="true" onswipe="handleSwipe"/>
-                <Placeholder creatingView="creatingView"/>
-                <image src="{{ question.prashna.image }}" height="200" width="400" onswipe="handleSwipe" class="m-t-10"
-                       visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
-                <GridLayout columns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}">
+                <image src="{{ question.prashna.image }}" height="200" width="400" onswipe="handleSwipe" class="not-selected-image m-y-10" visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
+
+                <GridLayout ccolumns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}">
                     <StackLayout row="0" col="0"
                                  class="{{ (options[0].show && options[0].correct)? 'correct' : (options[0].show && options[0].selected && !options[0].correct)? 'incorrect': 'not-selected-image' }}"
                                  tap="selectOption" onswipe="handleSwipe">

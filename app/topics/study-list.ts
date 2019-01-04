@@ -6,6 +6,7 @@ import { CreateViewEventData } from "ui/placeholder";
 import * as navigationModule from "../shared/navigation";
 import { ITopic } from "~/shared/questions.model";
 import { StudyListViewModel } from "./study-list-view-model";
+import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: StudyListViewModel;
 let banner: any;
@@ -39,6 +40,7 @@ export function onNavigatingTo(args: NavigatedData) {
     const page = <Page>args.object;
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     banner = page.getViewById("banner");
+    SelectedPageService.getInstance().updateSelectedPage("study");
     vm = new StudyListViewModel();
     page.bindingContext = vm;
 }

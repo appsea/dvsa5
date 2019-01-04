@@ -14,27 +14,38 @@
         NavigationButton as a side-drawer button in iOS is not possible,
         because its function is to always navigate back in the application.
         -->
-        <Label class="action-bar-title" text="Categories"></Label>
+        <Label class="action-bar-title">
+            <label.formattedText>
+                <formattedString>
+                    <formattedString.spans>
+                        <span text="Categories ("/>
+                        <span text="{{ selected }}"/>
+                        <span text="/"/>
+                        <span text="{{ total }}"/>
+                        <span text=")"/>
+                    </formattedString.spans>
+                </formattedString>
+            </label.formattedText>
+        </Label>
     </ActionBar>
     <DockLayout stretchLastChild="true">
         <StackLayout dock="top" height="20dpi" class="category-full-background">
         </StackLayout>
         <StackLayout dock="bottom" class="category-full-background">
             <StackLayout class="margin" orientation="horizontal" horizontalAlignment="center">
-                <Button class="btn btn-primary btn-rounded-lg" text="Start" tap="start" margin="10dpi"
-                        width="80%"/>
+                <Button id="startButton" class="btn btn-primary btn-rounded-lg" text="Start" tap="start" margin="10dpi" width="80%"/>
             </StackLayout>
             <StackLayout id="banner">
             </StackLayout>
         </StackLayout>
         <ScrollView id="scrollView" onswipe="handleSwipe" class="category-full-background">
             <StackLayout class="margin" onswipe="handleSwipe">
-                <Repeater items="{{ categories }}" row="1" id="categoryList" onswipe="handleSwipe"
-                          class="category-background">
-                    <Repeater.itemTemplate>
-                        <GridLayout rows="auto, auto" columns="auto, *"  tap="selectCategory" onswipe="handleSwipe"
+                <ListView id="categoryList" class="list-group" separatorColor="transparent"  items="{{ categories }}" itemTap="{{ selectCategory }}" style="height:1250px">
+                    <ListView.itemTemplate>
+                        <GridLayout rows="auto, auto" columns="auto, *, auto"  tap="selectCategory" onswipe="handleSwipe"
                                     class="{{ selected? 'category-background-selected m-5': 'category-background m-5'}}">
-                            <Label row="0" col="0" rowSpan="2" text="{{ icon }}" backgroundColor="#53beb1" class="fa icon" verticalAlignment="center" horizontalAlignment="center" style="padding-left: 10; padding-top: 10"/>
+                            <Image row="0" col="2" rowSpan="2" src="~/images/iconselected.png" visibility="{{ selected ? 'visible' : 'collapsed' }}" class="icon-selected"></Image>
+                            <Label row="0" col="0" rowSpan="2" text="{{ icon }}" backgroundColor="#53beb1" class="fa icon m-l-5" verticalAlignment="center" horizontalAlignment="center" style="padding-left: 10; padding-top: 10"/>
                             <Label row="0" col="1" text="{{name}}"
                                    class="{{ attempted.length === questionNumbers.length && percentage > 40  ? 'category-complete-heading':'category-todo-heading' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
@@ -67,10 +78,9 @@
                                 </label.formattedText>
                             </Label>
                         </GridLayout>
-                    </Repeater.itemTemplate>
-                </Repeater>
+                    </ListView.itemTemplate>
+                </ListView>
             </StackLayout>
         </ScrollView>
     </DockLayout>
-
 </Page>

@@ -2,6 +2,7 @@ import { AndroidActivityBackPressedEventData, AndroidApplication } from "applica
 import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { isAndroid, screen } from "platform";
+import { ListView } from "tns-core-modules/ui/list-view";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { topmost } from "ui/frame";
 import { Label } from "ui/label";
@@ -9,12 +10,14 @@ import { NavigatedData, Page } from "ui/page";
 import { CreateViewEventData } from "ui/placeholder";
 import { Repeater } from "ui/repeater";
 import { TextView } from "ui/text-view";
+import { SelectedPageService } from "~/shared/selected-page-service";
 import { CategoryListViewModel } from "./category-list-view-model";
 
 let vm: CategoryListViewModel;
 let _page: any;
 const banner: any = {};
-let categoryList: Repeater;
+let categoryList: ListView;
+let startButton: any;
 
 export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
@@ -46,6 +49,10 @@ export function onNavigatingTo(args: NavigatedData) {
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     _page = page;
     categoryList = _page.getViewById("categoryList");
+    startButton = page.getViewById("startButton");
+    startButton.visibility = "collapsed";
+    console.log("categoryList", categoryList);
+    SelectedPageService.getInstance().updateSelectedPage("category");
     vm = new CategoryListViewModel();
     page.bindingContext = vm;
 }
@@ -64,9 +71,27 @@ export function onDrawerButtonTap(args: EventData) {
     vm.showDrawer();
 }
 
+import { AnimationCurve } from "tns-core-modules/ui/enums";
+
 export function selectCategory(args): void {
     vm.selectCategory(args);
     categoryList.refresh();
+    if (vm.categoriesSelected) {
+        if (startButton.visibility !== "visible") {
+            startButton.visibility = "visible";
+            startButton.translateY = 300;
+            startButton.animate({ translate: { x: 0, y: 0 }, opacity: 1, duration: 500 });
+        }
+    } else {
+        startButton.animate({ translate: { x: 0, y: 300 }, opacity: 1, duration: 500  }).then(() => {
+            startButton.visibility = "collapsed";
+        });
+        // startButton.animate({ translate: { x: 0, y: -200 }, opacity: 1, duration: 500 });
+        // startButton.translateY = 0;
+        // startButton.visibility = "collapsed";
+        // startButton.opacity = 0;
+        // startButton.visibility = "collapsed";
+    }
 }
 
 export function start() {
