@@ -51,7 +51,6 @@ export function onNavigatingTo(args: NavigatedData) {
     categoryList = _page.getViewById("categoryList");
     startButton = page.getViewById("startButton");
     startButton.visibility = "collapsed";
-    console.log("categoryList", categoryList);
     SelectedPageService.getInstance().updateSelectedPage("category");
     vm = new CategoryListViewModel();
     page.bindingContext = vm;

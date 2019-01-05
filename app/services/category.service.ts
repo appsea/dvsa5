@@ -1,7 +1,7 @@
-import { ICategory, IQuestion } from "~/shared/questions.model";
-import { HttpService } from "./http.service";
-import { PersistenceService } from "./persistence.service";
-import { QuestionUtil } from "./question.util";
+import {ICategory, IQuestion} from "~/shared/questions.model";
+import {HttpService} from "./http.service";
+import {PersistenceService} from "./persistence.service";
+import {QuestionUtil} from "./question.util";
 
 export class CategoryService {
 
@@ -14,6 +14,7 @@ export class CategoryService {
     private _categories: Array<ICategory> = [];
 
     private constructor() {
+        this._categories = this.getCategories();
     }
 
     getSize(search: string): number {
@@ -25,13 +26,15 @@ export class CategoryService {
     }
 
     attemptQuestion(question: IQuestion) {
-        for (const category of this._categories) {
+        const category = this._categories.filter((c) => c.name === question.category)[0];
+        if (category.name === question.category) {
             if (!category.wronglyAnswered) {
                 category.wronglyAnswered = [];
             }
             if (!category.attempted) {
                 category.attempted = [];
             }
+            console.log(category.questionNumbers.indexOf(+question.number));
             if (category.questionNumbers.indexOf(+question.number) > -1) {
                 if (category.attempted.indexOf(+question.number) === -1) {
                     category.attempted.push(+question.number);
@@ -41,10 +44,12 @@ export class CategoryService {
                         category.wronglyAnswered.push(+question.number);
                     }
                 } else {
-                    category.wronglyAnswered = category.wronglyAnswered.filter((value) => value !== +question.number);
+                    category.wronglyAnswered = category.wronglyAnswered
+                        .filter((value) => value !== +question.number);
                 }
-                category.percentage = ((1 - category.wronglyAnswered.length / category.attempted.length) * 100)
-                    .toFixed(2);
+                console.log(Math.floor(50.50));
+                category.percentage = Math.floor((1 - category.wronglyAnswered.length / category.attempted.length)
+                    * 100);
             }
             PersistenceService.getInstance().saveCategories(this._categories);
         }
@@ -91,8 +96,8 @@ export class CategoryService {
         return categories.filter((c) => c.name === search.name).length > 0;
     }
 
-    private calculatePercentage(category: ICategory): string {
-        return category.wronglyAnswered.length === 0 ? "0"
-            : (category.wronglyAnswered.length * 100 / category.attempted.length).toFixed(2);
+    private calculatePercentage(category: ICategory): number {
+        return category.wronglyAnswered.length === 0 ? 0
+            : Math.floor(category.wronglyAnswered.length * 100 / category.attempted.length);
     }
 }

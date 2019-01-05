@@ -9,6 +9,7 @@
   },
   "rules": {
     "array-type": [true, "generic"],
+    "max-line-length": [true, 200],
     "arrow-return-shorthand": true,
     "member-access": [true, "no-public"],
     "newline-before-return": true,

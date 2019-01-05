@@ -65,7 +65,7 @@
                                 <span text="{{ ps.attempted.length }}" class="attempted" />
                                 <span text=" of " class="total" />
                                 <span text="{{ questionSize }}" class="total" />
-                                <span text=" Questions" class="total" />
+                                <span text=" Practiced" class="total" />
                             </formattedString.spans>
                         </formattedString>
                     </label.formattedText>

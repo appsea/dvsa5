@@ -62,7 +62,7 @@ export interface ICategory {
     wronglyAnswered?: Array<number>;
     attempted?: Array<number>;
     selected?: boolean;
-    percentage?: string;
+    percentage?: number;
 }
 
 export interface ITopicStatus {

@@ -74,6 +74,10 @@ export class PersistenceService {
         appSettings.remove(RESULT);
     }
 
+    saveCategories(categories: Array<ICategory>) {
+        appSettings.setString(constantsModule.CATEGORIES, JSON.stringify(categories));
+    }
+
     readCategories(): Array<ICategory> {
         let categories: Array<ICategory>;
         try {
@@ -92,10 +96,6 @@ export class PersistenceService {
 
     hasCategories(): boolean {
         return appSettings.hasKey(constantsModule.CATEGORIES);
-    }
-
-    saveCategories(categories: Array<ICategory>) {
-        appSettings.setString(constantsModule.CATEGORIES, JSON.stringify(categories));
     }
 
     hasTopics(): boolean {

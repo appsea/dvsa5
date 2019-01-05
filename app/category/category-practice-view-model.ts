@@ -9,6 +9,7 @@ import { QuizUtil } from "~/shared/quiz.util";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 import {QuestionViewModel} from "~/question/question-view-model";
+import {CategoryService} from "~/services/category.service";
 
 export class CategoryPracticeViewModel extends Observable {
     private _questionService: QuestionService;
@@ -62,6 +63,20 @@ export class CategoryPracticeViewModel extends Observable {
     get question() {
         if (!this._question) {
             this._question = {options: [], explanation: "", show: false};
+        }
+
+        for (const option of this._question.options) {
+            if (option.description) {
+                if (option.description.startsWith("A.")) {
+                    option.description = option.description.replace("A. ", "").trim();
+                } else if (option.description.startsWith("B.")) {
+                    option.description = option.description.replace("B. ", "").trim();
+                } else if (option.description.startsWith("C.")) {
+                    option.description = option.description.replace("C. ", "").trim();
+                } else if (option.description.startsWith("D.")) {
+                    option.description = option.description.replace("D. ", "").trim();
+                }
+            }
         }
 
         return this._question;
@@ -128,6 +143,7 @@ export class CategoryPracticeViewModel extends Observable {
             this.question.skipped = false;
         }
         QuestionService.getInstance().handleWrongQuestions(this.question);
+        CategoryService.getInstance().attemptQuestion(this.question);
     }
 
     getTotalQuestions() : number {
