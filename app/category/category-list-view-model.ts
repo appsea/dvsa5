@@ -5,6 +5,7 @@ import { topmost } from "ui/frame";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
 import { CategoryService } from "~/services/category.service";
+import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
 import { ICategory } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
@@ -37,6 +38,7 @@ export class CategoryListViewModel extends Observable {
         this._categories.forEach((c) => {
             c.icon = String.fromCharCode(+c.icon);
         });
+        console.log("c.icon::", this._categories[0]);
         this.publish();
     }
 
@@ -63,8 +65,8 @@ export class CategoryListViewModel extends Observable {
         let message: string = "You don't have access to these questions";
         const actions = ["Top Up"];
         if (accessibleQuestions.length > 0) {
-            message = "Only " + accessibleQuestions.length
-                + " Questions accessible. Top up for more.";
+            message = "You can practice only " + accessibleQuestions.length
+                + " Questions. Top up for more.";
             actions.push("Practice");
         }
         dialogs.action({
@@ -120,32 +122,29 @@ export class CategoryListViewModel extends Observable {
                 cancelButtonText: "Cancel",
                 actions
             }).then((result) => {
-                if (result !== "Cancel") {
-                    let numbers = [];
-                    console.log("result", result);
-                    if (result === "All Questions") {
-                        numbers = this.findAllQuestionsForSelectedCategories();
-                    } else if (result === "Unanswered") {
-                        const unanswered = this.findUnansweredQuestionNumbers();
-                        numbers = numbers.concat(unanswered);
-                    } else if (result === "Incorrectly Answered") {
-                        for (const category of this.categories) {
-                            if (category.selected) {
-                                numbers = numbers.concat(category.wronglyAnswered);
-                            }
-                        }
-                    } else if (result === "Incorrect and unanswered") {
-                        for (const category of this.categories) {
-                            if (category.selected) {
-                                const unanswered: Array<number> = category.questionNumbers.filter((q) =>
-                                    category.attempted.indexOf(q) === -1);
-                                numbers = numbers.concat(unanswered);
-                                numbers = numbers.concat(category.wronglyAnswered);
-                            }
+                let numbers = [];
+                if (result === "All Questions") {
+                    numbers = this.findAllQuestionsForSelectedCategories();
+                } else if (result === "Unanswered") {
+                    const unanswered = this.findUnansweredQuestionNumbers();
+                    numbers = numbers.concat(unanswered);
+                } else if (result === "Incorrectly Answered") {
+                    for (const category of this.categories) {
+                        if (category.selected) {
+                            numbers = numbers.concat(category.wronglyAnswered);
                         }
                     }
-                    this.handleAccessibleQuestions(numbers);
+                } else if (result === "Incorrect and unanswered") {
+                    for (const category of this.categories) {
+                        if (category.selected) {
+                            const unanswered: Array<number> = category.questionNumbers.filter((q) =>
+                                category.attempted.indexOf(q) === -1);
+                            numbers = numbers.concat(unanswered);
+                            numbers = numbers.concat(category.wronglyAnswered);
+                        }
+                    }
                 }
+                this.handleAccessibleQuestions(numbers);
             });
         } else {
             const numbers = this.findAllQuestionsForSelectedCategories();
@@ -168,10 +167,10 @@ export class CategoryListViewModel extends Observable {
     }
 
     private findUnansweredQuestionNumbers() {
-        let unanswered: Array<number> = [];
+        const unanswered: Array<number> = [];
         for (const category of this.categories) {
             if (category.selected) {
-                unanswered = unanswered.concat(category.questionNumbers.filter((q) =>
+                unanswered.concat(category.questionNumbers.filter((q) =>
                     category.attempted.indexOf(q) === -1));
             }
         }

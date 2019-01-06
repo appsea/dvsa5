@@ -3,7 +3,7 @@
 
 // Font icon class
 .fa {
-  font-family: "fa-solid-900";
+  font-family: "fa-solid-900", "FontAwesome";
 }
 
 // Common page class
@@ -282,42 +282,6 @@ Label {
   font-size: 20;
 }
 
-.category-full-background {
-  background-color: #2d7bc1;
-}
-
-.category-background {
-  background-color: #ffffff;
-  border-radius: 5;
-  border-color: #2d7bc1;
-}
-
-.category-background-selected {
-  background-color: #44ffff;
-  border-radius: 5;
-  border-color: #2d7bc1;
-}
-
-.category-todo-heading {
-  color: red;
-  font-size: 15;
-  font-weight: bold;
-  margin-left: 5;
-}
-
-.category-stats {
-  color: black;
-  font-size: 16;
-  margin-left: 5;
-}
-
-.category-complete-heading {
-  color: #2cb316;
-  font-size: 16;
-  font-weight: bold;
-  margin-left: 5;
-}
-
 .paragraph {
   font-size: 14;
   margin-top: 10;
@@ -393,22 +357,150 @@ Label {
   background: #51BC6B;
 }
 
-.icon {
-  border-radius: 30;
-  font-size: 25;
-  width: 50;
-  height: 50;
-  color: white;
-  background: #51BC6B;
-  padding-left: 28;
-}
-
-.icon-selected {
-  width: 24;
-  margin-right: 10;
-}
-
 .mesh-background {
   background-repeat: no-repeat;
   background-position: bottom;
+}
+
+.category-full-background {
+  background-color: #3370c1;
+}
+
+.category-background {
+  background-color: #ffffff;
+  border-radius: 5;
+  border-color: #2d7bc1;
+}
+
+.category-background-selected {
+  background-color: #44ffff;
+  border-radius: 5;
+  border-color: #2d7bc1;
+}
+
+.category-todo-heading {
+  color: red;
+  font-size: 15;
+  font-weight: bold;
+  margin-left: 5;
+}
+
+.category-stats {
+  color: black;
+  font-size: 16;
+}
+
+.category-complete-heading {
+  color: #2cb316;
+  font-size: 16;
+  font-weight: bold;
+  margin-left: 5;
+}
+
+.badge {
+  border-radius: 50%;
+  margin-right: 10;
+  vertical-align: middle;
+  text-align: center;
+  background-color: #f6993f;
+}
+
+.transactions-list {
+  background-color: #f1f5f8;
+  margin-left: 15;
+  margin-right: 15;
+}
+
+.transactions-list .transactions-list-header {
+  font-size: 12;
+  color: #3d4852;
+  margin-bottom: 5;
+}
+
+.transactions-list-item {
+  background-color: #ffffff;
+  border-radius: 5;
+  border-color: #f1f5f8;
+  border-width: 1;
+  padding-left: 15;
+  padding-right: 15;
+  padding-top: 5;
+  padding-bottom: 5;
+  margin-bottom: 10;
+}
+
+.transactions-list-item-selected {
+  background-color: #b8c2cc;
+  border-radius: 5;
+  border-color: #b8d3cc;
+  border-width: 1;
+  padding-left: 15;
+  padding-right: 15;
+  padding-top: 5;
+  padding-bottom: 5;
+  margin-bottom: 10;
+}
+
+.transactions-list .transactions-list-item .badge {
+  border-radius: 50%;
+  margin-right: 10;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.transactions-list .transactions-list-item .badge .icon {
+  color: #ffffff;
+}
+
+.transactions-list .transactions-list-item .badge.home {
+  background-color: #3490dc;
+}
+
+.transactions-list .transactions-list-item .badge.transport {
+  background-color: #22292f;
+}
+
+.transactions-list .transactions-list-item .badge.communication {
+  background-color: #3490dc;
+}
+
+.transactions-list .transactions-list-item .badge.hotel {
+  background-color: #38c172;
+}
+
+.transactions-list .transactions-list-item .badge.restaurant {
+  background-color: #f6993f;
+}
+
+.transactions-list .transactions-list-item .title {
+  font-size: 14;
+  color: #3d4852;
+}
+
+.transactions-list .transactions-list-item .category {
+  font-size: 12;
+  color: #b8c2cc;
+}
+
+.transactions-list .transactions-list-item .ammount {
+  font-size: 14;
+  vertical-align: middle;
+}
+
+.transactions-list .transactions-list-item .ammount .quantity.red {
+  color: #e3342f;
+}
+
+.transactions-list .transactions-list-item .ammount .quantity.green {
+  color: #38c172;
+}
+
+.icon {
+  color: #b8c2cc;
+  font-size: 12;
+}
+
+.icon-selected {
+  color: #3A53FF;
+  vertical-align: middle;
 }

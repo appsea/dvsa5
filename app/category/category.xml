@@ -33,50 +33,52 @@
         </StackLayout>
         <StackLayout dock="bottom" class="category-full-background">
             <StackLayout class="margin" orientation="horizontal" horizontalAlignment="center">
-                <Button id="startButton" class="btn btn-primary btn-rounded-lg" text="Start" tap="start" margin="10dpi" width="80%"/>
+                <Button id="startButton" class="btn btn-login btn-rounded-sm font-weight-bold t-18" backgroundColor="#ffffff" text="Start" tap="start" margin="10dpi"
+                        width="80%"/>
             </StackLayout>
             <StackLayout id="banner">
             </StackLayout>
         </StackLayout>
-        <ScrollView id="scrollView" onswipe="handleSwipe" class="category-full-background">
-            <StackLayout class="margin" onswipe="handleSwipe">
-                <ListView id="categoryList" class="list-group" separatorColor="transparent"  items="{{ categories }}" itemTap="{{ selectCategory }}" style="height:1250px">
+        <ScrollView id="scrollView" class="category-full-background">
+            <StackLayout class="margin">
+                <ListView id="categoryList" class="list-group" separatorColor="transparent" items="{{ categories }}"
+                          itemTap="selectCategory" style="height:1250px">
                     <ListView.itemTemplate>
-                        <GridLayout rows="auto, auto" columns="auto, *, auto"  tap="selectCategory" onswipe="handleSwipe"
-                                    class="{{ selected? 'category-background-selected m-5': 'category-background m-5'}}">
-                            <Image row="0" col="2" rowSpan="2" src="~/images/iconselected.png" visibility="{{ selected ? 'visible' : 'collapsed' }}" class="icon-selected"></Image>
-                            <Label row="0" col="0" rowSpan="2" text="{{ icon }}" backgroundColor="#53beb1" class="fa icon m-l-5" verticalAlignment="center" horizontalAlignment="center" style="padding-left: 10; padding-top: 10"/>
-                            <Label row="0" col="1" text="{{name}}"
-                                   class="{{ attempted.length === questionNumbers.length && percentage > 40  ? 'category-complete-heading':'category-todo-heading' }}"
-                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
-                                   onswipe="handleSwipe"/>
-                            <Label row="1" col="1" visibility="{{ attempted.length>0 ? 'visible' : 'collapsed' }}"
-                                   class="category-stats">
-                                <label.formattedText>
-                                    <formattedString>
-                                        <formattedString.spans>
-                                            <span text=" {{attempted.length}} "/>
-                                            <span text=" of "/>
-                                            <span text="{{ questionNumbers.length }}"/>
-                                            <span text=" Answered, "/>
-                                            <span text=" {{ percentage }} "/>
-                                            <span text="% Accuracy"/>
-                                        </formattedString.spans>
-                                    </formattedString>
-                                </label.formattedText>
-                            </Label>
-                            <Label row="1" col="1" visibility="{{ attempted.length===0 ? 'visible' : 'collapsed' }}"
-                                   class="category-stats">
-                                <label.formattedText>
-                                    <formattedString>
-                                        <formattedString.spans>
-                                            <span text=" Total "/>
-                                            <span text="{{ questionNumbers.length }}"/>
-                                            <span text=" Questions"/>
-                                        </formattedString.spans>
-                                    </formattedString>
-                                </label.formattedText>
-                            </Label>
+                        <GridLayout columns="auto, *, auto" class="{{ selected? 'transactions-list-item-selected m-5': 'transactions-list-item m-5'}}">
+                            <StackLayout col="0" height="50" width="50" class="badge mr-10">
+                                <Label text="{{ icon }}" class="fa c-white"></Label>
+                            </StackLayout>
+                            <StackLayout col="1" verticalAlignment="center">
+                                <Label text="{{name}}" class="{{ attempted.length === questionNumbers.length && percentage > 40  ? 'category-complete-heading':'category-todo-heading' }}" textWrap="true"/>
+                                <Label visibility="{{ attempted.length>0 ? 'visible' : 'collapsed' }}"
+                                       class="category-stats">
+                                    <label.formattedText>
+                                        <formattedString>
+                                            <formattedString.spans>
+                                                <span text="{{attempted.length}}"/>
+                                                <span text=" of "/>
+                                                <span text="{{ questionNumbers.length }}"/>
+                                                <span text=" Answered, "/>
+                                                <span text=" {{ percentage }} "/>
+                                                <span text="% Accuracy"/>
+                                            </formattedString.spans>
+                                        </formattedString>
+                                    </label.formattedText>
+                                </Label>
+                                <Label visibility="{{ attempted.length===0 ? 'visible' : 'collapsed' }}"
+                                       class="category-stats">
+                                    <label.formattedText>
+                                        <formattedString>
+                                            <formattedString.spans>
+                                                <span text=" Total "/>
+                                                <span text="{{ questionNumbers.length }}"/>
+                                                <span text=" Questions"/>
+                                            </formattedString.spans>
+                                        </formattedString>
+                                    </label.formattedText>
+                                </Label>
+                            </StackLayout>
+                            <Label col="2" text="&#xf058;" class="fa icon-selected" visibility="{{ selected ? 'visible' : 'collapsed' }}"/>
                         </GridLayout>
                     </ListView.itemTemplate>
                 </ListView>

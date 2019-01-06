@@ -1,5 +1,5 @@
 import { PersistenceService } from "~/services/persistence.service";
-import {ISubTopic, ITopic, ITopicStatus} from "~/shared/questions.model";
+import { ISubTopic, ITopic, ITopicStatus } from "~/shared/questions.model";
 
 export class TopicService {
 
@@ -37,7 +37,7 @@ export class TopicService {
             const attempted = t.subTopics.filter((s) => s.complete).length;
             const percentage = (attempted * 100 / t.subTopics.length).toFixed(0);
 
-            return {name: t.name, attempted, total: t.subTopics.length, percentage};
+            return {icon: t.icon, name: t.name, attempted, total: t.subTopics.length, percentage};
         });
 
         return status;
@@ -153,58 +153,72 @@ export class TopicService {
     createSubTopics(): Array<ITopic> {
         const list: Array<ITopic> = [];
         const first: ITopic = {
+            icon: String.fromCharCode(0xf29d),
             name: "Vulnerable road users",
             subTopics: this.createSubTopicsForVulnerableRoadUsers()
         };
         const second: ITopic = {
+            icon: String.fromCharCode(0xf5e1),
             name: "Incidents",
             subTopics: this.createSubTopicsForIncidents()
         };
         const third: ITopic = {
+            icon: String.fromCharCode(0xf3ed),
             name: "Safety and your vehicle",
             subTopics: this.createSubTopicsForSafetyAndYourVehicle()
         };
         const fourth: ITopic = {
+            icon: String.fromCharCode(0xf118),
             name: "Attitude",
             subTopics: this.createSubTopicsForAttitude()
         };
         const fifth: ITopic = {
+            icon: String.fromCharCode(0xf06e),
             name: "Alertness",
             subTopics: this.createSubTopicsForAlertness()
         };
         const sixth: ITopic = {
+            icon: String.fromCharCode(0xf02d),
             name: "Documents",
             subTopics: this.createSubTopicsForDocuments()
         };
         const seventh: ITopic = {
+            icon: String.fromCharCode(0xf560),
             name: "Safety margins",
             subTopics: this.createSubTopicsForSafetyMargins()
         };
         const eighth: ITopic = {
+            icon: String.fromCharCode(0xf06e),
             name: "Rules of the road",
             subTopics: this.createSubTopicsForRulesOfTheRoad()
         };
         const nineth: ITopic = {
+            icon: String.fromCharCode(0xf637),
             name: "Road and traffic sign",
             subTopics: this.createSubTopicsForRoadAndTrafficSign()
         };
         const tenth: ITopic = {
+            icon: String.fromCharCode(0xf4df),
             name: "Other types of vehicles",
             subTopics: this.createSubTopicsForOtherTypesOfVehicles()
         };
         const eleventh: ITopic = {
+            icon: String.fromCharCode(0xf071),
             name: "Hazard awareness",
             subTopics: this.createSubTopicsForHazzardAwareness()
         };
         const twelveth: ITopic = {
+            icon: String.fromCharCode(0xf59d),
             name: "Vehicle loading",
             subTopics: this.createSubTopicsForVehicleLoading()
         };
         const thirteenth: ITopic = {
+            icon: String.fromCharCode(0xf1B9),
             name: "Vehicle handling",
             subTopics: this.createSubTopicsForVehicleHandling()
         };
         const fourteenth: ITopic = {
+            icon: String.fromCharCode(0xf018),
             name: "Motorway driving",
             subTopics: this.createSubTopicsForMotorwayDriving()
         };

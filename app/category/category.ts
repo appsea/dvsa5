@@ -2,6 +2,7 @@ import { AndroidActivityBackPressedEventData, AndroidApplication } from "applica
 import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { isAndroid, screen } from "platform";
+import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { ListView } from "tns-core-modules/ui/list-view";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { topmost } from "ui/frame";
@@ -69,8 +70,6 @@ export function onDrawerButtonTap(args: EventData) {
     // resetBanner();
     vm.showDrawer();
 }
-
-import { AnimationCurve } from "tns-core-modules/ui/enums";
 
 export function selectCategory(args): void {
     vm.selectCategory(args);

@@ -66,6 +66,7 @@ export interface ICategory {
 }
 
 export interface ITopicStatus {
+    icon?: string;
     name?: string;
     attempted?: number;
     total?: number;
@@ -73,6 +74,7 @@ export interface ITopicStatus {
 }
 
 export interface ITopic {
+    icon?: string;
     name?: string;
     subTopics: Array<ISubTopic>;
 }
