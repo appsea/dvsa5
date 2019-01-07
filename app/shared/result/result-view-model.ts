@@ -16,6 +16,10 @@ export class ResultViewModel extends Observable {
         return this._state.questions.length;
     }
 
+    get correct() {
+        return this._result.correct;
+    }
+
     get state() {
         return this._state;
     }
@@ -56,8 +60,8 @@ export class ResultViewModel extends Observable {
                 wrong = wrong + 1;
             }
         }
-        const percentage = (correct * 100 / this._state.questions.length);
-        const percentageString: string = percentage.toFixed(2);
+        const percentage = Math.floor(correct * 100 / this._state.questions.length);
+        const percentageString: string = String(percentage);
         this._result = {
             itemType: this._state.mode,
             date: QuizUtil.getDateString(new Date()),
@@ -78,9 +82,9 @@ export class ResultViewModel extends Observable {
     private initData() {
         this.set("result",
             [
-                {Brand: "Correct", Count: this._result.correct},
-                {Brand: "Wrong", Count: this._result.wrong},
-                {Brand: "Skipped", Count: this._result.skipped}
+                {Type: "Correct", Count: this._result.correct},
+                {Type: "Wrong", Count: this._result.wrong},
+                {Type: "Skipped", Count: this._result.skipped}
             ]);
     }
 }

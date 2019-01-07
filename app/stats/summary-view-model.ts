@@ -26,13 +26,12 @@ export class SummaryViewModel extends Observable {
         });
         const overall: Array<IResult> = [];
         const percentage = total === 0 ? 0 : Math.floor(correct * 100 / total);
-        const percentageString: string = percentage + "%";
         const result: IResult = {
             date: QuizUtil.getDateString(new Date()),
             correct,
             total,
             totalExams,
-            percentage: percentageString,
+            percentage,
             pass: percentage > 70
         };
         overall.push(result);

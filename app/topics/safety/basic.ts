@@ -11,6 +11,7 @@ import * as navigationModule from "../../shared/navigation";
 import { TopicService } from "../topic.service";
 
 let banner: any;
+let _subTopic: ISubTopic;
 const pageData = new Observable();
 
 export function onPageLoaded(args: EventData): void {
