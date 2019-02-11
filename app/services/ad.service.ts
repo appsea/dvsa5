@@ -50,9 +50,9 @@ export class AdService {
         }
     }
 
-    showSmartBanner() {
+    showSmartBanner(): Promise<void> {
         if (this._showAd) {
-            this.doCreateSmartBanner();
+            return this.doCreateSmartBanner();
         }
     }
 
@@ -77,11 +77,11 @@ export class AdService {
         return height;
     }
 
-    doCreateSmartBanner(): void {
-        this.createBanner(AD_SIZE.SMART_BANNER);
+    doCreateSmartBanner(): Promise<void> {
+        return this.createBanner(AD_SIZE.SMART_BANNER);
     }
 
-    doCreateSkyscraperBanner(): void {
+    /*doCreateSkyscraperBanner(): void {
         this.createBanner(AD_SIZE.SKYSCRAPER);
     }
 
@@ -99,7 +99,7 @@ export class AdService {
 
     doCreateLeaderboardBanner(): void {
         this.createBanner(AD_SIZE.LEADERBOARD);
-    }
+    }*/
 
     doShowInterstitial(): void {
         showInterstitial().then(
@@ -143,8 +143,8 @@ export class AdService {
         );
     }
 
-    private createBanner(size: AD_SIZE): void {
-        createBanner({
+    private createBanner(size: AD_SIZE): Promise<void> {
+        return createBanner({
             testing: AdService._testing,
             // if this 'view' property is not set, the banner is overlayed on the current top most view
             // view: ..,
@@ -158,10 +158,7 @@ export class AdService {
                 // top: 10
                 bottom: isIOS ? 50 : 0
             },
-            keywords: ["foo", "bar"]
-        }).then(
-            () => console.log("Banner created"),
-            (error) => console.error("Error creating banner: ", error)
-        );
+            keywords: ["game", "education"]
+        });
     }
 }

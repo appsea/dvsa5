@@ -78,7 +78,7 @@
                                     </label.formattedText>
                                 </Label>
                             </StackLayout>
-                            <Label col="2" text="&#xf058;" class="fa icon-selected" visibility="{{ selected ? 'visible' : 'collapsed' }}"/>
+                            <Label col="2" text="&#xf00c;" class="fa icon-selected"/>
                         </GridLayout>
                     </ListView.itemTemplate>
                 </ListView>

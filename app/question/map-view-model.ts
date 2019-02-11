@@ -51,7 +51,7 @@ export class MapViewModel extends Observable {
         if (this.items.length > args.index && this.items[args.index].status !== TBD) {
             this.state.questionNumber = item.value;
             SettingsService.getInstance().saveCache(this.state.mode, this.state);
-            navigationModule.toPage("question/practice");
+            navigationModule.toPage("question/" + this.state.mode.toLowerCase());
         } else {
             Toast.makeText("Question " + item.value + " is yet to be asked." , "short").show();
         }

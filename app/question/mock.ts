@@ -4,6 +4,7 @@ import { isAndroid } from "platform";
 import { EventData } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
+import { SwipeDirection } from "tns-core-modules/ui/gestures";
 import * as ListView from "tns-core-modules/ui/list-view";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
@@ -18,6 +19,7 @@ let vm: TimerViewModel;
 let optionList: ListView.ListView;
 let scrollView: ScrollView;
 let banner: any;
+let loaded: boolean = false;
 
 export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
@@ -30,6 +32,7 @@ export function resetBanner() {
     if (banner) {
         banner.height = "0";
     }
+    loaded = false;
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
@@ -66,7 +69,7 @@ export function onNavigatingTo(args: NavigatedData) {
 }
 
 export function handleSwipe(args) {
-    if (args.direction === 2) {
+    if (args.direction === SwipeDirection.left) {
         next();
     }
 }
@@ -100,9 +103,16 @@ export function next(): void {
         dialogs.alert("Please connect to internet so that we can fetch next question for you!");
     } else {
         vm.next();
-        if (AdService.getInstance().showAd) {
-            banner.height = AdService.getInstance().getAdHeight() + "dpi";
-            AdService.getInstance().showSmartBanner();
+        if (AdService.getInstance().showAd && !loaded) {
+            AdService.getInstance().showSmartBanner().then(
+                () => {
+                    loaded = true;
+                    banner.height = AdService.getInstance().getAdHeight() + "dpi";
+                },
+                (error) => {
+                    resetBanner();
+                }
+            );
         }
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);

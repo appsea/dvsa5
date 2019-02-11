@@ -1,5 +1,6 @@
 <Page
         class="page"
+        loaded="onPageLoaded"
         navigatingTo="onNavigatingTo"
         xmlns="http://schemas.nativescript.org/tns.xsd">
 
@@ -96,7 +97,7 @@
 
                 <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe" visibility="{{ options[0].description ? 'visible' : 'collapsed' }}">
                     <Repeater.itemTemplate>
-                        <GridLayout columns="auto,*" class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}">
+                        <GridLayout columns="auto,*" class="{{ (show && correct)? 'correct m-y-5' : (show && selected && !correct)? 'incorrect m-y-5': 'not-selected m-y-5' }}">
                             <Label col="0" text="{{ tag + '. ' }}"
                                    class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"

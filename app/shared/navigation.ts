@@ -1,5 +1,14 @@
 import * as frameModule from "tns-core-modules/ui/frame";
+import { SettingsService } from "~/services/settings.service";
 import { IState, ISubTopic } from "./questions.model";
+
+export function route() {
+    let path = SettingsService.getInstance().getRoute();
+    if (!path) {
+        path = "question/practice";
+    }
+    toPage(path);
+}
 
 export function	gotoResultPage(state: IState) {
     frameModule.topmost().navigate({

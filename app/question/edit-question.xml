@@ -34,15 +34,18 @@
                 <Label text="Explanation" class="label font-weight-bold m-b-5"/>
                 <TextView class="input" text="{{ question.explanation }}"></TextView>
                 <Label text="Select correct option" class="label font-weight-bold m-b-5"/>
-                <Repeater items="{{ question.options }}" row="1" id="optionList">
+                <Repeater items="{{ question.options }}" row="1" id="optionList" class="m-t-10">
                     <Repeater.itemTemplate>
-                        <StackLayout
-                                class="{{ selected ? 'selected': 'not-selected' }}"
-                                tap="selectOption">
-                            <Label text="{{ description}}"
+                        <GridLayout columns="auto,*" class="{{ selected ? 'selected m-y-5': 'not-selected m-y-5' }}">
+                            <Label col="0" text="{{ tag + '. ' }}"
                                    class="{{ selected ? 'selected': 'not-selected' }}"
-                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"/>
-                        </StackLayout>
+                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
+                                   onswipe="handleSwipe"/>
+                            <Label col="1" text="{{ description }}"
+                                   class="{{ selected ? 'selected': 'not-selected' }}"
+                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
+                                   onswipe="handleSwipe"/>
+                        </GridLayout>
                     </Repeater.itemTemplate>
                 </Repeater>
             </StackLayout>

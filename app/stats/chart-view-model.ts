@@ -8,7 +8,7 @@ export class ChartViewModel {
     constructor() {
         const results: Array<IResult> = PersistenceService.getInstance().getResult();
         results.forEach((result) =>
-            this._stats.push({Percentage: +result.percentage.substr(0, result.percentage.length - 3)}));
+            this._stats.push({Percentage: +result.percentage.substr(0, result.percentage.length - 1)}));
     }
 
     get stats() {

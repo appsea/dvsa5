@@ -15,6 +15,8 @@ import * as navigationModule from "../shared/navigation";
 
 export class SummaryViewModel extends Observable {
 
+    private _checked: boolean = false;
+
     get overall() {
         const results: Array<IResult> = PersistenceService.getInstance().getResult();
         let correct: number = 0;
@@ -26,7 +28,7 @@ export class SummaryViewModel extends Observable {
         });
         const overall: Array<IResult> = [];
         const percentage = total === 0 ? 0 : Math.floor(correct * 100 / total);
-        const percentageString = String(percentage);
+        const percentageString: string = percentage + "%";
         const result: IResult = {
             date: QuizUtil.getDateString(new Date()),
             correct,
@@ -105,10 +107,11 @@ export class SummaryViewModel extends Observable {
 
     load(): any {
         this.calculate();
-        if (ConnectionService.getInstance().isConnected()) {
+        if (!this._checked && ConnectionService.getInstance().isConnected()) {
             HttpService.getInstance().checkTotalQuestions().then((st) => {
                 this._serverQuestionSize = !isNaN(Number(st)) ? Number(st) : 434;
                 this.calculate();
+                this._checked = true;
             });
         }
     }
@@ -128,29 +131,32 @@ export class SummaryViewModel extends Observable {
     preloadVideoAd() {
         this.setAdLoadedFalse();
         this.calculate();
-        rewardModule.preloadVideoAd({
-            testing: AdService._testing,
-            iosInterstitialId: constantsModule.REWARD_AD_ID, // add your own
-            androidInterstitialId: constantsModule.REWARD_AD_ID, // add your own
-            // Android automatically adds the connected device as test device with testing:true, iOS does not
-            iosTestDeviceIds: ["ce97330130c9047ce0d4430d37d713b2"],
-            keywords: ["games", "education"] // add keywords for ad targeting
-        }, (reward) => { console.log("reward", reward);
-                         /*QuestionService.getInstance().findPremiumRange((this._questionSize + 1),
-                (this._questionSize + this._rewards)).then(this.load());*/
+        if (!PersistenceService.getInstance().isPremium()) {
+            rewardModule.preloadVideoAd({
+                testing: AdService._testing,
+                iosInterstitialId: constantsModule.REWARD_AD_ID, // add your own
+                androidInterstitialId: constantsModule.REWARD_AD_ID, // add your own
+                // Android automatically adds the connected device as test device with testing:true, iOS does not
+                iosTestDeviceIds: ["ce97330130c9047ce0d4430d37d713b2"],
+                keywords: ["games", "education"] // add keywords for ad targeting
+            }, (reward) => { console.log("reward", reward);
+                             QuestionService.getInstance().findPremiumRange((this._questionSize + 1),
+                    (this._questionSize + this._rewards)).then(this.load());
             }, () => this.preloadVideoAd(), () => {
-            this.setAdLoadedTrue();
-            this.calculate();
-        }).then(
-            (reward) => {
-                console.log("interstitial ", reward);
-            },
-            (error) => {
-                console.log("admob preloadInterstitial error: " + error);
-                this.setAdLoadedFalse();
+                this.setAdLoadedTrue();
                 this.calculate();
-            }
-        );
+            }).then(
+                (reward) => {
+                    console.log("interstitial ", reward);
+                    this.load();
+                },
+                (error) => {
+                    console.log("admob preloadInterstitial error: " + error);
+                    this.setAdLoadedFalse();
+                    this.calculate();
+                }
+            );
+        }
     }
 
     calculate() {

@@ -2,6 +2,7 @@ import * as Toast from "nativescript-toast";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { QuestionService } from "~/services/question.service";
 import { IOption, IQuestion, IState } from "~/shared/questions.model";
+import {QuestionUtil} from "~/services/question.util";
 
 export class EditQuestionViewModel extends Observable {
 
@@ -14,21 +15,41 @@ export class EditQuestionViewModel extends Observable {
     }
     private _state: IState;
     private _question: IQuestion;
-    private _originalQuestion: string;
+    private _originalQuestion: IQuestion;
+    private _originalQuestionString: string;
 
     constructor(state: IState) {
         super();
-        this._originalQuestion = JSON.stringify(state.questions[state.questionNumber - 1]);
-        this._question = JSON.parse(this._originalQuestion);
+        this._originalQuestionString = JSON.stringify(state.questions[state.questionNumber - 1]);
+        this._originalQuestion = JSON.parse(this._originalQuestionString);
+        this._question = JSON.parse(this._originalQuestionString);
         this._state = state;
         this.publish();
     }
 
     save() {
-        if (JSON.stringify(this._question) !== this._originalQuestion) {
-            QuestionService.getInstance().update(this._question);
-            Toast.makeText("Thanks a ton. Your changes will be reviewed and included asap.", "long")
-                .show();
+        if (this._question && this._question.description && this._question.explanation) {
+            console.log("this._question.description", this._question.description, "this._question.explanation", this._question.explanation);
+            if (this._question.description !== "text" && this._question.explanation !== "text") {
+                if (JSON.stringify(this._question) !== this._originalQuestionString) {
+                    if (QuestionUtil.isOptionUpdated(this._question)) {
+                        QuestionService.getInstance().updateCorrectOption(this._question);
+                    } else if (this._question.description !== this._originalQuestion.description || this._question.explanation !== this._originalQuestion.explanation) {
+                        if (this._question.description !== this._originalQuestion.description && this._question.explanation !== this._originalQuestion.explanation){
+                            this._question.suggestionHint = "Both Updated";
+                        } else if (this._question.description !== this._originalQuestion.description) {
+                            this._question.suggestionHint = "Question Updated";
+                        } else if (this._question.explanation !== this._originalQuestion.explanation) {
+                            this._question.suggestionHint = "Explanation Updated";
+                        }
+                        QuestionService.getInstance().update(this._question);
+                    }
+                    Toast.makeText("Thanks a ton. Your changes will be reviewed and included asap.", "long")
+                        .show();
+                }
+            } else {
+                Toast.makeText("Ignored", "long").show();
+            }
         }
     }
 

@@ -1,0 +1,63 @@
+<Page
+        class="page"
+        navigatingTo="onNavigatingTo"
+        xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar class="action-bar">
+        <!--
+        Use the NavigationButton as a side-drawer button in Android
+        because ActionItems are shown on the right side of the ActionBar
+        -->
+        <NavigationButton ios:visibility="collapsed" icon="res://menu" tap="onDrawerButtonTap"></NavigationButton>
+        <!--
+        Use the ActionItem for IOS with position set to left. Using the
+        NavigationButton as a side-drawer button in iOS is not possible,
+        because its function is to always navigate back in the application.
+        -->
+        <ActionItem icon="res://navigation/menu"
+                    android:visibility="collapsed"
+                    tap="onDrawerButtonTap"
+                    ios.position="left">
+        </ActionItem>
+        <Label class="action-bar-title" text="Premium"/>
+    </ActionBar>
+
+    <StackLayout class="page-login" backgroundImage="res://mesh">
+        <Label text="&#xf43f;" class="fa m-t-20 icon"/>
+        <GridLayout rows="auto, auto, auto, auto" class="center m-t-15">
+            <GridLayout row="0" columns="auto, auto" class="m-10">
+                <Label col="0" text="&#xf02d;" class="fa c-white tick m-x-20"></Label>
+                <StackLayout col="1" verticalAlignment="center">
+                    <Label text="All Question!" class="feature" textWrap="true" />
+                    <Label class="description" text="Access whole question bank." />
+                </StackLayout>
+            </GridLayout>
+            <GridLayout row="1" columns="auto, auto" class="m-10">
+                <Label col="0" text="&#xf4e2;" class="fa c-white tick m-x-20"></Label>
+                <StackLayout col="1" verticalAlignment="center">
+                    <Label text="Go Ad-Free!" class="feature" textWrap="true" />
+                    <Label class="description" text="Focus on what is important." />
+                </StackLayout>
+            </GridLayout>
+            <GridLayout row="2" columns="auto, auto" class="m-10">
+                <Label col="0" text="&#xf072;" class="fa c-white tick m-x-20 rotate"></Label>
+                <StackLayout col="1" verticalAlignment="center">
+                    <Label text="Go Offline!" class="feature" textWrap="true" />
+                    <Label class="description" text="Practice even when you are offline.">
+                    </Label>
+                </StackLayout>
+            </GridLayout>
+            <GridLayout row="3" columns="auto, auto" class="m-10">
+                <Label col="0" text="&#xf164;" class="fa c-white tick m-x-20"></Label>
+                <StackLayout col="1" verticalAlignment="center">
+                    <Label text="Thumbs up!" class="feature" textWrap="true" />
+                    <Label class="description" text="Give thumbs up for our efforts."/>
+                </StackLayout>
+            </GridLayout>
+        </GridLayout>
+        <Button class="btn btn-login btn-rounded-sm font-weight-bold t-18" backgroundColor="#ffffff" tap="pay"
+                text="{{ item.priceFormatted }}"></Button>
+        <Label class="t-12 white-color center" textDecoration="underline" text="Restore Purchase" tap="onRestoreTap"></Label>
+        <ActivityIndicator busy="{{ loading }}"/>
+    </StackLayout>
+</Page>

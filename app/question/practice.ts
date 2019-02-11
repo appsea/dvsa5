@@ -1,23 +1,23 @@
-import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
-import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { isAndroid, screen } from "platform";
-import { EventData, Observable } from "tns-core-modules/data/observable";
+import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
+import {RadSideDrawer} from "nativescript-ui-sidedrawer";
+import {isAndroid, screen} from "platform";
+import {EventData, Observable} from "tns-core-modules/data/observable";
 import * as ButtonModule from "tns-core-modules/ui/button";
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import { topmost } from "tns-core-modules/ui/frame";
-import { SwipeDirection } from "tns-core-modules/ui/gestures";
-import { Label } from "tns-core-modules/ui/label";
-import { NavigatedData, Page } from "tns-core-modules/ui/page";
-import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
-import { Repeater } from "tns-core-modules/ui/repeater";
-import { ScrollView } from "tns-core-modules/ui/scroll-view";
-import { TextView } from "tns-core-modules/ui/text-view";
-import { AdService } from "~/services/ad.service";
-import { SettingsService } from "~/services/settings.service";
-import { ConnectionService } from "~/shared/connection.service";
-import { SelectedPageService } from "~/shared/selected-page-service";
+import {topmost} from "tns-core-modules/ui/frame";
+import {SwipeDirection} from "tns-core-modules/ui/gestures";
+import {Label} from "tns-core-modules/ui/label";
+import {NavigatedData, Page} from "tns-core-modules/ui/page";
+import {CreateViewEventData} from "tns-core-modules/ui/placeholder";
+import {Repeater} from "tns-core-modules/ui/repeater";
+import {ScrollView} from "tns-core-modules/ui/scroll-view";
+import {TextView} from "tns-core-modules/ui/text-view";
+import {AdService} from "~/services/ad.service";
+import {SettingsService} from "~/services/settings.service";
+import {ConnectionService} from "~/shared/connection.service";
+import {SelectedPageService} from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";
-import { QuestionViewModel } from "./question-view-model";
+import {QuestionViewModel} from "./question-view-model";
 
 let vm: QuestionViewModel;
 let optionList: Repeater;
@@ -27,6 +27,7 @@ let explanationHeader: Label;
 let _page: any;
 let scrollView: ScrollView;
 let banner: any;
+let loaded: boolean = false;
 
 export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
@@ -39,6 +40,7 @@ export function resetBanner() {
     if (banner) {
         banner.height = "0";
     }
+    loaded = false;
 }
 
 /* ***********************************************************
@@ -57,20 +59,17 @@ export function onNavigatingTo(args) {
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     banner = page.getViewById("banner");
     suggestionButton = page.getViewById("suggestionButton");
-    if (!SettingsService.route()) {
-        _page = page;
-        optionList = page.getViewById("optionList");
-        scrollView = page.getViewById("scrollView");
-        vm = new QuestionViewModel(constantsModule.PRACTICE);
-        page.bindingContext = vm;
-        SelectedPageService.getInstance().updateSelectedPage("practice");
-    } else {
-        explanationHeader = page.getViewById("explanationHeader");
-        defaultExplanation = page.getViewById("defaultExplanation");
-        explanationHeader.visibility = "hidden";
-        defaultExplanation.visibility = "hidden";
-        suggestionButton.visibility = "hidden";
-    }
+    _page = page;
+    optionList = page.getViewById("optionList");
+    scrollView = page.getViewById("scrollView");
+    vm = new QuestionViewModel(constantsModule.PRACTICE);
+    page.bindingContext = vm;
+    SelectedPageService.getInstance().updateSelectedPage("practice");
+    explanationHeader = page.getViewById("explanationHeader");
+    defaultExplanation = page.getViewById("defaultExplanation");
+    explanationHeader.visibility = "hidden";
+    defaultExplanation.visibility = "hidden";
+    suggestionButton.visibility = "hidden";
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
@@ -126,9 +125,16 @@ export function next(): void {
         dialogs.alert("Please connect to internet so that we can fetch next question for you!");
     } else {
         vm.next();
-        if (AdService.getInstance().showAd) {
-            banner.height = AdService.getInstance().getAdHeight() + "dpi";
-            AdService.getInstance().showSmartBanner();
+        if (AdService.getInstance().showAd && !loaded) {
+            AdService.getInstance().showSmartBanner().then(
+                () => {
+                    loaded = true;
+                    banner.height = AdService.getInstance().getAdHeight() + "dpi";
+                },
+                (error) => {
+                    resetBanner();
+                }
+            );
         }
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);
@@ -155,7 +161,7 @@ export function selectOption(args): void {
         vm.showAnswer();
         vm.selectOption(args);
         optionList.refresh();
-        moveToLast();
+        // moveToLast();
         vm.updatePracticeStats();
     }
 }

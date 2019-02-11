@@ -7,6 +7,7 @@ export interface IQuestion {
     skipped?: boolean;
     flagged?: boolean;
     show?: boolean;
+    suggestionHint?: string;
 }
 
 export interface IPrashna {

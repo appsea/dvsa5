@@ -5,6 +5,7 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as ButtonModule from "tns-core-modules/ui/button";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
+import { SwipeDirection } from "tns-core-modules/ui/gestures";
 import { Label } from "tns-core-modules/ui/label";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
@@ -25,6 +26,7 @@ let explanationHeader: Label;
 let _page: any;
 let scrollView: ScrollView;
 let banner: any;
+let loaded: boolean = false;
 
 export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
@@ -37,6 +39,7 @@ export function resetBanner() {
     if (banner) {
         banner.height = "0";
     }
+    loaded = false;
 }
 /* ***********************************************************
 * Use the "onNavigatingTo" handler to initialize the page binding context.
@@ -79,16 +82,16 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function handleSwipe(args) {
-    if (args.direction === 2) {
+    if (args.direction === SwipeDirection.left) {
         next();
     }
 }
 
 export function moveToLast() {
     suggestionButton = _page.getViewById("suggestionButton");
-    if (suggestionButton) {
+    if (suggestionButton && scrollView) {
         const locationRelativeTo = suggestionButton.getLocationRelativeTo(scrollView);
-        if (scrollView && locationRelativeTo) {
+        if (locationRelativeTo) {
             scrollView.scrollToVerticalOffset(locationRelativeTo.y, false);
         }
     }
@@ -117,9 +120,16 @@ export function next(): void {
         dialogs.alert("Please connect to internet so that we can fetch next question for you!");
     } else {
         vm.next();
-        if (AdService.getInstance().showAd) {
-            banner.height = AdService.getInstance().getAdHeight() + "dpi";
-            AdService.getInstance().showSmartBanner();
+        if (AdService.getInstance().showAd && !loaded) {
+            AdService.getInstance().showSmartBanner().then(
+                () => {
+                    loaded = true;
+                    banner.height = AdService.getInstance().getAdHeight() + "dpi";
+                },
+                (error) => {
+                    resetBanner();
+                }
+            );
         }
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);

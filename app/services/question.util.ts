@@ -30,5 +30,9 @@ export class QuestionUtil {
         return !this.isSkipped(question) && !this.isCorrect(question);
     }
 
+    static isOptionUpdated(question: IQuestion) {
+        return !this.isCorrect(question);
+    }
+
     private constructor() {}
 }

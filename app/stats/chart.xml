@@ -1,6 +1,7 @@
 <Page
         class="page"
         loaded="onPageLoaded"
+        navigatedFrom="onNavigatedFrom"
         xmlns:chart="nativescript-ui-chart"
         xmlns="http://schemas.nativescript.org/tns.xsd">
 

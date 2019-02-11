@@ -73,7 +73,7 @@ Feel free to customize layouts and components to change how your app drawer look
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'premium' ? ' selected': '') }}"
-                        route="premium/premium" params="premium" tap="goPremium">
+                        route="premium/premium-page" params="premium" tap="goPremium">
                 <Label row="0" col="0" text="&#xf43f;" class="fa t-14"/>
                 <Label row="0" col="1" text="Premium" class="p-r-10" />
             </GridLayout>

@@ -1,5 +1,6 @@
 <Page
         class="page"
+        loaded="onPageLoaded"
         navigatingTo="onNavigatingTo"
         xmlns="http://schemas.nativescript.org/tns.xsd">
 
@@ -58,7 +59,7 @@
                 <Label text="{{ question.prashna.text }}" textWrap="true" onswipe="handleSwipe"/>
                 <image src="{{ question.prashna.image }}" height="200" width="400" onswipe="handleSwipe" class="not-selected-image m-y-10" visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
 
-                <GridLayout ccolumns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}">
+                <GridLayout ccolumns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}" class="m-t-10">
                     <StackLayout row="0" col="0"
                                  class="{{ (options[0].show && options[0].correct)? 'correct' : (options[0].show && options[0].selected && !options[0].correct)? 'incorrect': 'not-selected-image' }}"
                                  tap="selectOption" onswipe="handleSwipe">
@@ -89,9 +90,9 @@
                     </StackLayout>
                 </GridLayout>
 
-                <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe" visibility="{{ options[0].description ? 'visible' : 'collapsed' }}">
+                <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe" visibility="{{ options[0].description ? 'visible' : 'collapsed' }}"  class="m-t-10">
                     <Repeater.itemTemplate>
-                        <GridLayout columns="auto,*" class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}">
+                        <GridLayout columns="auto,*" class="{{ (show && correct)? 'correct m-y-5' : (show && selected && !correct)? 'incorrect m-y-5': 'not-selected m-y-5' }}">
                             <Label col="0" text="{{ tag + '. ' }}"
                                    class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
