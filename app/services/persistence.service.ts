@@ -119,7 +119,7 @@ export class PersistenceService {
     }
 
     isPremium(): boolean {
-        return appSettings.hasKey(PREMIUM);
+        return !appSettings.hasKey(PREMIUM);
     }
 
     savePracticeStats(practiceStats: IPracticeStats) {

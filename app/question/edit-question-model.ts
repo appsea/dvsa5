@@ -1,8 +1,8 @@
 import * as Toast from "nativescript-toast";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { QuestionService } from "~/services/question.service";
+import { QuestionUtil } from "~/services/question.util";
 import { IOption, IQuestion, IState } from "~/shared/questions.model";
-import {QuestionUtil} from "~/services/question.util";
 
 export class EditQuestionViewModel extends Observable {
 
@@ -28,16 +28,16 @@ export class EditQuestionViewModel extends Observable {
     }
 
     save() {
-        if (this._question && this._question.description && this._question.explanation) {
-            console.log("this._question.description", this._question.description, "this._question.explanation", this._question.explanation);
-            if (this._question.description !== "text" && this._question.explanation !== "text") {
+        if (this._question && this._question.prashna.text && this._question.explanation) {
+            console.log("this._question.prashna.text", this._question.prashna.text, "this._question.explanation", this._question.explanation);
+            if (this._question.prashna.text !== "text" && this._question.explanation !== "text") {
                 if (JSON.stringify(this._question) !== this._originalQuestionString) {
                     if (QuestionUtil.isOptionUpdated(this._question)) {
                         QuestionService.getInstance().updateCorrectOption(this._question);
-                    } else if (this._question.description !== this._originalQuestion.description || this._question.explanation !== this._originalQuestion.explanation) {
-                        if (this._question.description !== this._originalQuestion.description && this._question.explanation !== this._originalQuestion.explanation){
+                    } else if (this._question.prashna.text !== this._originalQuestion.prashna.text || this._question.explanation !== this._originalQuestion.explanation) {
+                        if (this._question.prashna.text !== this._originalQuestion.prashna.text && this._question.explanation !== this._originalQuestion.explanation) {
                             this._question.suggestionHint = "Both Updated";
-                        } else if (this._question.description !== this._originalQuestion.description) {
+                        } else if (this._question.prashna.text !== this._originalQuestion.prashna.text) {
                             this._question.suggestionHint = "Question Updated";
                         } else if (this._question.explanation !== this._originalQuestion.explanation) {
                             this._question.suggestionHint = "Explanation Updated";

@@ -26,7 +26,7 @@ export class ProgressViewModel extends Observable {
         });
         const overall: Array<IResult> = [];
         const percentage = total === 0 ? 0 : Math.floor(correct * 100 / total);
-        const percentageString: string = String(percentage) + "%";
+        const percentageString: string = percentage.toFixed(2) + "%";
         const result: IResult = {
             date: QuizUtil.getDateString(new Date()),
             correct,

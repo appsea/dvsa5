@@ -137,6 +137,47 @@ export class QuestionService {
         return this.containsQuestion(question, PersistenceService.getInstance().readFlaggedQuestions());
     }
 
+    findPremiumRange(startAt: number, endAt: number): Promise<void> {
+        return new Promise((resolve, reject) => {
+            HttpService.getInstance().findPremiumRange<Array<IQuestion>>("number", startAt, endAt)
+                .then((map: any) => {
+                    const newQuestions: Array<IQuestion> = Object.keys(map).map((key) => map[key]);
+                    let questions: Array<IQuestion> = this.readQuestions();
+                    questions = questions.concat(newQuestions);
+                    this.saveQuestions(questions);
+                    resolve();
+                }).catch((e) => {
+                console.error("Error Loading Premium Range Questions...", e);
+                reject(e);
+            });
+        });
+    }
+
+    saveQuestions(questions: Array<IQuestion>): void {
+        const json: string = JSON.stringify(questions);
+        appSettings.setString(constantsModule.QUESTIONS, json);
+        appSettings.setNumber(constantsModule.QUESTIONS_SIZE, questions.length);
+    }
+
+    readQuestions(): Array<IQuestion> {
+        let questions: Array<IQuestion>;
+        try {
+            questions = this.hasQuestions() ? JSON.parse(appSettings.getString(constantsModule.QUESTIONS)) : [];
+        } catch (error) {
+            questions = [];
+        }
+
+        return questions;
+    }
+
+    hasQuestions(): boolean {
+        return appSettings.hasKey(constantsModule.QUESTIONS);
+    }
+
+    hasSize(): boolean {
+        return appSettings.hasKey(constantsModule.QUESTIONS_SIZE);
+    }
+
     private containsQuestion(search: IQuestion, questions: Array<IQuestion>): boolean {
         let contains = false;
         questions.forEach((question) => {
