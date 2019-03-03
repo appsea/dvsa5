@@ -39,7 +39,6 @@ export class AdService {
                 this._showAd = show === "true";
             });
         } else {
-
             this._showAd = false;
         }
     }
@@ -158,7 +157,7 @@ export class AdService {
                 // top: 10
                 bottom: isIOS ? 50 : 0
             },
-            keywords: ["game", "education"]
+            keywords: ["games", "education"]
         });
     }
 }

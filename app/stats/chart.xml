@@ -24,8 +24,8 @@
         <Label class="action-bar-title" text="Progress"/>
     </ActionBar>
 
-    <StackLayout>
-        <chart:RadCartesianChart row="1" selectionMode="Single">
+    <GridLayout>
+        <chart:RadCartesianChart selectionMode="Single">
             <chart:RadCartesianChart.horizontalAxis>
                 <chart:CategoricalAxis lineColor="#ebf1f2"
                                        lineThickness="2" labelTextColor="#021042"
@@ -77,5 +77,5 @@
                 </chart:Palette>
             </chart:RadCartesianChart.palettes>
         </chart:RadCartesianChart>
-    </StackLayout>
+    </GridLayout>
 </Page>

@@ -7,6 +7,7 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { SwipeDirection } from "tns-core-modules/ui/gestures";
 import * as ListView from "tns-core-modules/ui/list-view";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
@@ -71,6 +72,8 @@ export function onNavigatingTo(args: NavigatedData) {
 export function handleSwipe(args) {
     if (args.direction === SwipeDirection.left) {
         next();
+    } else if (args.direction === SwipeDirection.right) {
+        previous();
     }
 }
 
@@ -140,4 +143,22 @@ export function selectOption(args): void {
 
 export function goToEditPage(): void {
     vm.goToEditPage();
+}
+
+export function firstOption(args) {
+    divert(0);
+}
+export function secondOption(args: CreateViewEventData) {
+    divert(1);
+}
+export function thirdOption(args: CreateViewEventData) {
+    divert(2);
+}
+export function fourthOption(args: CreateViewEventData) {
+    divert(3);
+}
+
+export function divert(index: number) {
+    vm.selectIndex(index);
+    optionList.refresh();
 }

@@ -1,7 +1,8 @@
-<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded" 
-    xmlns:nsDrawer="nativescript-ui-sidedrawer" 
-    xmlns:myDrawer="shared/my-drawer" 
-    xmlns="http://schemas.nativescript.org/tns.xsd">
+<Page class="page" navigatingTo="onNavigatingTo" loaded="onPageLoaded"
+      xmlns:nsDrawer="nativescript-ui-sidedrawer"
+      xmlns:myDrawer="shared/my-drawer"
+      xmlns:Card="nativescript-cardview"
+      xmlns="http://schemas.nativescript.org/tns.xsd">
 
     <ActionBar class="action-bar">
         <!--
@@ -43,16 +44,20 @@
         Always wrap content in a layout component.
         -->
         <nsDrawer:RadSideDrawer.mainContent>
-            <ScrollView>
-                <Repeater items="{{ subTopics }}" row="1" id="topicList" class="category-background">
-                    <Repeater.itemTemplate>
-                        <StackLayout tap="selectSubTopic" class="{{ selected? 'category-background-selected': 'category-background'}}">
-                            <Label text="{{name}}" class="{{complete? 'category-complete-heading': 'category-todo-heading' }}" textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption" onswipe="handleSwipe"/>
+            <ListView items="{{ subTopics }}" row="1" id="topicList" class="category-background" separatorColor="transparent">
+                <ListView.itemTemplate>
+                    <Card:CardView class="m-5 cardStyle" margin="10" elevation="10" radius="5">
+                        <StackLayout tap="selectSubTopic"
+                                     class="{{ selected? 'category-background-selected': 'category-background'}}">
+                            <Label text="{{name}}"
+                                   class="{{complete? 'category-complete-heading': 'category-todo-heading' }}"
+                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
+                                   onswipe="handleSwipe"/>
                             <StackLayout class="hr-light"></StackLayout>
                         </StackLayout>
-                    </Repeater.itemTemplate>
-                </Repeater>
-            </ScrollView>
+                    </Card:CardView>
+                </ListView.itemTemplate>
+            </ListView>
         </nsDrawer:RadSideDrawer.mainContent>
     </nsDrawer:RadSideDrawer>
 </Page>

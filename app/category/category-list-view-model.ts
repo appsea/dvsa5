@@ -5,7 +5,6 @@ import { topmost } from "ui/frame";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
 import { CategoryService } from "~/services/category.service";
-import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
 import { ICategory } from "~/shared/questions.model";
 import * as navigationModule from "../shared/navigation";
@@ -32,13 +31,15 @@ export class CategoryListViewModel extends Observable {
 
     constructor() {
         super();
-        /*PersistenceService.getInstance().clearCategories();
-        CategoryService.getInstance().readCategoriesFromFirebase();*/
         this._categories = CategoryService.getInstance().getCategories();
         this._categories.forEach((c) => {
             c.icon = String.fromCharCode(+c.icon);
         });
-        console.log("c.icon::", this._categories[0]);
+        this.publish();
+    }
+
+    refresh() {
+        this._categories = CategoryService.getInstance().getCategories();
         this.publish();
     }
 
@@ -53,7 +54,7 @@ export class CategoryListViewModel extends Observable {
         AdService.getInstance().hideAd();
     }
 
-    start() {
+    practice() {
         if (this.categoriesSelected) {
             this.showOptions();
         } else {
@@ -105,16 +106,15 @@ export class CategoryListViewModel extends Observable {
 
     private showOptions() {
         const actions = ["All Questions"];
+        if (this.categories.filter((ca) => ca.selected && ca.attempted.length > 0 && ca.attempted.length < ca.questionNumbers.length).length > 0) {
+            actions.push("Unanswered");
+        }
         if (this.findWronglyAnsweredSelectedCategories().length > 0) {
             actions.push("Incorrectly Answered");
         }
         if (this.categories.filter((ca) => ca.selected && (ca.wronglyAnswered.length > 0 &&
                 ca.questionNumbers.length > ca.attempted.length)).length > 0) {
-            actions.push("Incorrect and unanswered");
-        }
-        const unansweredQuestionNumbers = this.findUnansweredQuestionNumbers();
-        if (unansweredQuestionNumbers.length > 0 && this.isUnansweredLessThanTotalQuestions(unansweredQuestionNumbers)) {
-            actions.push("Unanswered");
+            actions.push("Incorrect and Unanswered");
         }
         if (actions.length > 1) {
             dialogs.action({
@@ -122,29 +122,31 @@ export class CategoryListViewModel extends Observable {
                 cancelButtonText: "Cancel",
                 actions
             }).then((result) => {
-                let numbers = [];
-                if (result === "All Questions") {
-                    numbers = this.findAllQuestionsForSelectedCategories();
-                } else if (result === "Unanswered") {
-                    const unanswered = this.findUnansweredQuestionNumbers();
-                    numbers = numbers.concat(unanswered);
-                } else if (result === "Incorrectly Answered") {
-                    for (const category of this.categories) {
-                        if (category.selected) {
-                            numbers = numbers.concat(category.wronglyAnswered);
+                if (result !== "Cancel") {
+                    let numbers = [];
+                    if (result === "All Questions") {
+                        numbers = this.findAllQuestionsForSelectedCategories();
+                    } else if (result === "Unanswered") {
+                        const unanswered = this.findUnansweredQuestionNumbers();
+                        numbers = numbers.concat(unanswered);
+                    } else if (result === "Incorrectly Answered") {
+                        for (const category of this.categories) {
+                            if (category.selected) {
+                                numbers = numbers.concat(category.wronglyAnswered);
+                            }
+                        }
+                    } else if (result === "Incorrect and Unanswered") {
+                        for (const category of this.categories) {
+                            if (category.selected) {
+                                const unanswered: Array<number> = category.questionNumbers.filter((q) =>
+                                    category.attempted.indexOf(q) === -1);
+                                numbers = numbers.concat(unanswered);
+                                numbers = numbers.concat(category.wronglyAnswered);
+                            }
                         }
                     }
-                } else if (result === "Incorrect and unanswered") {
-                    for (const category of this.categories) {
-                        if (category.selected) {
-                            const unanswered: Array<number> = category.questionNumbers.filter((q) =>
-                                category.attempted.indexOf(q) === -1);
-                            numbers = numbers.concat(unanswered);
-                            numbers = numbers.concat(category.wronglyAnswered);
-                        }
-                    }
+                    this.handleAccessibleQuestions(numbers);
                 }
-                this.handleAccessibleQuestions(numbers);
             });
         } else {
             const numbers = this.findAllQuestionsForSelectedCategories();
@@ -167,10 +169,10 @@ export class CategoryListViewModel extends Observable {
     }
 
     private findUnansweredQuestionNumbers() {
-        const unanswered: Array<number> = [];
+        let unanswered: Array<number> = [];
         for (const category of this.categories) {
             if (category.selected) {
-                unanswered.concat(category.questionNumbers.filter((q) =>
+                unanswered = unanswered.concat(category.questionNumbers.filter((q) =>
                     category.attempted.indexOf(q) === -1));
             }
         }

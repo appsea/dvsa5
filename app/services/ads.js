@@ -81,16 +81,19 @@ admob.preloadVideoAd = function (arg, rewardCB, reload, afterAdLoaded) {
                 },
                 onRewardedVideoAdClosed() {
                     console.log("onRewardedVideoAdClosed");
-                    /*if (admob.videoView) {
+                    if (admob.videoView) {
                         admob.videoView.setRewardedVideoAdListener(null);
                         admob.videoView = null;
-                    }*/
-                    console.log("Calling reload..");
+                    }
                     reload();
                 },
                 onRewardedVideoAdFailedToLoad(errorCode) {
                     console.log("onRewardedVideoAdFailedToLoad", errorCode);
                     reject(errorCode);
+                    if (admob.videoView) {
+                        admob.videoView.setRewardedVideoAdListener(null);
+                        admob.videoView = null;
+                    }
                     reload();
                 },
                 onRewardedVideoAdLoaded() {
@@ -134,5 +137,9 @@ admob.showVideoAd = function () {
         }
     });
 };
+
+admob.adLoaded = function() {
+    return !!admob.videoView;
+}
 
 module.exports = admob;

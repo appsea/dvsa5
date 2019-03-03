@@ -1,23 +1,23 @@
-import {AndroidActivityBackPressedEventData, AndroidApplication} from "application";
-import {RadSideDrawer} from "nativescript-ui-sidedrawer";
-import {isAndroid, screen} from "platform";
-import {EventData, Observable} from "tns-core-modules/data/observable";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { isAndroid, screen } from "platform";
+import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as ButtonModule from "tns-core-modules/ui/button";
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import {topmost} from "tns-core-modules/ui/frame";
-import {SwipeDirection} from "tns-core-modules/ui/gestures";
-import {Label} from "tns-core-modules/ui/label";
-import {NavigatedData, Page} from "tns-core-modules/ui/page";
-import {CreateViewEventData} from "tns-core-modules/ui/placeholder";
-import {Repeater} from "tns-core-modules/ui/repeater";
-import {ScrollView} from "tns-core-modules/ui/scroll-view";
-import {TextView} from "tns-core-modules/ui/text-view";
-import {AdService} from "~/services/ad.service";
-import {SettingsService} from "~/services/settings.service";
-import {ConnectionService} from "~/shared/connection.service";
-import {SelectedPageService} from "~/shared/selected-page-service";
+import { topmost } from "tns-core-modules/ui/frame";
+import { SwipeDirection } from "tns-core-modules/ui/gestures";
+import { Label } from "tns-core-modules/ui/label";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
+import { Repeater } from "tns-core-modules/ui/repeater";
+import { ScrollView } from "tns-core-modules/ui/scroll-view";
+import { TextView } from "tns-core-modules/ui/text-view";
+import { AdService } from "~/services/ad.service";
+import { ConnectionService } from "~/shared/connection.service";
+import { SelectedPageService } from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";
-import {QuestionViewModel} from "./question-view-model";
+import { QuestionViewModel } from "./question-view-model";
+import {CategoryService} from "~/services/category.service";
 
 let vm: QuestionViewModel;
 let optionList: Repeater;
@@ -89,6 +89,8 @@ export function onDrawerButtonTap(args: EventData) {
 export function handleSwipe(args) {
     if (args.direction === SwipeDirection.left) {
         next();
+    } else if (args.direction === SwipeDirection.right) {
+        previous();
     }
 }
 
@@ -121,11 +123,14 @@ export function flag(): void {
 }
 
 export function next(): void {
+    CategoryService.getInstance().readCategoriesFromFirebase();
     if (AdService.getInstance().showAd && !ConnectionService.getInstance().isConnected()) {
         dialogs.alert("Please connect to internet so that we can fetch next question for you!");
     } else {
         vm.next();
+        console.log("About to show ads" + AdService.getInstance().showAd + " loaded " , !loaded);
         if (AdService.getInstance().showAd && !loaded) {
+            console.log("Inside ads");
             AdService.getInstance().showSmartBanner().then(
                 () => {
                     loaded = true;
@@ -184,7 +189,7 @@ export function divert(index: number) {
         vm.showAnswer();
         vm.selectIndex(index);
         optionList.refresh();
-        moveToLast();
+        // moveToLast();
     }
 }
 

@@ -11,6 +11,7 @@ import { setTimeout } from "timer";
 import * as frame from "tns-core-modules/ui/frame";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
+import { PersistenceService } from "~/services/persistence.service";
 import { GeneralService } from "./services/general.service";
 
 purchase.init([
@@ -37,12 +38,16 @@ application.on(application.uncaughtErrorEvent, (args) => {
     }
 });
 
-/*setTimeout(() => AdService.getInstance().doPreloadInterstitial(() => {
-        QuestionViewModel._errorLoading = false;
-    },
-    () => {
-        QuestionViewModel._errorLoading = true;
-    }), 1000);*/
+setTimeout(() => {
+    if (!PersistenceService.getInstance().isPremium()) {
+        AdService.getInstance().doPreloadInterstitial(() => {
+                QuestionViewModel._errorLoading = false;
+            },
+            () => {
+                QuestionViewModel._errorLoading = true;
+            });
+    }
+}, 1000);
 app.run({moduleName: "app-root/app-root"});
 /*
 Do not place any code after the application has been started as it will not

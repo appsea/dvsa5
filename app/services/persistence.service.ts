@@ -75,6 +75,7 @@ export class PersistenceService {
     }
 
     saveCategories(categories: Array<ICategory>) {
+        console.log("Saving categories.");
         appSettings.setString(constantsModule.CATEGORIES, JSON.stringify(categories));
     }
 
@@ -84,6 +85,7 @@ export class PersistenceService {
             const key = constantsModule.CATEGORIES;
             categories = appSettings.hasKey(key) ? JSON.parse(appSettings.getString(key)) : [];
         } catch (error) {
+            console.error("failed to load categories");
             categories = [];
         }
 
@@ -119,7 +121,7 @@ export class PersistenceService {
     }
 
     isPremium(): boolean {
-        return !appSettings.hasKey(PREMIUM);
+        return appSettings.hasKey(PREMIUM);
     }
 
     savePracticeStats(practiceStats: IPracticeStats) {

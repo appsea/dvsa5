@@ -271,11 +271,9 @@ export class QuestionViewModel extends Observable {
     }
 
     private fetchUniqueQuestion() {
-        console.log("fetching......");
         this._loading = true;
         this._questionService.getNextQuestion().then((que: IQuestion) => {
             if (!this.alreadyAsked(que)) {
-                console.log("Not asked...");
                 this._state.questionNumber = this._state.questionNumber + 1;
                 this._question = que;
                 QuizUtil.correctImagePath(this._question);

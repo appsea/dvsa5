@@ -39,29 +39,29 @@
             <StackLayout id="banner">
             </StackLayout>
         </StackLayout>
-        <ScrollView id="scrollView" onswipe="handleSwipe">
-            <StackLayout class="margin" onswipe="handleSwipe">
-                <Label text="{{ question.description }}" textWrap="true" onswipe="handleSwipe"/>
-                <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe">
+        <ScrollView id="scrollView">
+            <StackLayout class="margin">
+                <Label text="{{ question.description }}" textWrap="true"/>
+                <Repeater items="{{ options }}" row="1" id="optionList">
                     <Repeater.itemTemplate>
                         <StackLayout
                                 class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
-                                tap="selectOption" onswipe="handleSwipe">
+                                tap="selectOption">
                             <Label text="{{ description}}"
                                    class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
-                                   onswipe="handleSwipe"/>
+                                  />
                         </StackLayout>
                     </Repeater.itemTemplate>
                 </Repeater>
                 <Label id="explanationHeader" text="Explanation: " marginTop="20dpi"
                        visibility="{{ question && question.show ? 'visible' : 'collapsed' }}" style="font-weight: bold"
-                       textWrap="true" onswipe="handleSwipe"/>
+                       textWrap="true"/>
                 <Label id="explanation" text="{{ question && question.explanation}}" marginBottom="5dpi" textWrap="true"
-                       onswipe="handleSwipe" visibility="{{ question.show ? 'visible' : 'collapsed' }}"/>
+                       visibility="{{ question.show ? 'visible' : 'collapsed' }}"/>
                 <Label id="defaultExplanation"
                        text="Explanation Coming Soon. Feel free to update it yourself by clicking on following button:)"
-                       marginBottom="5dpi" textWrap="true" onswipe="handleSwipe"
+                       marginBottom="5dpi" textWrap="true"
                        visibility="{{ question && question.show && !question.explanation ? 'visible' : 'collapsed' }}"/>
                 <Button id="suggestionButton" text="Improve Question" class="btn btn-primary" tap="goToEditPage"
                         visibility="{{ question && question.show ? 'visible' : 'collapsed' }}"/>

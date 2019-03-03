@@ -184,8 +184,8 @@ export class SettingsService {
     private getDefaultSetting() {
         return {
             totalQuestionsQuick: 15,
-            totalTime: 110,
-            totalQuestionsMock: 67
+            totalTime: constantsModule.EXAM_TIME,
+            totalQuestionsMock: constantsModule.TOTAL_MOCK_QUESTIONS
         };
     }
 }

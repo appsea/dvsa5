@@ -39,6 +39,10 @@ export function onDrawerButtonTap(args: EventData) {
     QuestionViewModel.showDrawer();
 }
 
+export function toggleSearch(args: EventData) {
+    vm.toggleSearch();
+}
+
 export function all(): void {
     vm.all();
     list.scrollToIndex(0);

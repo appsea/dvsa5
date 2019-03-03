@@ -35,7 +35,7 @@ export function onNavigatingTo(args: NavigatedData) {
     * page in the same data state that he left it in before navigating.
     *************************************************************/
     const page = <Page>args.object;
-    vm = new SummaryViewModel();
+    vm = SummaryViewModel.getInstance();
     page.bindingContext = vm;
     SelectedPageService.getInstance().updateSelectedPage("stats");
 }

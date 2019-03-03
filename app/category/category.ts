@@ -25,6 +25,9 @@ export function onPageLoaded(args: EventData): void {
         return;
     }
     resetBanner();
+    if (vm) {
+        vm.refresh();
+    }
 }
 
 export function resetBanner() {
@@ -92,6 +95,6 @@ export function selectCategory(args): void {
     }
 }
 
-export function start() {
-    vm.start();
+export function practice() {
+    vm.practice();
 }

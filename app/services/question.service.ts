@@ -20,13 +20,6 @@ import { SettingsService } from "./settings.service";
 export class QuestionService {
 
     static getInstance(): QuestionService {
-        if (!PersistenceService.getInstance().hasCategories()) {
-            console.log("Loaded Categories....");
-            CategoryService.getInstance().readCategoriesFromFirebase();
-        } else {
-            console.log("Already Loaded Categories....");
-        }
-
         return QuestionService._instance;
     }
 
@@ -88,7 +81,6 @@ export class QuestionService {
     }
 
     updateCorrectOption(question: IQuestion) {
-        console.log("updateCorrectOption", question);
         const url = constantsModule.FIREBASE_URL + "updateOption.json";
         const questionWithDate = {question, date: QuizUtil.getDate()};
         HttpService.getInstance().httpPost(url, questionWithDate);
@@ -120,6 +112,7 @@ export class QuestionService {
             this.questions = questions;
             this._settingsService.saveQuestions(questions);
         });
+        CategoryService.getInstance().readCategoriesFromFirebase();
     }
 
     readQuestionSize(): number {
@@ -129,7 +122,7 @@ export class QuestionService {
 
     getQuestion(value: number): Promise<IQuestion> {
         return new Promise<IQuestion>((resolve, reject) => {
-            resolve(this.questions[value - 1]);
+            resolve(JSON.parse(JSON.stringify(this.questions[value - 1])));
         });
     }
 
@@ -212,7 +205,7 @@ export class QuestionService {
         return new Promise<IQuestion>((resolve, reject) => {
             const randomNumber = this.getRandomNumber(this.questions.length);
             // randomNumber = 54;
-            // const randomNumber = 26;
+            // const randomNumber = 60;
             console.log("randomNumber: ", randomNumber);
             const question = JSON.parse(JSON.stringify(this.questions[randomNumber]));
             question.flagged = this.isFlagged(question);

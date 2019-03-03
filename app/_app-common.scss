@@ -95,21 +95,43 @@ Label {
 .selected {
   background-color: #3A53FF;
   color: white;
+  border-radius: 8;
 }
 
 .not-selected {
-  background-color: white;
+  background-color: #f6f6f6;
   color: black;
+  border-radius: 8;
+}
+
+.question-image {
+  background-color: #4a98b4;
+  border-radius: 8;
+  @extend .m-y-10;
 }
 
 .selected-image {
   background-color: #3A53FF;
+  border-radius: 8;
   @extend .m-5;
 }
 
 .not-selected-image {
   background-color: #4a98b4;
+  border-radius: 8;
   @extend .m-5;
+}
+
+.skipped-correct-image {
+  background-color: #4c8ec1;
+  color: white;
+  border-radius: 8;
+}
+
+.skipped-not-selected-image {
+  background-color: #808080;
+  color: white;
+  border-radius: 8;
 }
 
 .margin {
@@ -124,26 +146,31 @@ Label {
 .all {
   background-color: #14418B;
   color: white;
+  border-radius: 8;
 }
 
 .correct {
   background-color: #07C65A;
   color: white;
+  border-radius: 8;
 }
 
 .incorrect {
   background-color: #ed1b1f;
   color: white;
+  border-radius: 8;
 }
 
 .skipped {
   background-color: #4c8ec1;
   color: white;
+  border-radius: 8;
 }
 
 .tbd {
   background-color: #808080;
   color: white;
+  border-radius: 8;
 }
 
 .drawer-header {
@@ -193,14 +220,12 @@ Label {
   color: green;
   font-weight: bold;
   font-size: 16;
-  font-weight: bold;
 }
 
 .progress-result-failed {
   color: #ed1b1f;
   font-weight: bold;
   font-size: 16;
-  font-weight: bold;
 }
 
 .progress-background {
@@ -255,14 +280,12 @@ Label {
   color: green;
   font-weight: bold;
   font-size: 16;
-  font-weight: bold;
 }
 
 .progress-result-failed {
   color: #ed1b1f;
   font-weight: bold;
   font-size: 16;
-  font-weight: bold;
 }
 
 .progress-background {
@@ -419,25 +442,19 @@ Label {
 
 .transactions-list-item {
   background-color: #ffffff;
-  border-radius: 5;
   border-color: #f1f5f8;
+  border-radius: 10;
   border-width: 1;
-  padding-left: 15;
-  padding-right: 15;
-  padding-top: 5;
-  padding-bottom: 5;
+  padding: 5 15;
   margin-bottom: 10;
 }
 
 .transactions-list-item-selected {
-  background-color: #b8c2cc;
-  border-radius: 5;
-  border-color: #b8d3cc;
+  background-color: #B8DAF5;
+  border-color: #B8DAF5;
+  border-radius: 10;
   border-width: 1;
-  padding-left: 15;
-  padding-right: 15;
-  padding-top: 5;
-  padding-bottom: 5;
+  padding: 5 15;
   margin-bottom: 10;
 }
 
@@ -469,7 +486,7 @@ Label {
 }
 
 .transactions-list .transactions-list-item .badge.restaurant {
-  background-color: #f6993f;
+  background-color: #900C3F;
 }
 
 .transactions-list .transactions-list-item .title {

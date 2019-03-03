@@ -4,6 +4,7 @@
 import * as appSettings from "application-settings";
 import { isAndroid } from "platform";
 import { Observable } from "tns-core-modules/data/observable";
+import { CategoryService } from "~/services/category.service";
 import { PersistenceService } from "~/services/persistence.service";
 import { QuestionUtil } from "~/services/question.util";
 import { PRACTICE_STATS } from "~/shared/constants";
@@ -38,7 +39,7 @@ export class StatsService {
             }
         }
         PersistenceService.getInstance().savePracticeStats(practiceStats);
-
+        CategoryService.getInstance().attemptQuestion(question);
     }
 
 }

@@ -15,7 +15,11 @@ import * as navigationModule from "../shared/navigation";
 
 export class SummaryViewModel extends Observable {
 
-    private _checked: boolean = false;
+    static getInstance(): SummaryViewModel {
+        return SummaryViewModel._instance;
+    }
+
+    private static _instance: SummaryViewModel = new SummaryViewModel();
 
     get overall() {
         const results: Array<IResult> = PersistenceService.getInstance().getResult();
@@ -63,7 +67,7 @@ export class SummaryViewModel extends Observable {
     }
 
     get serverQuestionSize() {
-        return !isNaN(this._serverQuestionSize) ? this._serverQuestionSize : 434;
+        return !isNaN(this._serverQuestionSize) ? this._serverQuestionSize : 773;
     }
 
     get isPremium() {
@@ -79,37 +83,42 @@ export class SummaryViewModel extends Observable {
     }
 
     get adLoaded() {
-        return this._adLoaded;
+        return rewardModule.adLoaded();
     }
+
+    get error() {
+        return this._error;
+    }
+
+    private _checked: boolean = false;
 
     private _ps: IPracticeStats;
 
     private _mock: IResult;
     private _practiceAccuracy: number;
     private _practiceCoverage: number;
-    private _serverQuestionSize: number = 434;
+    private _serverQuestionSize: number = 773;
     private _questionSize: number = 200;
     private _rewards: number = 10;
     private _isPremium: boolean = false;
+    private _error: boolean = false;
 
     private _allQuestionsLoaded: boolean = false;
-    private _adLoaded: boolean = false;
 
-    constructor() {
+    private constructor() {
         super();
         this.load();
         this.preloadVideoAd();
-        setTimeout(() => {
-            this.setAdLoadedTrue();
+        /*setTimeout(() => {
             this.publish();
-        }, 5000);
+        }, 5000);*/
     }
 
     load(): any {
         this.calculate();
         if (!this._checked && ConnectionService.getInstance().isConnected()) {
             HttpService.getInstance().checkTotalQuestions().then((st) => {
-                this._serverQuestionSize = !isNaN(Number(st)) ? Number(st) : 434;
+                this._serverQuestionSize = !isNaN(Number(st)) ? Number(st) : 773;
                 this.calculate();
                 this._checked = true;
             });
@@ -129,9 +138,7 @@ export class SummaryViewModel extends Observable {
     }
 
     preloadVideoAd() {
-        this.setAdLoadedFalse();
-        this.calculate();
-        if (!PersistenceService.getInstance().isPremium()) {
+        if (!PersistenceService.getInstance().isPremium() && !rewardModule.adLoaded()) {
             rewardModule.preloadVideoAd({
                 testing: AdService._testing,
                 iosInterstitialId: constantsModule.REWARD_AD_ID, // add your own
@@ -139,20 +146,22 @@ export class SummaryViewModel extends Observable {
                 // Android automatically adds the connected device as test device with testing:true, iOS does not
                 iosTestDeviceIds: ["ce97330130c9047ce0d4430d37d713b2"],
                 keywords: ["games", "education"] // add keywords for ad targeting
-            }, (reward) => { console.log("reward", reward);
-                             QuestionService.getInstance().findPremiumRange((this._questionSize + 1),
-                    (this._questionSize + this._rewards)).then(this.load());
-            }, () => this.preloadVideoAd(), () => {
-                this.setAdLoadedTrue();
+            }, (reward) => {
+                QuestionService.getInstance().findPremiumRange((this._questionSize + 1),
+                    (this._questionSize + this._rewards)).then(() => this.calculate(),
+                    (e) => console.log("Got error....", e));
+            }, () => {
+                this.preloadVideoAd();
+            }, () => {
+                this._error = false;
                 this.calculate();
             }).then(
                 (reward) => {
-                    console.log("interstitial ", reward);
-                    this.load();
+                    console.log("interstitial reward but this does nothing..", reward);
                 },
                 (error) => {
-                    console.log("admob preloadInterstitial error: " + error);
-                    this.setAdLoadedFalse();
+                    console.log("admob preloadInterstitial error:: " + error);
+                    this._error = true;
                     this.calculate();
                 }
             );
@@ -165,7 +174,7 @@ export class SummaryViewModel extends Observable {
         this._ps = PersistenceService.getInstance().readPracticeStats();
         this._practiceAccuracy = this._ps.attempted.length === 0 ? 0
             : Math.floor(this._ps.correct.length * 100 / this._ps.attempted.length);
-        this._practiceCoverage = Math.floor(this._ps.attempted.length * 100 / this._questionSize);
+        this._practiceCoverage = this._questionSize === 0 ? 0 : Math.floor(this._ps.attempted.length * 100 / this._questionSize);
         this._mock = this.overall;
         this._allQuestionsLoaded = this._questionSize === this._serverQuestionSize;
         this._rewards = this._serverQuestionSize - this._questionSize > 10 ? 10
@@ -210,16 +219,12 @@ export class SummaryViewModel extends Observable {
         });
         this.notify({
             object: this, eventName: Observable.propertyChangeEvent,
-            propertyName: "adLoaded", value: this._adLoaded
+            propertyName: "adLoaded", value: this.adLoaded
         });
-    }
-
-    private setAdLoadedTrue() {
-        this._adLoaded = true;
-    }
-
-    private setAdLoadedFalse() {
-        this._adLoaded = false;
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "error", value: this.error
+        });
     }
 
     private showVideoAd() {

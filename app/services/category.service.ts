@@ -1,7 +1,7 @@
-import {ICategory, IQuestion} from "~/shared/questions.model";
-import {HttpService} from "./http.service";
-import {PersistenceService} from "./persistence.service";
-import {QuestionUtil} from "./question.util";
+import { ICategory, IQuestion } from "~/shared/questions.model";
+import { HttpService } from "./http.service";
+import { PersistenceService } from "./persistence.service";
+import { QuestionUtil } from "./question.util";
 
 export class CategoryService {
 
@@ -56,13 +56,21 @@ export class CategoryService {
     }
 
     getCategories(): Array<ICategory> {
-        return PersistenceService.getInstance().readCategories();
+        const categories: Array<ICategory> = PersistenceService.getInstance().readCategories();
+        /*categories.forEach((c) => console.log("c service", c.icon));
+        categories.forEach((c) => {
+            c.icon = String.fromCharCode(+c.icon);
+        });
+        categories.forEach((c) => console.log("c service After", c.icon));*/
+
+        return categories;
     }
 
     readCategoriesFromFirebase(): void {
+        console.log("readCategoriesFromFirebase...............");
         HttpService.getInstance().getCategories<Array<ICategory>>().then((categories: Array<ICategory>) => {
+            console.log("Got categories...............");
             for (const category of categories) {
-                console.log("category::", category);
                 if (!category.wronglyAnswered) {
                     category.wronglyAnswered = [];
                 }
@@ -71,6 +79,7 @@ export class CategoryService {
                 }
             }
             this.mergeWithSaved(categories);
+            console.log("Done...............");
         });
     }
 
@@ -78,6 +87,7 @@ export class CategoryService {
         const existingCategories: Array<ICategory> = PersistenceService.getInstance().readCategories();
         const merged: Array<ICategory> = [];
         for (const category of newCategories) {      // for every property in obj1
+            category.icon = String.fromCharCode(+category.icon);
             if (this.contains(category, existingCategories)) {
                 const savedCategory = this.getCategory(category.name);
                 savedCategory.questionNumbers = category.questionNumbers;

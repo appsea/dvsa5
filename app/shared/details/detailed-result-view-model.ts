@@ -1,8 +1,15 @@
-import { EventData, Observable } from "tns-core-modules/data/observable";
+import { EventData, Observable, PropertyChangeData  } from "tns-core-modules/data/observable";
+import { TextField } from "tns-core-modules/ui/text-field";
+import { SearchBar } from "ui/search-bar";
 import { QuestionUtil } from "~/services/question.util";
+import { ObservableProperty } from "../observable-property-decorator";
 import { IQuestion, IState } from "../questions.model";
 
 export class DetailedResultViewModel extends Observable {
+
+    @ObservableProperty() searchPhrase: string = "";
+
+    private _searching: boolean = false;
 
     get size() {
         return this._size;
@@ -15,6 +22,7 @@ export class DetailedResultViewModel extends Observable {
     get questions() {
         return this._questions;
     }
+
     private _questions: Array<IQuestion> = [];
     private allQuestions: Array<IQuestion>;
     private _message: string;
@@ -25,6 +33,11 @@ export class DetailedResultViewModel extends Observable {
         super();
         this.state = state;
         this.allQuestions = state.questions;
+        this.on(Observable.propertyChangeEvent, (propertyChangeData: PropertyChangeData) => {
+            if (propertyChangeData.propertyName === "searchPhrase") {
+                this.refilter();
+            }
+        });
         this.all();
     }
 
@@ -59,6 +72,44 @@ export class DetailedResultViewModel extends Observable {
         this.publish();
     }
 
+    onSearchSubmit(args): void {
+        this.refilter();
+        const searchBar = <SearchBar>args.object;
+        searchBar.dismissSoftInput();
+    }
+
+    textFieldLoaded(args): void {
+        const textField: TextField = <TextField>args.object;
+        setTimeout(() => {
+            {
+                textField.focus();
+                textField.dismissSoftInput();
+            }
+        }, 100);
+    }
+
+    clear(): void {
+        this.refilter();
+    }
+
+    refilter() {
+        const f = this.searchPhrase.trim().toLowerCase();
+
+        this._questions = this.allQuestions.filter((q) => q.prashna.text.toLowerCase().includes(f)
+            || q.options.filter((o) => o.description && o.description.toLowerCase().includes(f)).length > 0
+            || q.explanation.toLowerCase().includes(f));
+        this.publish();
+    }
+
+    get searching() {
+        return this._searching;
+    }
+
+    toggleSearch(): void {
+        this._searching = !this._searching;
+        this.publish();
+    }
+
     private publish() {
         this.notify({
             object: this,
@@ -77,6 +128,12 @@ export class DetailedResultViewModel extends Observable {
             eventName: Observable.propertyChangeEvent,
             propertyName: "message",
             value: this._message
+        });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "searching",
+            value: this._searching
         });
     }
 }

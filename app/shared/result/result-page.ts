@@ -20,19 +20,21 @@ export function onPageLoaded(args: EventData): void {
         return;
     }
     const pg = args.object;
-    pg.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
+    if (pg != null && !pg.hasListeners(AndroidApplication.activityBackPressedEvent)) {
+        pg.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
+    }
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
     dialogs.confirm("Do you want to start new exam?").then((proceed) => {
         if (proceed) {
-            navigationModule.toPage("question/practice");
+            navigationModule.toPage("question/" + state.mode.toLowerCase());
         }
     });
     args.cancel = true;
 }
 
-export function onNavigatingTo(args: NavigatedData): void {
+export function onNavigatingTo(args: NavigatedData) {
     if (args.isBackNavigation) {
         return;
     }

@@ -3,6 +3,7 @@ import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { isAndroid, screen } from "platform";
 import * as ButtonModule from "tns-core-modules/ui/button";
+import { SwipeDirection } from "tns-core-modules/ui/gestures";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import * as dialogs from "ui/dialogs";
 import { topmost } from "ui/frame";
@@ -22,6 +23,7 @@ let numbers: Array<number>;
 let _page: any;
 let scrollView: ScrollView;
 let banner: any;
+let loaded: boolean = false;
 
 export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
@@ -34,6 +36,7 @@ export function resetBanner() {
     if (banner) {
         banner.height = "0";
     }
+    loaded = false;
 }
 
 /* ***********************************************************
@@ -68,10 +71,10 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function handleSwipe(args) {
-    if (args.direction === 1) {
-        previous();
-    } else if (args.direction === 2) {
+    if (args.direction === SwipeDirection.left) {
         next();
+    } else if (args.direction === SwipeDirection.right) {
+        previous();
     }
 }
 
@@ -108,9 +111,16 @@ export function next(): void {
         dialogs.alert("Please connect to internet so that we can fetch next question for you!");
     } else {
         vm.next();
-        if (AdService.getInstance().showAd) {
-            banner.height = AdService.getInstance().getAdHeight() + "dpi";
-            AdService.getInstance().showSmartBanner();
+        if (AdService.getInstance().showAd && !loaded) {
+            AdService.getInstance().showSmartBanner().then(
+                () => {
+                    loaded = true;
+                    banner.height = AdService.getInstance().getAdHeight() + "dpi";
+                },
+                (error) => {
+                    resetBanner();
+                }
+            );
         }
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);
@@ -125,8 +135,32 @@ export function showAnswer(): void {
 }
 
 export function selectOption(args): void {
-    vm.showAnswer();
-    vm.selectOption(args);
-    optionList.refresh();
-    moveToLast();
+    if (!vm.enableSelection()) {
+        vm.showAnswer();
+        vm.selectOption(args);
+        optionList.refresh();
+        // moveToLast();
+        vm.updatePracticeStats();
+    }
+}
+
+export function firstOption(args) {
+    divert(0);
+}
+export function secondOption(args: CreateViewEventData) {
+    divert(1);
+}
+export function thirdOption(args: CreateViewEventData) {
+    divert(2);
+}
+export function fourthOption(args: CreateViewEventData) {
+    divert(3);
+}
+
+export function divert(index: number) {
+    if (!vm.enableSelection()) {
+        vm.showAnswer();
+        vm.selectIndex(index);
+        optionList.refresh();
+    }
 }

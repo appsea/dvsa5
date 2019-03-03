@@ -40,11 +40,11 @@
                             <Label col="0" text="{{ tag + '. ' }}"
                                    class="{{ selected ? 'selected': 'not-selected' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
-                                   onswipe="handleSwipe"/>
+                                  />
                             <Label col="1" text="{{ description }}"
                                    class="{{ selected ? 'selected': 'not-selected' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
-                                   onswipe="handleSwipe"/>
+                                  />
                         </GridLayout>
                     </Repeater.itemTemplate>
                 </Repeater>

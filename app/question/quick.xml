@@ -55,53 +55,53 @@
             <StackLayout id="banner">
             </StackLayout>
         </StackLayout>
-        <ScrollView id="scrollView" onswipe="handleSwipe">
-            <StackLayout class="margin" onswipe="handleSwipe">
-                <Label text="{{ question.prashna.text }}" textWrap="true" onswipe="handleSwipe"/>
-                <image src="{{ question.prashna.image }}" height="200" width="400" onswipe="handleSwipe" class="m-5"
+        <ScrollView id="scrollView">
+            <StackLayout class="margin">
+                <Label text="{{ question.prashna.text }}" textWrap="true"/>
+                <image src="{{ question.prashna.image }}" height="200" width="400" class="m-5"
                        visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
                 <GridLayout columns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}" class="m-t-10">
                     <StackLayout row="0" col="0"
                                  class="{{ options[0].selected ? 'selected-image' : 'not-selected-image' }}"
-                                 tap="selectOption" onswipe="handleSwipe">
+                                 tap="selectOption">
                         <image src="{{ options[0].image }}" tap="firstOption" class="m-5"
-                               onswipe="handleSwipe"
+
                                visibility="{{ options[0].image ? 'visible' : 'collapsed' }}"/>
                     </StackLayout>
                     <StackLayout row="0" col="1"
                                  class="{{ options[1].selected ? 'selected-image' : 'not-selected-image' }}"
-                                 tap="selectOption" onswipe="handleSwipe">
+                                 tap="selectOption">
                         <image src="{{ options[1].image }}" tap="secondOption" class="m-5"
-                               onswipe="handleSwipe"
+
                                visibility="{{ options[1].image ? 'visible' : 'collapsed' }}"/>
                     </StackLayout>
                     <StackLayout row="1" col="0"
                                  class="{{ options[2].selected ? 'selected-image' : 'not-selected-image' }}"
-                                 tap="selectOption" onswipe="handleSwipe">
+                                 tap="selectOption">
                         <image src="{{ options[2].image }}" tap="thirdOption" class="m-5"
-                               onswipe="handleSwipe"
+
                                visibility="{{ options[2].image ? 'visible' : 'collapsed' }}"/>
                     </StackLayout>
                     <StackLayout row="1" col="1"
                                  class="{{ options[3].selected ? 'selected-image' : 'not-selected-image' }}"
-                                 tap="selectOption" onswipe="handleSwipe">
+                                 tap="selectOption">
                         <image src="{{ options[3].image }}" tap="fourthOption" class="m-5"
-                               onswipe="handleSwipe"
+
                                visibility="{{ options[3].image ? 'visible' : 'collapsed' }}"/>
                     </StackLayout>
                 </GridLayout>
 
-                <Repeater items="{{ options }}" row="1" id="optionList" onswipe="handleSwipe" visibility="{{ options[0].description ? 'visible' : 'collapsed' }}" class="m-t-10">
+                <Repeater items="{{ options }}" row="1" id="optionList" visibility="{{ options[0].description ? 'visible' : 'collapsed' }}" class="m-t-10">
                     <Repeater.itemTemplate>
                         <GridLayout columns="auto,*" class="{{ selected ? 'selected m-y-5' : 'not-selected m-y-5' }}">
                             <Label col="0" text="{{ tag + '. ' }}"
                                    class="{{ selected ? 'selected' : 'not-selected' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
-                                   onswipe="handleSwipe"/>
+                                  />
                             <Label col="1" text="{{ description }}"
                                    class="{{ selected ? 'selected' : 'not-selected' }}"
                                    textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
-                                   onswipe="handleSwipe"/>
+                                  />
                         </GridLayout>
                     </Repeater.itemTemplate>
                 </Repeater>
