@@ -134,7 +134,7 @@ export class SummaryViewModel extends Observable {
     }
 
     goPremium() {
-        navigationModule.toPage("premium/premium");
+        navigationModule.toPage("premium/premium-page");
     }
 
     preloadVideoAd() {

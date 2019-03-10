@@ -4,6 +4,7 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { AdService } from "~/services/ad.service";
 import { GeneralService } from "~/services/general.service";
+import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
 import * as constantsModule from "../shared/constants";
 
@@ -17,23 +18,33 @@ export class PremiumModel extends Observable {
         return this._loading;
     }
 
+    get premium() {
+        return this._premium;
+    }
+
     private _loading: boolean = true;
+    private _premium: boolean = false;
     private _item: any;
 
     constructor() {
         super();
-        purchase.getProducts()
-            .then((res) => {
-                // this._items = res;
-                this._item = res[0];
-                this._loading = false;
-                this.publish();
-            })
-            .catch((e) => {
-                this._item.priceFormatted = "Oops..Please try again!!";
-                this._loading = false;
-            });
-        this.publish();
+        if (!PersistenceService.getInstance().isPremium()) {
+            purchase.getProducts()
+                .then((res) => {
+                    // this._items = res;
+                    this._item = res[0];
+                    this._loading = false;
+                    this.publish();
+                })
+                .catch((e) => {
+                    this._item.priceFormatted = "Oops..Please try again!!";
+                    this._loading = false;
+                });
+
+        } else {
+            this._premium = true;
+            this.publish();
+        }
     }
 
     restorePurchase() {
@@ -71,6 +82,10 @@ export class PremiumModel extends Observable {
         this.notify({
             object: this, eventName: Observable.propertyChangeEvent,
             propertyName: "loading", value: this._loading
+        });
+        this.notify({
+            object: this, eventName: Observable.propertyChangeEvent,
+            propertyName: "premium", value: this.premium
         });
     }
 }

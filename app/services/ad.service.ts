@@ -24,7 +24,7 @@ export class AdService {
         this._showAd = showAd;
     }
 
-    static _testing = true;
+    static _testing = false;
 
     static getInstance(): AdService {
         return AdService._instance;
@@ -113,7 +113,7 @@ export class AdService {
     }
 
     doPreloadInterstitial(resolve, reject): void {
-        if(this._showAd){
+        if (this._showAd) {
             preloadInterstitial({
                 testing: AdService._testing,
                 iosInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
@@ -136,7 +136,7 @@ export class AdService {
     }
 
     doCreateInterstitial(): void {
-        if(this._showAd){
+        if (this._showAd) {
             createInterstitial({
                 testing: AdService._testing,
                 iosInterstitialId: constantsModule.INTERSTITIAL_AD_ID,

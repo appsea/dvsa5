@@ -136,6 +136,7 @@ export class QuestionService {
                 .then((map: any) => {
                     const newQuestions: Array<IQuestion> = Object.keys(map).map((key) => map[key]);
                     let questions: Array<IQuestion> = this.readQuestions();
+                    console.log("questions size ", newQuestions.length);
                     questions = questions.concat(newQuestions);
                     this.saveQuestions(questions);
                     resolve();
@@ -205,7 +206,7 @@ export class QuestionService {
         return new Promise<IQuestion>((resolve, reject) => {
             const randomNumber = this.getRandomNumber(this.questions.length);
             // randomNumber = 54;
-            // const randomNumber = 60;
+            // const randomNumber = 60; //image
             console.log("randomNumber: ", randomNumber);
             const question = JSON.parse(JSON.stringify(this.questions[randomNumber]));
             question.flagged = this.isFlagged(question);

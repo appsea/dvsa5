@@ -82,9 +82,6 @@ export class SettingsService {
     }
 
     clearAll(): void {
-        this.clearCache(constantsModule.MAIN);
-        this.clearCache(constantsModule.QUICK1);
-        this.clearCache(constantsModule.TICK);
         if (constantsModule.CLEAR || !appSettings.hasKey(constantsModule.VERSION) ||
             appSettings.getNumber(constantsModule.VERSION) < constantsModule.VERSION_NUMBER) {
             this.clearCache(constantsModule.MAIN);
@@ -173,11 +170,10 @@ export class SettingsService {
     }
 
     private handleStructureChange() {
-        if (appSettings.hasKey(constantsModule.SETTINGS) && !appSettings.hasKey(constantsModule.ADDTICK)) {
+        if (appSettings.hasKey(constantsModule.SETTINGS)) {
             const setting: ISetting = JSON.parse(appSettings.getString(constantsModule.SETTINGS));
             setting.totalTime = this.getDefaultSetting().totalTime;
             appSettings.setString(constantsModule.SETTINGS, JSON.stringify(setting));
-            appSettings.setBoolean(constantsModule.ADDTICK, true);
         }
     }
 

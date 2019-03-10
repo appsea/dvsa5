@@ -1,3 +1,4 @@
+import { File, Folder, knownFolders } from "tns-core-modules/file-system";
 import { IQuestion } from "~/shared/questions.model";
 
 export class QuizUtil {
@@ -40,6 +41,14 @@ export class QuizUtil {
                 option.image = "~/images/" + option.image;
             }
         }
+    }
+
+    static exist(relativePath: string): boolean {
+        const path: string = relativePath.replace("~", "");
+        const currentAppFolder = knownFolders.currentApp();
+        const exists = File.exists(currentAppFolder.path + path);
+
+        return exists;
     }
 
     private constructor() {

@@ -100,8 +100,8 @@ Label {
 }
 
 .question-image {
-  background-color: $question-image-background;
   border-radius: 8;
+  height: 200;
   @extend .m-y-10;
 }
 

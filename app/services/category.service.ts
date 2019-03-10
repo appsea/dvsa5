@@ -67,9 +67,7 @@ export class CategoryService {
     }
 
     readCategoriesFromFirebase(): void {
-        console.log("readCategoriesFromFirebase...............");
         HttpService.getInstance().getCategories<Array<ICategory>>().then((categories: Array<ICategory>) => {
-            console.log("Got categories...............");
             for (const category of categories) {
                 if (!category.wronglyAnswered) {
                     category.wronglyAnswered = [];
@@ -79,7 +77,6 @@ export class CategoryService {
                 }
             }
             this.mergeWithSaved(categories);
-            console.log("Done...............");
         });
     }
 

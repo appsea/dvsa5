@@ -71,3 +71,7 @@ export function onRestoreTap(data: ItemEventData) {
     showDialog = true;
     vm.restorePurchase();
 }
+
+export function practice(args: EventData) {
+    navigationModule.toPage("category/category");
+}

@@ -97,10 +97,12 @@ export class QuestionViewModel extends Observable {
     }
 
     previous(): void {
+        console.log("Previous...");
         this.goPrevious();
     }
 
     goPrevious() {
+        console.log("Go Previous...");
         if (this._state.questionNumber > 1) {
             this._state.questionNumber = this._state.questionNumber - 1;
             this._question = this._state.questions[this._state.questionNumber - 1];
@@ -272,10 +274,9 @@ export class QuestionViewModel extends Observable {
     private fetchUniqueQuestion() {
         this._loading = true;
         this._questionService.getNextQuestion().then((que: IQuestion) => {
-            if (!this.alreadyAsked(que)) {
+            if (!this.alreadyAsked(que) && this.hasValidImages(que)) {
                 this._state.questionNumber = this._state.questionNumber + 1;
                 this._question = que;
-                QuizUtil.correctImagePath(this._question);
                 this._state.questions.push(this._question);
                 this._loading = false;
                 this.saveAndPublish(this._mode, this._state);
@@ -293,5 +294,19 @@ export class QuestionViewModel extends Observable {
                 }
             }
         });
+    }
+
+    private hasValidImages(que: IQuestion): boolean {
+        QuizUtil.correctImagePath(que);
+        if (que.prashna.image && !QuizUtil.exist(que.prashna.image)) {
+            return false;
+        }
+        for (const option of que.options) {
+            if (option.image && !QuizUtil.exist(option.image)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -13,11 +13,11 @@ import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { TextView } from "tns-core-modules/ui/text-view";
 import { AdService } from "~/services/ad.service";
+import { CategoryService } from "~/services/category.service";
 import { ConnectionService } from "~/shared/connection.service";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";
 import { QuestionViewModel } from "./question-view-model";
-import {CategoryService} from "~/services/category.service";
 
 let vm: QuestionViewModel;
 let optionList: Repeater;
@@ -109,6 +109,7 @@ export function goToEditPage(): void {
 }
 
 export function previous(): void {
+    console.log("Model Previous...");
     if (!vm) {
         vm = new QuestionViewModel(constantsModule.PRACTICE);
     }

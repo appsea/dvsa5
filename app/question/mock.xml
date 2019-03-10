@@ -54,11 +54,11 @@
         <StackLayout dock="bottom" visibility="{{ question? 'visible': 'collapsed' }}">
             <StackLayout class="margin" orientation="horizontal" horizontalAlignment="center">
                 <Image src="~/images/map-marker-icon.png" height="45" tap="showMap" margin="2" width="10%" />
-                <Button class="btn btn-primary btn-rounded-lg" text="Quit" tap="quit" visibility="{{ !allQuestionsAsked ? 'visible' : 'collapsed' }}" margin="2dpi" width="25%"/>
-                <Button class="btn btn-primary btn-rounded-lg" text="<<" tap="previous" margin="2dpi" width="30%" />
-                <Button class="btn btn-primary btn-rounded-lg" text="Ad" visibility="{{ showAdOnNext ? 'visible' : 'collapsed' }}" tap="next" margin="2dpi" width="30%"/>
-                <Button class="btn btn-primary btn-rounded-lg" text=">>" visibility="{{ showAdOnNext ? 'collapsed' : 'visible' }}" tap="next" margin="2dpi" width="30%"/>
-                <Button class="btn btn-primary btn-rounded-lg" text="Submit" tap="submit" visibility="{{ allQuestionsAsked ? 'visible' : 'collapsed' }}" margin="2dpi" width="25%"/>
+                <Button class="btn btn-primary btn-rounded-lg" text="Quit" tap="quit" visibility="{{ !allQuestionsAsked ? 'visible' : 'collapsed' }}" margin="2" width="25%"/>
+                <Button class="btn btn-primary btn-rounded-lg" text="<<" tap="previous" margin="2" width="30%" />
+                <Button class="btn btn-primary btn-rounded-lg" text="Ad" visibility="{{ showAdOnNext ? 'visible' : 'collapsed' }}" tap="next" margin="2" width="30%"/>
+                <Button class="btn btn-primary btn-rounded-lg" text=">>" visibility="{{ showAdOnNext ? 'collapsed' : 'visible' }}" tap="next" margin="2" width="30%"/>
+                <Button class="btn btn-primary btn-rounded-lg" text="Submit" tap="submit" visibility="{{ allQuestionsAsked ? 'visible' : 'collapsed' }}" margin="2" width="25%"/>
             </StackLayout>
             <StackLayout id="banner">
             </StackLayout>
@@ -66,7 +66,7 @@
         <ScrollView id="scrollView" onswipe="handleSwipe">
             <StackLayout class="margin">
                 <Label text="{{ question.prashna.text }}" textWrap="true"/>
-                <image src="{{ question.prashna.image }}" class="m-5" visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
+                <image src="{{ question.prashna.image }}" class="m-5 question-image" visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
                 <GridLayout columns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}" class="m-t-10">
                     <StackLayout row="0" col="0" class="{{ options[0].selected ? 'selected-image' : 'not-selected-image' }}" tap="firstOption" >
                         <image src="{{ options[0].image }}" class="m-5" />

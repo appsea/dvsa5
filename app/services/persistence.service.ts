@@ -27,10 +27,6 @@ export class PersistenceService {
         appSettings.setString(key, JSON.stringify(questions));
     }
 
-    addResult(results: Array<IResult>) {
-        appSettings.setString(RESULT, JSON.stringify(results));
-    }
-
     resetAllStats(): any {
         this.resetPracticeStats();
         this.resetMockExamStats();

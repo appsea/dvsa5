@@ -65,32 +65,26 @@
                 <Label text="{{ question.prashna.text }}" textWrap="true"/>
                 <image src="{{ question.prashna.image }}" class="question-image"
                        visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}" minHeight="40%"/>
-                <GridLayout columns="*,*" rows="auto,auto" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}"
-                            class="m-t-10">
+                <GridLayout columns="*,*" rows="auto,auto" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}" class="m-t-10">
                     <StackLayout row="0" col="0"
                                  class="{{ (options[0].show && options[0].correct)? 'correct m-5' : (options[0].show && options[0].selected && !options[0].correct)? 'incorrect m-5': 'not-selected-image' }}"
                                  tap="firstOption" >
-                        <image src="{{ options[0].image }}" class="m-5"
-                               visibility="{{ options[0].image ? 'visible' : 'collapsed' }}"/>
+                        <image src="{{ options[0].image }}" class="m-5"/>
                     </StackLayout>
                     <StackLayout row="0" col="1"
                                  class="{{ (options[1].show && options[1].correct)? 'correct m-5' : (options[1].show && options[1].selected && !options[1].correct)? 'incorrect m-5': 'not-selected-image' }}"
                                  tap="secondOption">
-                        <image src="{{ options[1].image }}" class="m-5"
-                               visibility="{{ options[1].image ? 'visible' : 'collapsed' }}"/>
+                        <image src="{{ options[1].image }}" class="m-5"/>
                     </StackLayout>
                     <StackLayout row="1" col="0"
                                  class="{{ (options[2].show && options[2].correct)? 'correct m-5' : (options[2].show && options[2].selected && !options[2].correct)? 'incorrect m-5': 'not-selected-image' }}"
                                  tap="thirdOption">
-                        <image src="{{ options[2].image }}" class="m-5"
-                               visibility="{{ options[2].image ? 'visible' : 'collapsed' }}"/>
+                        <image src="{{ options[2].image }}" class="m-5"/>
                     </StackLayout>
                     <StackLayout row="1" col="1"
                                  class="{{ (options[3].show && options[3].correct)? 'correct m-5' : (options[3].show && options[3].selected && !options[3].correct)? 'incorrect m-5': 'not-selected-image' }}"
                                  tap="fourthOption">
-                        <image src="{{ options[3].image }}" class="m-5"
-
-                               visibility="{{ options[3].image ? 'visible' : 'collapsed' }}"/>
+                        <image src="{{ options[3].image }}" class="m-5"/>
                     </StackLayout>
                 </GridLayout>
 
@@ -98,15 +92,13 @@
                           visibility="{{ options[0].description ? 'visible' : 'collapsed' }}">
                     <Repeater.itemTemplate>
                         <GridLayout columns="auto,*"
-                                    class="{{ (show && correct)? 'correct m-y-5' : (show && selected && !correct)? 'incorrect m-y-5': 'not-selected m-y-5' }}">
+                                    class="{{ (show && correct)? 'correct m-y-5' : (show && selected && !correct)? 'incorrect m-y-5': 'not-selected m-y-5' }}" tap="selectOption">
                             <Label col="0" text="{{ tag + '. ' }}"
-                                   class="{{ (show && correct)? 'correct m-l-2' : (show && selected && !correct)? 'incorrect m-l-2': 'not-selected m-l-2' }}"
-                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
-                            />
+                                   class="{{ (show && correct)? 'correct m-l-2 m-y-10' : (show && selected && !correct)? 'incorrect m-l-2 m-y-10': 'not-selected m-l-2 m-y-10' }}"
+                                   textWrap="true"/>
                             <Label col="1" text="{{ description }}"
-                                   class="{{ (show && correct)? 'correct' : (show && selected && !correct)? 'incorrect': 'not-selected' }}"
-                                   textWrap="true" marginTop="10dpi" marginBottom="10dpi" tap="selectOption"
-                            />
+                                   class="{{ (show && correct)? 'correct m-y-10' : (show && selected && !correct)? 'incorrect m-y-10': 'not-selected m-y-10' }}"
+                                   textWrap="true"/>
                         </GridLayout>
                     </Repeater.itemTemplate>
                 </Repeater>
