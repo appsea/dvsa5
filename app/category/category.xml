@@ -33,7 +33,7 @@
     <GridLayout rows="*, auto">
         <ListView row="0" id="categoryList" class="list-group m-10" items="{{ categories }}" separatorColor="white" itemTap="selectCategory">
             <ListView.itemTemplate>
-                <Card:CardView class="{{ selected? 'transactions-list-item-selected m-5 cardStyle': 'transactions-list-item m-5 cardStyle'}}" margin="10" elevation="30" radius="5">
+                <Card:CardView class="{{ selected? 'category-list-item-selected m-5 cardStyle': 'category-list-item m-5 cardStyle'}}" margin="10" elevation="30" radius="5">
                     <GridLayout columns="auto, *, auto" class="m-10">
                         <StackLayout col="0" height="50" width="50" class="badge mr-10">
                             <Label text="{{ icon }}" class="fa c-white"></Label>
@@ -72,7 +72,7 @@
                 </Card:CardView>
             </ListView.itemTemplate>
         </ListView>
-        <StackLayout row="1" visibility="{{ selected > 0 ? 'visible' : 'collapsed' }}" >
+        <StackLayout row="1" visibility="{{ selected > 0 ? 'visible' : 'collapsed' }}">
             <Button id="startButton" class="btn btn-primary t-18" text="Practice" tap="practice" width="80%"/>
         </StackLayout>
     </GridLayout>

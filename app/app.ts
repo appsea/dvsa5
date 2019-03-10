@@ -15,7 +15,7 @@ import { PersistenceService } from "~/services/persistence.service";
 import { GeneralService } from "./services/general.service";
 
 purchase.init([
-    "base.sas.quiz.premium"
+    "dvsa.theory.test.premium"
 ]);
 
 if (isAndroid) {

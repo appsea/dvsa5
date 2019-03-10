@@ -1,6 +1,6 @@
 // Place any CSS rules you want to apply on both iOS and Android here.
 // This is where the vast majority of your CSS code goes.
-
+@import 'app-variables';
 // Font icon class
 .fa {
   font-family: "fa-solid-900", "FontAwesome";
@@ -47,11 +47,6 @@
   horizontal-align: center;
 }
 
-.flexbox-item {
-  width: 95%;
-  text-align: center;
-}
-
 .page-login {
   background: #3C59FD no-repeat right bottom;
   background-size: contain;
@@ -67,7 +62,7 @@ ActionBar .action-bar-title {
 }
 
 ActionBar .flagged {
-  color: #22ff20;
+  color: $flag-color;
 }
 
 Label {
@@ -76,18 +71,18 @@ Label {
 }
 
 .result-passed {
-  color: green;
+  color: $passed;
   font-size: 40;
 }
 
 .result-failed {
-  color: #ed1b1f;
+  color: $incorrect;
   font-size: 40;
 }
 
 .timer {
   font-size: 20;
-  color: #000099;
+  color: $timer-color;
   margin-top: 5;
   margin-bottom: 5;
 }
@@ -99,37 +94,37 @@ Label {
 }
 
 .not-selected {
-  background-color: #f6f6f6;
+  background-color: $not-selected;
   color: black;
   border-radius: 8;
 }
 
 .question-image {
-  background-color: #4a98b4;
+  background-color: $question-image-background;
   border-radius: 8;
   @extend .m-y-10;
 }
 
 .selected-image {
-  background-color: #3A53FF;
+  background-color: $selected-item;
   border-radius: 8;
   @extend .m-5;
 }
 
 .not-selected-image {
-  background-color: #4a98b4;
+  background-color: $question-image-background;
   border-radius: 8;
   @extend .m-5;
 }
 
 .skipped-correct-image {
-  background-color: #4c8ec1;
+  background-color: $question-image-background;
   color: white;
   border-radius: 8;
 }
 
 .skipped-not-selected-image {
-  background-color: #808080;
+  background-color: $tbd;
   color: white;
   border-radius: 8;
 }
@@ -144,31 +139,31 @@ Label {
 }
 
 .all {
-  background-color: #14418B;
+  background-color: $all;
   color: white;
   border-radius: 8;
 }
 
 .correct {
-  background-color: #07C65A;
+  background-color: $correct;
   color: white;
   border-radius: 8;
 }
 
 .incorrect {
-  background-color: #ed1b1f;
+  background-color: $incorrect;
   color: white;
   border-radius: 8;
 }
 
 .skipped {
-  background-color: #4c8ec1;
+  background-color: $skipped;
   color: white;
   border-radius: 8;
 }
 
 .tbd {
-  background-color: #808080;
+  background-color: $tbd;
   color: white;
   border-radius: 8;
 }
@@ -181,7 +176,7 @@ Label {
 }
 
 .exam-date-failed {
-  color: #ed1b1f;
+  color: $incorrect;
   font-size: 12;
   margin-top: 5;
   margin-left: 5;
@@ -189,7 +184,7 @@ Label {
 }
 
 .result-count-failed {
-  color: #ed1b1f;
+  color: $incorrect;
   font-size: 16;
   font-weight: bold;
   margin-left: 5;
@@ -201,7 +196,7 @@ Label {
 }
 
 .exam-date-passed {
-  color: green;
+  color: $passed;
   font-size: 11;
   margin-top: 5;
   margin-left: 5;
@@ -209,7 +204,7 @@ Label {
 }
 
 .result-count-passed {
-  color: green;
+  color: $passed;
   font-size: 16;
   font-weight: bold;
   margin-left: 5;
@@ -217,13 +212,13 @@ Label {
 }
 
 .progress-result-passed {
-  color: green;
+  color: $passed;
   font-weight: bold;
   font-size: 16;
 }
 
 .progress-result-failed {
-  color: #ed1b1f;
+  color: $incorrect;
   font-weight: bold;
   font-size: 16;
 }
@@ -241,7 +236,7 @@ Label {
 }
 
 .exam-date-failed {
-  color: #ed1b1f;
+  color: $incorrect;
   font-size: 12;
   margin-top: 5;
   margin-left: 5;
@@ -249,7 +244,7 @@ Label {
 }
 
 .result-count-failed {
-  color: #ed1b1f;
+  color: $incorrect;
   font-size: 16;
   font-weight: bold;
   margin-left: 5;
@@ -261,7 +256,7 @@ Label {
 }
 
 .exam-date-passed {
-  color: green;
+  color: $passed;
   font-size: 11;
   margin-top: 5;
   margin-left: 5;
@@ -269,7 +264,7 @@ Label {
 }
 
 .result-count-passed {
-  color: green;
+  color: $passed;
   font-size: 16;
   font-weight: bold;
   margin-left: 5;
@@ -277,13 +272,13 @@ Label {
 }
 
 .progress-result-passed {
-  color: green;
+  color: $passed;
   font-weight: bold;
   font-size: 16;
 }
 
 .progress-result-failed {
-  color: #ed1b1f;
+  color: $incorrect;
   font-weight: bold;
   font-size: 16;
 }
@@ -327,41 +322,41 @@ Label {
 
 .bullet {
   @extend .paragraph;
-  color: blue;
+  color: $bullet;
   margin-left: 10;
 }
 
 .status-incomplete {
   @extend .paragraph;
   font-weight: bold;
-  color: #ed1b1f;
+  color: $incorrect;
 }
 
 .status-complete {
   @extend .paragraph;
   font-weight: bold;
-  color: #07C65A;
+  color: $correct;
 }
 
 .switch-incomplete {
   margin-left: 5;
   margin-top: 10;
-  background-color: #ed1b1f;
+  background-color: $incorrect;
 }
 
 .switch-complete {
   margin-left: 5;
   margin-top: 10;
-  background-color: #07C65A;
+  background-color: $correct;
 }
 
 .chapter-incomplete {
-  background-color: #ed1b1f;
+  background-color: $incorrect;
   color: white;
 }
 
 .chapter-complete {
-  background-color: #07C65A;
+  background-color: $correct;
   color: white;
 }
 
@@ -377,16 +372,12 @@ Label {
 }
 
 .progressbar-value {
-  background: #51BC6B;
+  background: $progressbar-value;
 }
 
 .mesh-background {
   background-repeat: no-repeat;
   background-position: bottom;
-}
-
-.category-full-background {
-  background-color: #3370c1;
 }
 
 .category-background {
@@ -402,7 +393,7 @@ Label {
 }
 
 .category-todo-heading {
-  color: red;
+  color: $todo;
   font-size: 15;
   font-weight: bold;
   margin-left: 5;
@@ -414,7 +405,7 @@ Label {
 }
 
 .category-complete-heading {
-  color: #2cb316;
+  color: $complete;
   font-size: 16;
   font-weight: bold;
   margin-left: 5;
@@ -425,92 +416,27 @@ Label {
   margin-right: 10;
   vertical-align: middle;
   text-align: center;
-  background-color: #f6993f;
+  background-color: $category-icon;
 }
 
-.transactions-list {
-  background-color: #f1f5f8;
-  margin-left: 15;
-  margin-right: 15;
-}
-
-.transactions-list .transactions-list-header {
-  font-size: 12;
-  color: #3d4852;
-  margin-bottom: 5;
-}
-
-.transactions-list-item {
-  background-color: #ffffff;
-  border-color: #f1f5f8;
+.category-list-item {
+  background-color: $category-background;
+  border-color: $category-background;
   border-radius: 10;
   border-width: 1;
   padding: 5 15;
   margin-bottom: 10;
 }
 
-.transactions-list-item-selected {
-  background-color: #B8DAF5;
-  border-color: #B8DAF5;
+.category-list-item-selected {
+  background-color: $selected-category;
+  border-color: $selected-category;
   border-radius: 10;
   border-width: 1;
   padding: 5 15;
   margin-bottom: 10;
 }
 
-.transactions-list .transactions-list-item .badge {
-  border-radius: 50%;
-  margin-right: 10;
-  vertical-align: middle;
-  text-align: center;
-}
-
-.transactions-list .transactions-list-item .badge .icon {
-  color: #ffffff;
-}
-
-.transactions-list .transactions-list-item .badge.home {
-  background-color: #3490dc;
-}
-
-.transactions-list .transactions-list-item .badge.transport {
-  background-color: #22292f;
-}
-
-.transactions-list .transactions-list-item .badge.communication {
-  background-color: #3490dc;
-}
-
-.transactions-list .transactions-list-item .badge.hotel {
-  background-color: #38c172;
-}
-
-.transactions-list .transactions-list-item .badge.restaurant {
-  background-color: #900C3F;
-}
-
-.transactions-list .transactions-list-item .title {
-  font-size: 14;
-  color: #3d4852;
-}
-
-.transactions-list .transactions-list-item .category {
-  font-size: 12;
-  color: #b8c2cc;
-}
-
-.transactions-list .transactions-list-item .ammount {
-  font-size: 14;
-  vertical-align: middle;
-}
-
-.transactions-list .transactions-list-item .ammount .quantity.red {
-  color: #e3342f;
-}
-
-.transactions-list .transactions-list-item .ammount .quantity.green {
-  color: #38c172;
-}
 .icon-selected {
   color: #3A53FF;
   vertical-align: middle;

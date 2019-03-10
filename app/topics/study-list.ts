@@ -3,10 +3,10 @@ import { EventData } from "data/observable";
 import { isAndroid } from "platform";
 import { NavigatedData, Page } from "ui/page";
 import { CreateViewEventData } from "ui/placeholder";
-import * as navigationModule from "../shared/navigation";
 import { ITopic } from "~/shared/questions.model";
+import { SelectedPageService } from "~/shared/selected-page-service";
+import * as navigationModule from "../shared/navigation";
 import { StudyListViewModel } from "./study-list-view-model";
-import {SelectedPageService} from "~/shared/selected-page-service";
 
 let vm: StudyListViewModel;
 let banner: any;

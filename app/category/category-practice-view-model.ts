@@ -5,6 +5,7 @@ import { topmost } from "ui/frame";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
 import { CategoryService } from "~/services/category.service";
+import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
 import { StatsService } from "~/services/stats.service";
 import { IOption, IQuestion, IState } from "~/shared/questions.model";
@@ -45,8 +46,8 @@ export class CategoryPracticeViewModel extends Observable {
     }
 
     get showAdOnNext(): boolean {
-        return !CategoryPracticeViewModel._errorLoading && this.questionNumber % constantsModule.AD_COUNT === 0
-            && AdService.getInstance().showAd && (((this.count) % constantsModule.AD_COUNT) === 0);
+        return !CategoryPracticeViewModel._errorLoading && !PersistenceService.getInstance().isPremium() && AdService.getInstance().showAd && this.questionNumber % constantsModule.AD_COUNT === 0
+            && (((this.count) % constantsModule.AD_COUNT) === 0);
     }
 
     static _errorLoading = false;

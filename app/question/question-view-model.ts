@@ -55,8 +55,8 @@ export class QuestionViewModel extends Observable {
     }
 
     get showAdOnNext(): boolean {
-        return !QuestionViewModel._errorLoading && this.questionNumber % constantsModule.AD_COUNT === 0
-            && AdService.getInstance().showAd && (((this.count + 1) % constantsModule.AD_COUNT) === 0);
+        return !QuestionViewModel._errorLoading && AdService.getInstance().showAd && this.questionNumber % constantsModule.AD_COUNT === 0
+            && (((this.count + 1) % constantsModule.AD_COUNT) === 0);
     }
 
     static _errorLoading = false;
@@ -109,7 +109,6 @@ export class QuestionViewModel extends Observable {
     }
 
     next(): void {
-        console.log("Next...");
         if ((this._state.questionNumber < this._state.totalQuestions) || this.isPractice()) {
             if (this._state.questions.length > 0 && this._state.questions.length > this._state.questionNumber) {
                 this._state.questionNumber = this._state.questionNumber + 1;
