@@ -9,6 +9,10 @@ export class DetailedResultViewModel extends Observable {
 
     @ObservableProperty() searchPhrase: string = "";
 
+    private readonly ALL: string = "All";
+    private readonly INCORRECT: string = "Incorrect";
+    private readonly CORRECT: string = "Correct";
+    private readonly SKIPPED: string = "Skipped";
     private _searching: boolean = false;
 
     get size() {
@@ -42,7 +46,7 @@ export class DetailedResultViewModel extends Observable {
     }
 
     all(): void {
-        this._message = "All";
+        this._message = this.ALL;
         this.allQuestions.forEach((question) => {
             question.skipped = QuestionUtil.isSkipped(question);
         });
@@ -52,7 +56,7 @@ export class DetailedResultViewModel extends Observable {
     }
 
     correct(): void {
-        this._message = "Correct";
+        this._message = this.CORRECT;
         this._questions = this.allQuestions.filter((question) => QuestionUtil.isCorrect(question));
         this._size = this._questions.length;
         this.publish();
@@ -60,13 +64,13 @@ export class DetailedResultViewModel extends Observable {
 
     incorrect(): void {
         this._questions = this.allQuestions.filter((question) => QuestionUtil.isWrong(question));
-        this._message = "Incorrect";
+        this._message = this.INCORRECT;
         this._size = this._questions.length;
         this.publish();
     }
 
     skipped(): void {
-        this._message = "Skipped";
+        this._message = this.SKIPPED;
         this._questions = this.allQuestions.filter((question) => QuestionUtil.isSkipped(question));
         this._size = this._questions.length;
         this.publish();
@@ -89,7 +93,15 @@ export class DetailedResultViewModel extends Observable {
     }
 
     clear(): void {
-        this.refilter();
+        if (this._message === this.CORRECT) {
+            this.correct();
+        } else if (this._message === this.INCORRECT) {
+            this.incorrect();
+        } else if (this._message === this.SKIPPED) {
+            this.skipped();
+        } else {
+            this.all();
+        }
     }
 
     refilter() {

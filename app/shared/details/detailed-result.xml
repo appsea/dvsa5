@@ -90,12 +90,12 @@
 
                         <Repeater items="{{ options }}" row="1" visibility="{{ !skipped && options[0].description ? 'visible' : 'collapsed' }}">
                             <Repeater.itemTemplate>
-                                <GridLayout columns="auto,*" class="{{ (!selected && !correct)? 'not-selected m-y-5': ($parents['Repeater'].skipped && correct)? 'skipped m-y-5':(selected && !correct)?'incorrect m-y-5': 'correct m-y-5'}}">
+                                <GridLayout columns="auto,*" class="{{ (!selected && !correct)? 'not-selected m-y-5': (selected && !correct)?'incorrect m-y-5': 'correct m-y-5'}}">
                                     <Label col="0" text="{{ tag + '. ' }}"
-                                           class="{{ (!selected && !correct)? 'not-selected m-l-2 m-y-10': ($parents['Repeater'].skipped && correct)? 'skipped m-l-2 m-y-10':(selected && !correct)?'incorrect m-l-2 m-y-10': 'correct m-l-2 m-y-10'}}"
+                                           class="{{ (!selected && !correct)? 'not-selected m-l-2 m-y-10': (selected && !correct)?'incorrect m-l-2 m-y-10': 'correct m-l-2 m-y-10'}}"
                                            textWrap="true"/>
                                     <Label col="1" text="{{ description }}"
-                                           class="{{ (!selected && !correct)? 'not-selected m-y-10': ($parents['Repeater'].skipped && correct)? 'skipped m-y-10':(selected && !correct)?'incorrect m-y-10': 'correct m-y-10'}}"
+                                           class="{{ (!selected && !correct)? 'not-selected m-y-10': (selected && !correct)?'incorrect m-y-10': 'correct m-y-10'}}"
                                            textWrap="true"/>
                                 </GridLayout>
                             </Repeater.itemTemplate>
