@@ -1,166 +1,242 @@
-import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
 import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { isAndroid, screen } from "tns-core-modules/platform";
-import * as ButtonModule from "tns-core-modules/ui/button";
-import { SwipeDirection } from "tns-core-modules/ui/gestures";
-import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import * as dialogs from "ui/dialogs";
 import { topmost } from "ui/frame";
-import { Label } from "ui/label";
-import { NavigatedData, Page } from "ui/page";
-import { CreateViewEventData } from "ui/placeholder";
-import { Repeater } from "ui/repeater";
-import { TextView } from "ui/text-view";
-import { AdService } from "../services/ad.service";
-import { ConnectionService } from "../shared/connection.service";
-import { CategoryPracticeViewModel } from "./category-practice-view-model";
+import { QuestionViewModel } from "~/question/question-view-model";
+import { AdService } from "~/services/ad.service";
+import { CategoryService } from "~/services/category.service";
+import { PersistenceService } from "~/services/persistence.service";
+import { QuestionService } from "~/services/question.service";
+import { StatsService } from "~/services/stats.service";
+import { IOption, IQuestion, IState } from "~/shared/questions.model";
+import { QuizUtil } from "~/shared/quiz.util";
+import * as constantsModule from "../shared/constants";
+import * as navigationModule from "../shared/navigation";
 
-let vm: CategoryPracticeViewModel;
-let optionList: Repeater;
-let suggestionButton: ButtonModule.Button;
-let numbers: Array<number>;
-let _page: any;
-let scrollView: ScrollView;
-let banner: any;
-let loaded: boolean = false;
+export class CategoryPracticeViewModel extends Observable {
 
-export function onPageLoaded(args: EventData): void {
-    if (!isAndroid) {
-        return;
-    }
-    resetBanner();
-}
-
-export function resetBanner() {
-    if (banner) {
-        banner.height = "0";
-    }
-    loaded = false;
-}
-
-/* ***********************************************************
-* Use the "onNavigatingTo" handler to initialize the page binding context.
-*************************************************************/
-export function onNavigatingTo(args: NavigatedData): void {
-    if (args.isBackNavigation) {
-        return;
-    }
-    _page = <Page>args.object;
-    numbers = <Array<number>> _page.navigationContext;
-    optionList = _page.getViewById("optionList");
-    scrollView = _page.getViewById("scrollView");
-    banner = _page.getViewById("banner");
-    vm = new CategoryPracticeViewModel(numbers);
-    _page.bindingContext = vm;
-}
-
-export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
-    previous();
-    args.cancel = true;
-}
-
-/* ***********************************************************
-* According to guidelines, if you have a drawer on your page, you should always
-* have a button that opens it. Get a reference to the RadSideDrawer view and
-* use the showDrawer() function to open the app drawer section.
-*************************************************************/
-export function onDrawerButtonTap(args: EventData) {
-    resetBanner();
-    vm.showDrawer();
-}
-
-export function handleSwipe(args) {
-    if (args.direction === SwipeDirection.left) {
-        next();
-    } else if (args.direction === SwipeDirection.right) {
-        previous();
-    }
-}
-
-export function moveToLast() {
-    suggestionButton = _page.getViewById("suggestionButton");
-    if (suggestionButton) {
-        const locationRelativeTo = suggestionButton.getLocationRelativeTo(scrollView);
-        if (scrollView && locationRelativeTo) {
-            scrollView.scrollToVerticalOffset(locationRelativeTo.y, false);
+    get question() {
+        if (!this._question) {
+            this._question = {options: [], explanation: "", show: false};
         }
-    }
-}
 
-export function goToEditPage(): void {
-    vm.goToEditPage();
-}
-
-export function previous(): void {
-    if (!vm) {
-        vm = new CategoryPracticeViewModel([]);
-    }
-    vm.previous();
-    if (scrollView) {
-        scrollView.scrollToVerticalOffset(0, false);
-    }
-}
-
-export function flag(): void {
-    vm.flag();
-}
-
-export function next(): void {
-    if (AdService.getInstance().showAd && !ConnectionService.getInstance().isConnected()) {
-        dialogs.alert("Please connect to internet so that we can fetch next question for you!");
-    } else {
-        vm.next();
-        if (AdService.getInstance().showAd && !loaded) {
-            AdService.getInstance().showSmartBanner().then(
-                () => {
-                    loaded = true;
-                    banner.height = AdService.getInstance().getAdHeight() + "dpi";
-                },
-                (error) => {
-                    resetBanner();
+        for (const option of this._question.options) {
+            if (option.description) {
+                if (option.description.startsWith("A.")) {
+                    option.description = option.description.replace("A. ", "").trim();
+                } else if (option.description.startsWith("B.")) {
+                    option.description = option.description.replace("B. ", "").trim();
+                } else if (option.description.startsWith("C.")) {
+                    option.description = option.description.replace("C. ", "").trim();
+                } else if (option.description.startsWith("D.")) {
+                    option.description = option.description.replace("D. ", "").trim();
                 }
-            );
+            }
         }
-        if (scrollView) {
-            scrollView.scrollToVerticalOffset(0, false);
+
+        return this._question;
+    }
+
+    get options() {
+        return this._question.options;
+    }
+
+    get questionNumber() {
+        return this._questionNumber;
+    }
+
+    get showAdOnNext(): boolean {
+        return !CategoryPracticeViewModel._errorLoading && !PersistenceService.getInstance().isPremium() && AdService.getInstance().showAd && this.questionNumber % constantsModule.AD_COUNT === 0
+            && (((this.count) % constantsModule.AD_COUNT) === 0);
+    }
+
+    static _errorLoading = false;
+
+    private count: number = 0;
+    private _questionService: QuestionService;
+    private _question: IQuestion;
+    private _questionNumber: number = 0;
+    private _cache: Array<IQuestion> = [];
+
+    private _mode: string;
+    private _numbers: Array<number>;
+
+    constructor(numbers: Array<number>) {
+        super();
+        this._questionService = QuestionService.getInstance();
+        this._numbers = numbers;
+        this.next();
+    }
+
+    showInterstitial(): any {
+        if (AdService.getInstance().showAd && this.count > 1
+            && this.questionNumber % constantsModule.AD_COUNT === 0
+            && (((this.count - 1) % constantsModule.AD_COUNT) === 0)) {
+            AdService.getInstance().showInterstitial();
         }
     }
-}
 
-export function showAnswer(): void {
-    vm.showAnswer();
-    optionList.refresh();
-    moveToLast();
-}
-
-export function selectOption(args): void {
-    if (!vm.enableSelection()) {
-        vm.showAnswer();
-        vm.selectOption(args);
-        optionList.refresh();
-        // moveToLast();
-        vm.updatePracticeStats();
+    next(): void {
+        if (this._cache.length === 0 || this._questionNumber >= this._cache.length) {
+            this.fetchUniqueQuestion();
+        } else {
+            this._questionNumber = this._questionNumber + 1;
+            this._question = this._cache[this._questionNumber - 1];
+            this.publish();
+        }
     }
-}
 
-export function firstOption(args) {
-    divert(0);
-}
-export function secondOption(args: CreateViewEventData) {
-    divert(1);
-}
-export function thirdOption(args: CreateViewEventData) {
-    divert(2);
-}
-export function fourthOption(args: CreateViewEventData) {
-    divert(3);
-}
+    previous(): void {
+        this.goPrevious();
+    }
 
-export function divert(index: number) {
-    if (!vm.enableSelection()) {
-        vm.showAnswer();
-        vm.selectIndex(index);
-        optionList.refresh();
+    goPrevious() {
+        if (this._questionNumber > 1) {
+            this._questionNumber = this._questionNumber - 1;
+            this._question = this._cache[this._questionNumber - 1];
+            this.publish();
+        }
+    }
+
+    flag(): void {
+        this._questionService.handleFlagQuestion(this._question);
+        this.publish();
+    }
+
+    showDrawer() {
+        QuestionViewModel.showDrawer();
+        AdService.getInstance().hideAd();
+    }
+
+    enableSelection(): boolean {
+        return this._question.options.filter((option) => option.selected).length > 0 || this._question.show;
+    }
+
+    updatePracticeStats() {
+        StatsService.getInstance().updatePracticeStats(this.question);
+    }
+
+    allQuestionsAsked(): boolean {
+        return this._numbers.length <= this._cache.length;
+    }
+
+    isPractice(): boolean {
+        return this._mode === constantsModule.PRACTICE;
+    }
+
+    publish() {
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "question",
+            value: this._question
+        });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "questionNumber",
+            value: this._questionNumber
+        });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "options",
+            value: this._question.options
+        });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "totalQuestions",
+            value: this._numbers.length
+        });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "showAdOnNext",
+            value: this.showAdOnNext
+        });
+    }
+
+    showAnswer(): void {
+        this.question.options.forEach((option) => option.show = true);
+        this.question.show = true;
+        this.publish();
+    }
+
+    selectIndex(index: number) {
+        this.selectedOption(this._question.options[index]);
+    }
+
+    selectOption(args: any) {
+        const selectedOption: IOption = args.view.bindingContext;
+        if (selectedOption.selected) {
+            selectedOption.selected = false;
+            this.question.skipped = true;
+        } else {
+            this.question.options.forEach((item, index) => {
+                item.selected = item.tag === selectedOption.tag;
+            });
+            this.question.skipped = false;
+        }
+        QuestionService.getInstance().handleWrongQuestions(this.question);
+        CategoryService.getInstance().attemptQuestion(this.question);
+        console.log("selectOption", this.question.options);
+    }
+
+    getTotalQuestions(): number {
+        return this._numbers.length;
+    }
+
+    goToEditPage() {
+        const state: IState = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
+        navigationModule.gotoEditPage(state);
+    }
+
+    private increment() {
+        this.count = this.count + 1;
+    }
+
+    private selectedOption(selectedOption: IOption) {
+        if (selectedOption.selected) {
+            selectedOption.selected = false;
+            this.question.skipped = true;
+        } else {
+            this.question.options.forEach((item, index) => {
+                item.selected = item.tag === selectedOption.tag;
+            });
+            this.question.skipped = false;
+        }
+        this.publish();
+        QuestionService.getInstance().handleWrongQuestions(this.question);
+    }
+
+    private fetchUniqueQuestion() {
+        if (!this.allQuestionsAsked()) {
+            let randomIndex: number = QuizUtil.getRandomNumber(this._numbers.length);
+            let questionNumber = this._numbers[randomIndex];
+            while (this.isAlreadyAsked(questionNumber)) {
+                randomIndex = QuizUtil.getRandomNumber(this._numbers.length);
+                questionNumber = this._numbers[randomIndex];
+            }
+            QuestionService.getInstance().getQuestion(questionNumber).then((que: IQuestion) => {
+                this._questionNumber = this._questionNumber + 1;
+                this._question = que;
+                QuizUtil.correctImagePath(this._question);
+                this._cache.push(this._question);
+                this.publish();
+            });
+            this.increment();
+            this.showInterstitial();
+        } else {
+            dialogs.confirm("Hurray!! All questions are attempted. Click Ok to go to categories.").then((proceed) => {
+                if (proceed) {
+                    navigationModule.toPage("category/category");
+                }
+            });
+        }
+    }
+
+    private isAlreadyAsked(questionNumber: number): boolean {
+        return this._cache.filter((que) => +que.number === questionNumber).length > 0;
     }
 }
