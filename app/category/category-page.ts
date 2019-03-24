@@ -9,8 +9,8 @@ import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { TextView } from "tns-core-modules/ui/text-view";
-import { Label } from "ui/label";
-import { NavigatedData, Page } from "ui/page";
+import { Label } from "tns-core-modules/ui/label";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import { CategoryListViewModel } from "./category-list-view-model";
 

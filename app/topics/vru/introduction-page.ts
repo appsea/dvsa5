@@ -5,7 +5,7 @@ import { isAndroid } from "tns-core-modules/platform";
 import { topmost } from "tns-core-modules/ui/frame";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { Switch } from "tns-core-modules/ui/switch";
-import { NavigatedData, Page } from "ui/page";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
 import * as navigationModule from "~/shared/navigation";
 import { ISubTopic } from "~/shared/questions.model";
