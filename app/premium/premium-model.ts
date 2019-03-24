@@ -1,5 +1,5 @@
-import * as appSettings from "application-settings";
 import * as purchase from "nativescript-purchase";
+import * as appSettings from "tns-core-modules/application-settings";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { AdService } from "~/services/ad.service";

@@ -82,7 +82,7 @@ export interface ITopic {
 
 export interface ISubTopic {
     name?: string;
-    link?: string;
+    link: string;
     complete?: boolean;
 }
 

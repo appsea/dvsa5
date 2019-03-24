@@ -1,0 +1,62 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      #- image: circleci/openjdk:8u181-jdk-node-browsers
+      - image: circleci/android:api-28-node8-alpha
+
+      #- image: circleci/android:api-25-alpha
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    environment:
+      JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+      #ANDROID_HOME: /usr/lib/google-cloud-sdk
+      JVM_OPTS: -Xmx4096m
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4096m" -XX:+HeapDumpOnOutOfMemoryError -Dorg.gradle.daemon=false'
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+        
+      # - run: bash ./.circleci/download.sh
+      - run: echo $BASE_64_KEY | base64 -d > $KEYSTORE
+      - run: echo $JSON > key.json
+      - run: npm run tsc
+      - run: echo yes | sudo npm install nativescript -g --unsafe-perm
+      #- run: npm install
+      - run: echo yes | tns setup
+      - run: echo yes | tns cloud setup
+      - run: echo yes | tns doctor
+      - run: tns platform add android
+      - run: ls -lrt $HOME
+      - run: mkdir $HOME/.gradle
+      - run: cp app/App_Resources/Android/gradle.properties $HOME/.gradle/
+      - run: cp app/App_Resources/Android/gradle.properties platforms/android/
+      - run: more $HOME/.gradle/gradle.properties
+      - run: echo -n $'\031' | tns build android --env.snapshot --env.uglify --release --key-store-path $KEYSTORE --key-store-password $KEYSTORE_PASSWORD --key-store-alias sasquiz --key-store-alias-password $KEYSTORE_PASSWORD --copy-to dvsa.apk
+      - run: ls -lrt dvsa.apk
+      - run: chmod +x PlayStoreUploader/bin/PlayStoreUploader
+      - run: PlayStoreUploader/bin/PlayStoreUploader -key "key.json" -apk "dvsa.apk" -track "internal" -name "myApp" -notes "new release"

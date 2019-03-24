@@ -5,8 +5,9 @@ import { IState, ISubTopic } from "./questions.model";
 export function route() {
     let path = SettingsService.getInstance().getRoute();
     if (!path) {
-        path = "question/practice";
+        path = "question/practice-page";
     }
+    path = "question/practice-page";
     toPage(path);
 }
 
@@ -23,7 +24,7 @@ export function	gotoResultPage(state: IState) {
 
 export function	gotoEditPage(state: IState) {
     frameModule.topmost().navigate({
-        moduleName: "question/edit-question",
+        moduleName: "question/edit-question-page",
         context: state,
         transition: {
             name: "fade"
@@ -33,7 +34,7 @@ export function	gotoEditPage(state: IState) {
 
 export function	gotoQuestionMap(state: IState) {
     frameModule.topmost().navigate({
-        moduleName: "question/map",
+        moduleName: "question/map-page",
         context: state,
         transition: {
             name: "fade"
@@ -52,7 +53,7 @@ export function	toPage(path: string) {
 
 export function	gotoDetailsPage(state: IState) {
     frameModule.topmost().navigate({
-        moduleName: "shared/details/detailed-result",
+        moduleName: "shared/details/detailed-result-page",
         context: state,
         transition: {
             name: "fade"
@@ -66,7 +67,7 @@ export function	goBack() {
 
 export function	gotoCategoryPractice(numbers: Array<number>) {
     frameModule.topmost().navigate({
-        moduleName: "category/category-practice",
+        moduleName: "category/category-practice-page",
         context: numbers,
         transition: {
             name: "fade"
@@ -76,7 +77,7 @@ export function	gotoCategoryPractice(numbers: Array<number>) {
 
 export function	gotoSubtopics(topic: string) {
     frameModule.topmost().navigate({
-        moduleName: "topics/subtopic-list",
+        moduleName: "topics/subtopic-list-page",
         context: topic,
         transition: {
             name: "fade"

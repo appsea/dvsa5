@@ -1,7 +1,7 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
-import * as appSettings from "application-settings";
+import * as appSettings from "tns-core-modules/application-settings";
 import { Observable } from "tns-core-modules/data/observable";
 import { PRACTICE_STATS, PREMIUM, RESULT } from "~/shared/constants";
 import { ICategory, IPracticeStats, IQuestion, IResult, ITopic } from "~/shared/questions.model";

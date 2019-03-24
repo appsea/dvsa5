@@ -1,6 +1,6 @@
 import * as Toast from "nativescript-toast";
-import { setTimeout } from "timer";
 import { EventData, Observable } from "tns-core-modules/data/observable";
+import { setTimeout } from "tns-core-modules/timer";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { AdService } from "~/services/ad.service";
 import { HttpService } from "~/services/http.service";

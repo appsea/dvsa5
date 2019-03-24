@@ -84,7 +84,7 @@ export class BookmarkQuestionModel extends Observable {
         } else {
             dialogs.confirm(message).then((proceed) => {
                 if (proceed || this.length < 1) {
-                    navigationModule.toPage("question/practice");
+                    navigationModule.toPage("question/practice-page");
                 }
             });
         }

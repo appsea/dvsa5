@@ -1,4 +1,4 @@
-import * as appSettings from "application-settings";
+import * as appSettings from "tns-core-modules/application-settings";
 import { IQuestion, ISetting, IState } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
@@ -136,7 +136,7 @@ export class SettingsService {
             return appSettings.getString(constantsModule.ROUTE);
         }
 
-        return "question/practice";
+        return "question/practice-page";
     }
 
     hasQuestions(): boolean {

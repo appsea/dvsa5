@@ -14,7 +14,8 @@
   "scripts": {
     "lint": "tslint \"app/**/*.ts\"",
     "lintfix": "tslint --fix app/**/*.ts{,x}",
-    "test": "mocha --require ts-node/register app/tests/**/*.ts"
+    "test": "mocha --require ts-node/register app/tests/**/*.ts",
+    "tsc": "tsc"
   },
   "dependencies": {
     "nativescript-admob": "^3.2.0",

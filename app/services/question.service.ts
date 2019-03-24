@@ -1,9 +1,9 @@
 /**
  * Created by rakesh on 15-Nov-2017.
  */
-import * as appSettings from "application-settings";
 import * as appVersion from "nativescript-appversion";
 import * as Toast from "nativescript-toast";
+import * as appSettings from "tns-core-modules/application-settings";
 import { Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "ui/dialogs";
 import * as utils from "utils/utils";

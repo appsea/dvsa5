@@ -288,7 +288,7 @@ export class QuestionViewModel extends Observable {
                         .then((proceed) => {
                             if (proceed) {
                                 SettingsService.getInstance().clearCache(this._mode);
-                                navigationModule.toPage("question/practice");
+                                navigationModule.toPage("question/practice-page");
                             }
                         });
                 }

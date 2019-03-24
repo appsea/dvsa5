@@ -1,7 +1,7 @@
 import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { isAndroid } from "platform";
 import { EventData, Observable } from "tns-core-modules/data/observable";
+import { isAndroid } from "tns-core-modules/platform";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";

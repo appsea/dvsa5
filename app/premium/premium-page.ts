@@ -1,11 +1,11 @@
 import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
-import * as appSettings from "application-settings";
 import * as purchase from "nativescript-purchase";
 import { Product } from "nativescript-purchase/product";
 import { Transaction, TransactionState } from "nativescript-purchase/transaction";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { isAndroid } from "platform";
+import * as appSettings from "tns-core-modules/application-settings";
 import { EventData, Observable } from "tns-core-modules/data/observable";
+import { isAndroid } from "tns-core-modules/platform";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { ItemEventData } from "tns-core-modules/ui/list-view";
