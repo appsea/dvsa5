@@ -5,7 +5,7 @@ import * as appVersion from "nativescript-appversion";
 import * as Toast from "nativescript-toast";
 import * as appSettings from "tns-core-modules/application-settings";
 import { Observable } from "tns-core-modules/data/observable";
-import * as dialogs from "ui/dialogs";
+import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as utils from "utils/utils";
 import { ConnectionService } from "~/shared/connection.service";
 import { IQuestion } from "~/shared/questions.model";

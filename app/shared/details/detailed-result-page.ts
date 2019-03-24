@@ -1,5 +1,5 @@
-import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "tns-core-modules/application";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { isAndroid } from "tns-core-modules/platform";
 import { topmost } from "tns-core-modules/ui/frame";

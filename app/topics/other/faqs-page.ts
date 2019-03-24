@@ -1,11 +1,11 @@
-import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
-import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "tns-core-modules/application";
+import { EventData, Observable } from "tns-core-modules/data/observable";
 import { isAndroid } from "tns-core-modules/platform";
+import { topmost } from "tns-core-modules/ui/frame";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { Switch } from "tns-core-modules/ui/switch";
-import { topmost } from "ui/frame";
 import { NavigatedData, Page } from "ui/page";
-import { CreateViewEventData } from "ui/placeholder";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { ISubTopic } from "~/shared/questions.model";
 import * as navigationModule from "../../shared/navigation";

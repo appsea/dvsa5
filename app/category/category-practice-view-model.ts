@@ -1,5 +1,5 @@
-import { EventData, Observable } from "tns-core-modules/data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { QuestionViewModel } from "~/question/question-view-model";

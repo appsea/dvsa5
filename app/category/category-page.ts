@@ -1,16 +1,16 @@
-import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
-import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "tns-core-modules/application";
+import { EventData, Observable } from "tns-core-modules/data/observable";
 import { isAndroid, screen } from "tns-core-modules/platform";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
+import { topmost } from "tns-core-modules/ui/frame";
 import { ListView } from "tns-core-modules/ui/list-view";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
+import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
-import { topmost } from "ui/frame";
+import { TextView } from "tns-core-modules/ui/text-view";
 import { Label } from "ui/label";
 import { NavigatedData, Page } from "ui/page";
-import { CreateViewEventData } from "ui/placeholder";
-import { Repeater } from "ui/repeater";
-import { TextView } from "ui/text-view";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import { CategoryListViewModel } from "./category-list-view-model";
 

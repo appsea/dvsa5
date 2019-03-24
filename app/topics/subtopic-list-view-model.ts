@@ -1,6 +1,6 @@
-import { EventData, Observable } from "data/observable";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
-import { topmost } from "ui/frame";
+import { EventData, Observable } from "tns-core-modules/data/observable";
+import { topmost } from "tns-core-modules/ui/frame";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { ISubTopic } from "~/shared/questions.model";
 import { TopicService } from "./topic.service";

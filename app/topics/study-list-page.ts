@@ -1,8 +1,8 @@
-import { AndroidActivityBackPressedEventData, AndroidApplication } from "application";
-import { EventData } from "data/observable";
+import { AndroidActivityBackPressedEventData, AndroidApplication } from "tns-core-modules/application";
+import { EventData } from "tns-core-modules/data/observable";
 import { isAndroid } from "tns-core-modules/platform";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { NavigatedData, Page } from "ui/page";
-import { CreateViewEventData } from "ui/placeholder";
 import { ITopic } from "~/shared/questions.model";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import * as navigationModule from "../shared/navigation";
