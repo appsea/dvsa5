@@ -44,19 +44,15 @@ jobs:
       # - run: bash ./.circleci/download.sh
       - run: echo $BASE_64_KEY | base64 -d > $KEYSTORE
       - run: echo $JSON > key.json
+      - run: npm install nativescript-dev-sass --save-dev
       - run: npm run tsc
       - run: echo yes | sudo npm install nativescript -g --unsafe-perm
       #- run: npm install
       - run: echo yes | tns setup
       - run: echo yes | tns cloud setup
       - run: echo yes | tns doctor
-      - run: tns platform add android
       - run: ls -lrt $HOME
       - run: mkdir $HOME/.gradle
       - run: cp app/App_Resources/Android/gradle.properties $HOME/.gradle/
-      - run: cp app/App_Resources/Android/gradle.properties platforms/android/
-      - run: more $HOME/.gradle/gradle.properties
       - run: echo -n $'\031' | tns build android --env.snapshot --env.uglify --release --key-store-path $KEYSTORE --key-store-password $KEYSTORE_PASSWORD --key-store-alias sasquiz --key-store-alias-password $KEYSTORE_PASSWORD --copy-to dvsa.apk
-      - run: ls -lrt dvsa.apk
-      - run: chmod +x PlayStoreUploader/bin/PlayStoreUploader
-      - run: PlayStoreUploader/bin/PlayStoreUploader -key "key.json" -apk "dvsa.apk" -track "internal" -name "myApp" -notes "new release"
+      - run: java -jar release-manager-1.0.jar -key "key.json" -apk "dvsa.apk" -track "beta" -name "myApp" -notes "new release"
