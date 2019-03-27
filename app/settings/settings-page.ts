@@ -7,24 +7,11 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { QuestionViewModel } from "~/question/question-view-model";
+import { AdService } from "~/services/ad.service";
 import { SelectedPageService } from "~/shared/selected-page-service";
-import * as navigationModule from "../shared/navigation";
 import { SettingsViewModel } from "./settings-view-model";
 
 let vm: SettingsViewModel;
-
-export function onPageLoaded(args: EventData): void {
-    if (!isAndroid) {
-        return;
-    }
-    const page = args.object;
-    page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
-}
-
-export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
-    navigationModule.toPage("question/practice-page");
-    args.cancel = true;
-}
 
 export function onNavigatingTo(args: NavigatedData) {
     /* ***********************************************************
@@ -36,6 +23,7 @@ export function onNavigatingTo(args: NavigatedData) {
     vm = new SettingsViewModel();
     page.bindingContext = vm;
     SelectedPageService.getInstance().updateSelectedPage("settings");
+    AdService.getInstance().hideAd();
 }
 
 export function onDrawerButtonTap(args: EventData) {

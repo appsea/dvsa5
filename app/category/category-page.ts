@@ -4,15 +4,16 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import { isAndroid, screen } from "tns-core-modules/platform";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { topmost } from "tns-core-modules/ui/frame";
+import { Label } from "tns-core-modules/ui/label";
 import { ListView } from "tns-core-modules/ui/list-view";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { TextView } from "tns-core-modules/ui/text-view";
-import { Label } from "tns-core-modules/ui/label";
-import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import { CategoryListViewModel } from "./category-list-view-model";
+import {AdService} from "~/services/ad.service";
 
 let vm: CategoryListViewModel;
 let _page: any;
@@ -28,6 +29,7 @@ export function onPageLoaded(args: EventData): void {
     if (vm) {
         vm.refresh();
     }
+    AdService.getInstance().hideAd();
 }
 
 export function resetBanner() {

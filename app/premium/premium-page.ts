@@ -21,18 +21,6 @@ import { PremiumModel } from "./premium-model";
 
 let vm: PremiumModel;
 let showDialog: boolean = true;
-export function onPageLoaded(args: EventData): void {
-    if (!isAndroid) {
-        return;
-    }
-    const page = args.object;
-    page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
-}
-
-export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
-    navigationModule.goBack();
-    args.cancel = true;
-}
 
 export function onNavigatingTo(args: NavigatedData) {
     /* ***********************************************************
@@ -56,6 +44,7 @@ export function onNavigatingTo(args: NavigatedData) {
             }
         }
     });
+    AdService.getInstance().hideAd();
 }
 
 export function onDrawerButtonTap(args: EventData) {

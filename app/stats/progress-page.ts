@@ -7,6 +7,7 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
+import { AdService } from "~/services/ad.service";
 import * as navigationModule from "~/shared/navigation";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import { ProgressViewModel } from "./progress-view-model";
@@ -17,6 +18,7 @@ let vm: ProgressViewModel;
 export function onPageLoaded(args: EventData): void {
     const pg = args.object;
     pg.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
+    AdService.getInstance().hideAd();
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {

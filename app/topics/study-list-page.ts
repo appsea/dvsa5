@@ -1,22 +1,16 @@
 import { AndroidActivityBackPressedEventData, AndroidApplication } from "tns-core-modules/application";
 import { EventData } from "tns-core-modules/data/observable";
 import { isAndroid } from "tns-core-modules/platform";
-import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { ITopic } from "~/shared/questions.model";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import * as navigationModule from "../shared/navigation";
 import { StudyListViewModel } from "./study-list-view-model";
+import {AdService} from "~/services/ad.service";
 
 let vm: StudyListViewModel;
 let banner: any;
-
-export function onPageLoaded(args: EventData): void {
-    if (!isAndroid) {
-        return;
-    }
-    resetBanner();
-}
 
 export function resetBanner() {
     if (banner) {
@@ -43,6 +37,7 @@ export function onNavigatingTo(args: NavigatedData) {
     SelectedPageService.getInstance().updateSelectedPage("study");
     vm = new StudyListViewModel();
     page.bindingContext = vm;
+    AdService.getInstance().hideAd();
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {

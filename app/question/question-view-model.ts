@@ -55,8 +55,9 @@ export class QuestionViewModel extends Observable {
     }
 
     get showAdOnNext(): boolean {
-        return !QuestionViewModel._errorLoading && AdService.getInstance().showAd && this.questionNumber % constantsModule.AD_COUNT === 0
-            && (((this.count + 1) % constantsModule.AD_COUNT) === 0);
+        return !QuestionViewModel._errorLoading && AdService.getInstance().showAd
+            && this.questionNumber % constantsModule.AD_COUNT === 0
+            && this.count % constantsModule.AD_COUNT === 0;
     }
 
     static _errorLoading = false;

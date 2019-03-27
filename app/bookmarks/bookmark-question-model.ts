@@ -36,8 +36,10 @@ export class BookmarkQuestionModel extends Observable {
     }
 
     get showAdOnNext(): boolean {
-        return this.questionNumber % constantsModule.AD_COUNT === 0 && AdService.getInstance().showAd &&
-            (((this.count + 1) % constantsModule.AD_COUNT) === 0);
+        return !QuestionViewModel._errorLoading && AdService.getInstance().showAd
+            && this.questionNumber === this.count
+            && this.questionNumber % constantsModule.AD_COUNT === 0
+            && this.count % constantsModule.AD_COUNT === 0;
     }
 
     private count: number;
@@ -50,13 +52,14 @@ export class BookmarkQuestionModel extends Observable {
         super();
         this._questions = questions;
         this._mode = mode;
-        this.count = -1;
+        this.count = 0;
     }
 
-    showInterstetial(): any {
-        if (AdService.getInstance().showAd && this.count > 0
+    showInterstitial(): any {
+        if (AdService.getInstance().showAd && this.count > 1
+            && this.questionNumber === this.count
             && (this.questionNumber - 1) % constantsModule.AD_COUNT === 0
-            && ((this.count % constantsModule.AD_COUNT) === 0)) {
+            && ((this.count - 1) % constantsModule.AD_COUNT === 0)) {
             AdService.getInstance().showInterstitial();
         }
     }
@@ -80,7 +83,7 @@ export class BookmarkQuestionModel extends Observable {
             this._questionNumber = this._questionNumber + 1;
             this.increment();
             this.publish();
-            this.showInterstetial();
+            this.showInterstitial();
         } else {
             dialogs.confirm(message).then((proceed) => {
                 if (proceed || this.length < 1) {
@@ -149,6 +152,8 @@ export class BookmarkQuestionModel extends Observable {
     }
 
     private increment() {
-        this.count = this.count + 1;
+        if (this.questionNumber > this.count) {
+            this.count = this.count + 1;
+        }
     }
 }

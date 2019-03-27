@@ -3,9 +3,9 @@ import { AndroidActivityBackPressedEventData, AndroidApplication } from "tns-cor
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { isAndroid } from "tns-core-modules/platform";
 import { topmost } from "tns-core-modules/ui/frame";
+import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { Switch } from "tns-core-modules/ui/switch";
-import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { ISubTopic } from "~/shared/questions.model";
 import * as navigationModule from "../../shared/navigation";
 import { TopicService } from "../topic.service";

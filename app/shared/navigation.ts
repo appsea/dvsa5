@@ -66,6 +66,7 @@ export function	goBack() {
 }
 
 export function	gotoCategoryPractice(numbers: Array<number>) {
+    console.log("going category/category-practice-page............");
     frameModule.topmost().navigate({
         moduleName: "category/category-practice-page",
         context: numbers,

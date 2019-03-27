@@ -38,7 +38,7 @@
         </Label>
     </ActionBar>
 
-    <DockLayout stretchLastChild="true">
+    <DockLayout stretchLastChild="true" visibility="{{ question.number ? 'visible' : 'collapsed' }}">
         <StackLayout dock="top" height="20dpi">
         </StackLayout>
         <StackLayout dock="bottom">

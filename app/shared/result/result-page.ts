@@ -7,6 +7,7 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
+import { AdService } from "~/services/ad.service";
 import * as navigationModule from "../navigation";
 import { IState } from "../questions.model";
 import { ResultViewModel } from "./result-view-model";
@@ -23,6 +24,7 @@ export function onPageLoaded(args: EventData): void {
     if (pg != null && !pg.hasListeners(AndroidApplication.activityBackPressedEvent)) {
         pg.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     }
+    AdService.getInstance().hideAd();
 }
 
 export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEventData) {
