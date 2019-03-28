@@ -107,17 +107,7 @@ export function next(): void {
         dialogs.alert("Please connect to internet so that we can fetch next question for you!");
     } else {
         vm.next();
-        if (AdService.getInstance().showAd && !loaded) {
-            AdService.getInstance().showSmartBanner().then(
-                () => {
-                    loaded = true;
-                    banner.height = AdService.getInstance().getAdHeight() + "dpi";
-                },
-                (error) => {
-                    resetBanner();
-                }
-            );
-        }
+        showBannerAd();
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);
         }

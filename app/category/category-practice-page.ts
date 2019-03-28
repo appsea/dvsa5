@@ -29,7 +29,8 @@ export function onPageLoaded(args: EventData): void {
     if (!isAndroid) {
         return;
     }
-    resetBanner();
+    loaded = false;
+    setTimeout(() => showBannerAd(), 1000);
 }
 
 export function resetBanner() {
@@ -111,17 +112,7 @@ export function next(): void {
         dialogs.alert("Please connect to internet so that we can fetch next question for you!");
     } else {
         vm.next();
-        if (AdService.getInstance().showAd && !loaded) {
-            AdService.getInstance().showSmartBanner().then(
-                () => {
-                    loaded = true;
-                    banner.height = AdService.getInstance().getAdHeight() + "dpi";
-                },
-                (error) => {
-                    resetBanner();
-                }
-            );
-        }
+        showBannerAd();
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);
         }
@@ -162,5 +153,19 @@ export function divert(index: number) {
         vm.showAnswer();
         vm.selectIndex(index);
         optionList.refresh();
+    }
+}
+
+function showBannerAd(): void {
+    if (AdService.getInstance().showAd && (!loaded || (banner && banner.height === "auto"))) {
+        AdService.getInstance().showSmartBanner().then(
+            () => {
+                loaded = true;
+                banner.height = AdService.getInstance().getAdHeight() + "dpi";
+            },
+            (error) => {
+                resetBanner();
+            }
+        );
     }
 }

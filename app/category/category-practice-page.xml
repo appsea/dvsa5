@@ -1,5 +1,6 @@
 <Page
         class="page"
+        loaded="onPageLoaded"
         navigatingTo="onNavigatingTo"
         xmlns="http://schemas.nativescript.org/tns.xsd">
 
