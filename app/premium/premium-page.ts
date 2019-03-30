@@ -62,5 +62,5 @@ export function onRestoreTap(data: ItemEventData) {
 }
 
 export function practice(args: EventData) {
-    navigationModule.toPage("category/category");
+    navigationModule.toPage("category/category-page");
 }

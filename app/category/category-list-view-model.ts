@@ -76,7 +76,7 @@ export class CategoryListViewModel extends Observable {
             actions
         }).then((result) => {
             if (result === "Top Up") {
-                navigationModule.toPage("stats/summary");
+                navigationModule.toPage("stats/summary-page");
             } else if (result === "Practice") {
                 navigationModule.gotoCategoryPractice(accessibleQuestions);
             }

@@ -38,18 +38,18 @@ export function onDrawerButtonTap(args: EventData) {
 }
 
 export function startTest(args: EventData) {
-    navigationModule.toPage("question/mock");
+    navigationModule.toPage("question/mock-page");
 }
 
 export function showChart(args: EventData) {
-    navigationModule.toPage("stats/chart");
+    navigationModule.toPage("stats/chart-page");
 }
 
 export function resetExamStats(): void {
     dialogs.confirm("Are you sure you want to clear your test statistics?").then((proceed) => {
         if (proceed) {
             vm.resetExamStats();
-            navigationModule.toPage("stats/progress");
+            navigationModule.toPage("stats/progress-page");
             Toast.makeText("Cleared Exam Stats!!!", "long").show();
         }
     });

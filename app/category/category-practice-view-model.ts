@@ -230,7 +230,7 @@ export class CategoryPracticeViewModel extends Observable {
         } else {
             dialogs.confirm("Hurray!! All questions are attempted. Click Ok to go to categories.").then((proceed) => {
                 if (proceed) {
-                    navigationModule.toPage("category/category");
+                    navigationModule.toPage("category/category-page");
                 }
             });
         }

@@ -112,6 +112,7 @@ export class QuestionViewModel extends Observable {
     }
 
     next(): void {
+        console.log(this._state.mode);
         if ((this._state.questionNumber < this._state.totalQuestions) || this.isPractice()) {
             if (this._state.questions.length > 0 && this._state.questions.length > this._state.questionNumber) {
                 this._state.questionNumber = this._state.questionNumber + 1;

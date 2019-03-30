@@ -99,7 +99,9 @@ export class QuestionService {
                 if (!ConnectionService.getInstance().isConnected()) {
                     dialogs.alert("Please connect to internet so that we can prepare quality questions for you!!");
                 } else {
-                    this.readAllQuestions();
+                    this.readAllQuestions().then(()=> {
+                        console.log("Read All Questions....");
+                    });
                 }
             }
         }
@@ -107,13 +109,29 @@ export class QuestionService {
         return this.getNextQuestionFromCache();
     }
 
-    readAllQuestions(): void {
-        HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
+    readAllQuestions(): Promise<void> {
+        return HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
+            const oldQuestionSize: number = this.readQuestionSize();
             this.questions = questions;
-            this._settingsService.saveQuestions(questions);
+            this.saveQuestions(questions);
+            CategoryService.getInstance().readCategoriesFromFirebase();
+            if (PersistenceService.getInstance().isPremium()) {
+                return HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>()
+                    .then((premiumQuestions: Array<IQuestion>) => {
+                        const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
+                        this.saveQuestions(updatedQuestions);
+                    });
+            } else {
+                if (oldQuestionSize > questions.length) {
+                    return this.findPremiumRange(questions.length + 1, oldQuestionSize).
+                    then(() => console.log("Loaded Premium Range", questions.length + 1, oldQuestionSize),
+                        (error) => console.error("Error loading premium range", error));
+                }
+            }
         });
-        CategoryService.getInstance().readCategoriesFromFirebase();
     }
+
+
 
     readQuestionSize(): number {
         return appSettings.hasKey(constantsModule.QUESTIONS_SIZE)
