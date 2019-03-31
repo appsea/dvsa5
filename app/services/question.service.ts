@@ -100,7 +100,6 @@ export class QuestionService {
                     dialogs.alert("Please connect to internet so that we can prepare quality questions for you!!");
                 } else {
                     this.readAllQuestions().then(()=> {
-                        console.log("Read All Questions....");
                     });
                 }
             }
@@ -154,7 +153,6 @@ export class QuestionService {
                 .then((map: any) => {
                     const newQuestions: Array<IQuestion> = Object.keys(map).map((key) => map[key]);
                     let questions: Array<IQuestion> = this.readQuestions();
-                    console.log("questions size ", newQuestions.length);
                     questions = questions.concat(newQuestions);
                     this.saveQuestions(questions);
                     resolve();

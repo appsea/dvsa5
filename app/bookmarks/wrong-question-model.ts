@@ -7,11 +7,11 @@ export class WrongQuestionModel extends BookmarkQuestionModel {
     private static message: string = "Hurray!! No more wrong questions. Click Ok to go to practice.";
 
     constructor() {
-        super(PersistenceService.getInstance().readWrongQuestions(), "wrong");
-        super.next(WrongQuestionModel.message);
+        super(PersistenceService.getInstance().readWrongQuestions(), "wrong", WrongQuestionModel.message);
+        super.next();
     }
 
     next(): void {
-        super.next(WrongQuestionModel.message);
+        super.next();
     }
 }

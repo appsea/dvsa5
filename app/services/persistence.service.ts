@@ -71,7 +71,6 @@ export class PersistenceService {
     }
 
     saveCategories(categories: Array<ICategory>) {
-        console.log("Saving categories.");
         appSettings.setString(constantsModule.CATEGORIES, JSON.stringify(categories));
     }
 

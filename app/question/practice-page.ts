@@ -13,7 +13,6 @@ import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { TextView } from "tns-core-modules/ui/text-view";
 import { AdService } from "~/services/ad.service";
-import { CategoryService } from "~/services/category.service";
 import { ConnectionService } from "~/shared/connection.service";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";
@@ -124,7 +123,6 @@ export function goToEditPage(): void {
 }
 
 export function previous(): void {
-    console.log("Model Previous...");
     if (!vm) {
         vm = new QuestionViewModel(constantsModule.PRACTICE);
     }
@@ -139,7 +137,6 @@ export function flag(): void {
 }
 
 export function next(): void {
-    CategoryService.getInstance().readCategoriesFromFirebase();
     if (AdService.getInstance().showAd && !ConnectionService.getInstance().isConnected()) {
         dialogs.alert("Please connect to internet so that we can fetch next question for you!");
     } else {
@@ -162,7 +159,7 @@ export function quit(): void {
 export function showAnswer(): void {
     vm.showAnswer();
     optionList.refresh();
-    moveToLast();
+    // moveToLast();
 }
 
 export function selectOption(args): void {

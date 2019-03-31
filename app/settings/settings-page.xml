@@ -1,5 +1,5 @@
 <Page
-        class="page page-login"
+        class="page page-login mesh-background"
         backgroundImage="res://mesh"
         navigatingTo="onNavigatingTo"
         xmlns="http://schemas.nativescript.org/tns.xsd">
@@ -23,7 +23,7 @@
         <Label class="action-bar-title" text="Settings"/>
     </ActionBar>
 
-    <StackLayout class="input-field m-t-20 mesh-background" horizontalAlignment="center" width="90%" backgroundImage="res://mesh">
+    <StackLayout class="input-field m-t-20" horizontalAlignment="center" width="90%">
 
         <Label text="Quick Exam Total Questions" class="setting-label" color="white"/>
         <TextField class="setting-field" text="{{ settings.totalQuestionsQuick }}" keyboardType="number" maxLength="2"></TextField>

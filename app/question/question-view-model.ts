@@ -54,12 +54,6 @@ export class QuestionViewModel extends Observable {
         return this._questionNumber;
     }
 
-    get showAdOnNext(): boolean {
-        return !QuestionViewModel._errorLoading && AdService.getInstance().showAd
-            && this.questionNumber % constantsModule.AD_COUNT === 0
-            && this.count % constantsModule.AD_COUNT === 0;
-    }
-
     static _errorLoading = false;
 
     static showDrawer() {
@@ -85,25 +79,29 @@ export class QuestionViewModel extends Observable {
         this._settingsService = SettingsService.getInstance();
         this._state = this._settingsService.readCache(mode);
         this._mode = mode;
-        this.count = this._state.questions.length - 1;
+        this.count = this._state.questionNumber;
         this.showFromState();
     }
 
     showInterstitial(): any {
-        if (AdService.getInstance().showAd && this.count > 0
+        if (AdService.getInstance().showAd && this.count > 1
             && (this.questionNumber - 1) % constantsModule.AD_COUNT === 0
-            && ((this.count % constantsModule.AD_COUNT) === 0)) {
+            && (((this.count - 1) % constantsModule.AD_COUNT) === 0)) {
             AdService.getInstance().showInterstitial();
         }
     }
 
+    get showAdOnNext(): boolean {
+        return !QuestionViewModel._errorLoading && AdService.getInstance().showAd
+            && this.questionNumber % constantsModule.AD_COUNT === 0
+            && this.count % constantsModule.AD_COUNT === 0;
+    }
+
     previous(): void {
-        console.log("Previous...");
         this.goPrevious();
     }
 
     goPrevious() {
-        console.log("Go Previous...");
         if (this._state.questionNumber > 1) {
             this._state.questionNumber = this._state.questionNumber - 1;
             this._question = this._state.questions[this._state.questionNumber - 1];
@@ -112,14 +110,12 @@ export class QuestionViewModel extends Observable {
     }
 
     next(): void {
-        console.log(this._state.mode);
         if ((this._state.questionNumber < this._state.totalQuestions) || this.isPractice()) {
             if (this._state.questions.length > 0 && this._state.questions.length > this._state.questionNumber) {
                 this._state.questionNumber = this._state.questionNumber + 1;
                 this._question = this._state.questions[this._state.questionNumber - 1];
                 this.saveAndPublish(this._mode, this._state);
             } else {
-                console.log("fetchUniqueQuestion...");
                 this.fetchUniqueQuestion();
             }
         }
@@ -281,7 +277,9 @@ export class QuestionViewModel extends Observable {
                 this._question = que;
                 this._state.questions.push(this._question);
                 this._loading = false;
+                this.increment();
                 this.saveAndPublish(this._mode, this._state);
+                this.showInterstitial();
             } else {
                 if (this._settingsService.hasMoreQuestions(this.state.questions.length)) {
                     this.fetchUniqueQuestion();

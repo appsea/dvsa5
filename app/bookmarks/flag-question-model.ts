@@ -6,11 +6,11 @@ export class FlagQuestionModel extends BookmarkQuestionModel {
     private static message: string = "No more flagged questions. Click Ok to go to practice.";
 
     constructor() {
-        super(PersistenceService.getInstance().readFlaggedQuestions(), "flag");
-        super.next(FlagQuestionModel.message);
+        super(PersistenceService.getInstance().readFlaggedQuestions(), "flag", FlagQuestionModel.message);
+        super.next();
     }
 
     next(): void {
-        super.next(FlagQuestionModel.message);
+        super.next();
     }
 }
