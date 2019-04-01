@@ -75,13 +75,13 @@ export class QuestionService {
     }
 
     update(question: IQuestion) {
-        const url = constantsModule.FIREBASE_URL + "suggestions.json";
+        const url = "suggestions.json";
         const questionWithDate = {question, date: QuizUtil.getDate()};
         HttpService.getInstance().httpPost(url, questionWithDate);
     }
 
     updateCorrectOption(question: IQuestion) {
-        const url = constantsModule.FIREBASE_URL + "updateOption.json";
+        const url = "updateOption.json";
         const questionWithDate = {question, date: QuizUtil.getDate()};
         HttpService.getInstance().httpPost(url, questionWithDate);
     }

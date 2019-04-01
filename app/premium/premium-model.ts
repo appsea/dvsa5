@@ -3,7 +3,6 @@ import * as appSettings from "tns-core-modules/application-settings";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { AdService } from "~/services/ad.service";
-import { GeneralService } from "~/services/general.service";
 import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
 import * as constantsModule from "../shared/constants";
@@ -51,7 +50,7 @@ export class PremiumModel extends Observable {
         try {
             purchase.restorePurchases();
         } catch (error) {
-            GeneralService.getInstance().logError(error);
+            console.error(error);
         }
     }
 
@@ -62,8 +61,6 @@ export class PremiumModel extends Observable {
             if (error.message.includes("Product already purchased")) {
                 this.grantRights();
                 dialogs.alert("You are a premium user now! You wont be charged twice as you've already paid earlier!");
-            } else {
-                GeneralService.getInstance().logError(error);
             }
         }
     }
