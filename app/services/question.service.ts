@@ -222,7 +222,9 @@ export class QuestionService {
         return new Promise<IQuestion>((resolve, reject) => {
             const randomNumber = this.getRandomNumber(this.questions.length);
             // randomNumber = 54;
-            // const randomNumber = 60; //image
+            // const randomNumber = 60; //option image
+            // const randomNumber = 137; //question image, 137
+            // const randomNumber = 149; //question image, 137
             console.log("randomNumber: ", randomNumber);
             const question = JSON.parse(JSON.stringify(this.questions[randomNumber]));
             question.flagged = this.isFlagged(question);

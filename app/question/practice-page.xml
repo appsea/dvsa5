@@ -57,7 +57,7 @@
         <ScrollView id="scrollView" scrollBarIndicatorVisible="true" onswipe="handleSwipe">
             <StackLayout class="margin">
                 <Label text="{{ question.prashna.text }}" textWrap="true"/>
-                <image src="{{ question.prashna.image }}" class="question-image" minHeight="40%" visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
+                <image src="{{ question.prashna.image }}" class="question-image" minHeight="40%" visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"  stretch="aspectFit"/>
                 <GridLayout columns="*,*" rows="auto,auto" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}" class="m-t-10">
                     <StackLayout row="0" col="0"
                                  class="{{ (options[0].show && options[0].correct)? 'correct m-5' : (options[0].show && options[0].selected && !options[0].correct)? 'incorrect m-5': 'not-selected-image' }}" tap="firstOption">

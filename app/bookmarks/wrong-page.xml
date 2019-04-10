@@ -62,7 +62,7 @@
         <ScrollView id="scrollView">
             <StackLayout class="margin">
                 <Label text="{{ question.prashna.text }}" textWrap="true"/>
-                <image src="{{ question.prashna.image }}" minHeight="40%" class="question-image m-y-10"  visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}"/>
+                <image src="{{ question.prashna.image }}" minHeight="40%" class="question-image m-y-10"  visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}" stretch="aspectFit"/>
 
                 <GridLayout columns="*,*" rows="auto,auto" style="margin-top:5" visibility="{{ options[0].image ? 'visible' : 'collapsed' }}">
                     <StackLayout row="0" col="0"

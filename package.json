@@ -15,7 +15,8 @@
     "lint": "tslint \"app/**/*.ts\"",
     "lintfix": "tslint --fix app/**/*.ts{,x}",
     "test": "mocha --require ts-node/register app/tests/**/*.ts",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "android": "tsc && tns run android"
   },
   "dependencies": {
     "crypto-js": "^3.1.9-1",

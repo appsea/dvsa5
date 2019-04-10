@@ -7,7 +7,6 @@ export function route() {
     if (!path) {
         path = "question/practice-page";
     }
-    path = "question/practice-page";
     toPage(path);
 }
 
