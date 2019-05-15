@@ -97,6 +97,7 @@ export class SummaryViewModel extends Observable {
     private _mock: IResult;
     private _practiceAccuracy: number;
     private _practiceCoverage: number;
+    private _serverQuestionSize : number = constantsModule.TOTAL_QUESTIONS;
     private _questionSize: number = 200;
     private _rewards: number = 10;
     private _isPremium: boolean = false;
