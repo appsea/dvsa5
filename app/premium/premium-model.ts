@@ -68,6 +68,8 @@ export class PremiumModel extends Observable {
     grantRights() {
         appSettings.setBoolean(constantsModule.PREMIUM, true);
         AdService.getInstance().showAd = false;
+        this._premium = true;
+        this.publish();
         QuestionService.getInstance().readAllQuestions();
     }
 

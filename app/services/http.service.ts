@@ -1,7 +1,7 @@
+import { AES, enc } from "crypto-js";
 import { Observable } from "tns-core-modules/data/observable";
 import * as httpModule from "tns-core-modules/http";
-import { MONICA, GUPIT } from "~/shared/constants";
-import { AES, enc } from "crypto-js";
+import { GUPIT, MONICA } from "~/shared/constants";
 export class HttpService {
 
     static getInstance(): HttpService {
@@ -13,7 +13,7 @@ export class HttpService {
     private static url: string;
 
     private constructor() {
-        var bytes  = AES.decrypt(MONICA, GUPIT);
+        const bytes  = AES.decrypt(MONICA, GUPIT);
         HttpService.url = bytes.toString(enc.Utf8);
     }
 

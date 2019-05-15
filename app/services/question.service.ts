@@ -99,7 +99,8 @@ export class QuestionService {
                 if (!ConnectionService.getInstance().isConnected()) {
                     dialogs.alert("Please connect to internet so that we can prepare quality questions for you!!");
                 } else {
-                    this.readAllQuestions().then(()=> {
+                    this.readAllQuestions().then(() => {
+                        console.log("Read All Questions...");
                     });
                 }
             }
@@ -120,17 +121,12 @@ export class QuestionService {
                         const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
                         this.saveQuestions(updatedQuestions);
                     });
-            } else {
-                if (oldQuestionSize > questions.length) {
-                    return this.findPremiumRange(questions.length + 1, oldQuestionSize).
-                    then(() => console.log("Loaded Premium Range", questions.length + 1, oldQuestionSize),
-                        (error) => console.error("Error loading premium range", error));
-                }
+            } else if (oldQuestionSize > questions.length) {
+                return this.findPremiumRange(questions.length + 1, oldQuestionSize).then(() => console.log("Loaded Premium Range", questions.length + 1, oldQuestionSize),
+                    (error) => console.error("Error loading premium range", error));
             }
         });
     }
-
-
 
     readQuestionSize(): number {
         return appSettings.hasKey(constantsModule.QUESTIONS_SIZE)

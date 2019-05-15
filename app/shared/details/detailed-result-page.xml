@@ -54,7 +54,7 @@
                             </Label.formattedText>
                         </Label>
                         <Label text="{{ prashna.text }}" textWrap="true"/>
-                        <image src="{{ prashna.image }}" class="m-y-10" minHeight="40%" visibility="{{ prashna.image ? 'visible' : 'collapsed' }}"/>
+                        <image src="{{ prashna.image }}" class="m-10 question-image" minHeight="40%" visibility="{{ prashna.image ? 'visible' : 'collapsed' }}" stretch="aspectFit"/>
                         <GridLayout columns="*,*" rows="auto,auto" visibility="{{ !skipped && options[0].image ? 'visible' : 'collapsed' }}">
                             <StackLayout row="0" col="0"
                                          class="{{ skipped ? (options[0].correct? 'skipped-correct-image m-5':'skipped-not-selected-image m-5') : (!options[0].selected && !options[0].correct)? 'not-selected-image': (skipped && options[0].correct)? 'skipped m-5':(options[0].selected && !options[0].correct)?'incorrect m-5': 'correct m-5'}}" >

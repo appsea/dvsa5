@@ -3,6 +3,7 @@ export const GUPIT = "dvsatheorykit";
 export const BANNER_AD_ID = "ca-app-pub-9082814869788754/2495314982";
 export const INTERSTITIAL_AD_ID = "ca-app-pub-9082814869788754/8631803339";
 export const REWARD_AD_ID = "ca-app-pub-9082814869788754/8649659798";
+export const TOTAL_QUESTIONS = 773;
 export const PREMIUM = "PREMIUM";
 export const WRONG_QUESTION = "WRONG_QUESTION";
 export const FLAG_QUESTION = "FLAG_QUESTION";
