@@ -10,6 +10,7 @@ export const FLAG_QUESTION = "FLAG_QUESTION";
 export const RESULT = "RESULT";
 export const MOCK = "mock-page";
 export const PASSING_PERCENTAGE = 86;
+export const TOTAL_QUICK_QUESTIONS = 15;
 export const TOTAL_MOCK_QUESTIONS = 50;
 export const EXAM_TIME = 57;
 export const VERSION_NUMBER: number = 1;
