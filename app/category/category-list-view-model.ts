@@ -156,7 +156,7 @@ export class CategoryListViewModel extends Observable {
 
     private handleAccessibleQuestions(numbers: Array<number>) {
         const size: number = QuestionService.getInstance().readQuestionSize();
-        const accessibleQuestions = numbers.filter((value) => value < size);
+        const accessibleQuestions = numbers.filter((value) => value <= size);
         if (accessibleQuestions.length === numbers.length) {
             navigationModule.gotoCategoryPractice(accessibleQuestions);
         } else {
