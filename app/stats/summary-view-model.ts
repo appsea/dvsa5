@@ -6,6 +6,7 @@ import { AdService } from "~/services/ad.service";
 import { HttpService } from "~/services/http.service";
 import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
+import { QuestionUtil } from "~/services/question.util";
 import { ConnectionService } from "~/shared/connection.service";
 import { IPracticeStats, IResult } from "~/shared/questions.model";
 import { QuizUtil } from "~/shared/quiz.util";
@@ -31,7 +32,8 @@ export class SummaryViewModel extends Observable {
             total += re.total;
         });
         const overall: Array<IResult> = [];
-        const percentage = total === 0 ? 0 : Math.floor(correct * 100 / total);
+        let percentage = total === 0 ? 0 : Math.floor(correct * 100 / total);
+        percentage = QuestionUtil.validatePercentage(percentage);
         const percentageString: string = percentage + "%";
         const result: IResult = {
             date: QuizUtil.getDateString(new Date()),
@@ -97,7 +99,7 @@ export class SummaryViewModel extends Observable {
     private _mock: IResult;
     private _practiceAccuracy: number;
     private _practiceCoverage: number;
-    private _serverQuestionSize : number = constantsModule.TOTAL_QUESTIONS;
+    private _serverQuestionSize: number = constantsModule.TOTAL_QUESTIONS;
     private _questionSize: number = 200;
     private _rewards: number = 10;
     private _isPremium: boolean = false;
@@ -179,6 +181,8 @@ export class SummaryViewModel extends Observable {
         this._allQuestionsLoaded = this._questionSize === this._serverQuestionSize;
         this._rewards = this._serverQuestionSize - this._questionSize > 10 ? 10
             : this._serverQuestionSize - this._questionSize;
+        this._practiceAccuracy = QuestionUtil.validatePercentage(this._practiceAccuracy);
+        this._practiceCoverage = QuestionUtil.validatePercentage(this._practiceCoverage);
         this.publish();
     }
 

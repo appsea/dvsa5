@@ -1,5 +1,6 @@
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { PersistenceService } from "~/services/persistence.service";
+import { QuestionUtil } from "~/services/question.util";
 import { IResult } from "~/shared/questions.model";
 import { QuizUtil } from "~/shared/quiz.util";
 
@@ -25,7 +26,8 @@ export class ProgressViewModel extends Observable {
             total += re.total;
         });
         const overall: Array<IResult> = [];
-        const percentage = total === 0 ? 0 : Math.floor(correct * 100 / total);
+        let percentage = total === 0 ? 0 : Math.floor(correct * 100 / total);
+        percentage = QuestionUtil.validatePercentage(percentage);
         const percentageString: string = percentage.toFixed(2) + "%";
         const result: IResult = {
             date: QuizUtil.getDateString(new Date()),

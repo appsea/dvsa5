@@ -47,9 +47,9 @@ export class CategoryService {
                     category.wronglyAnswered = category.wronglyAnswered
                         .filter((value) => value !== +question.number);
                 }
-                console.log(Math.floor(50.50));
                 category.percentage = Math.floor((1 - category.wronglyAnswered.length / category.attempted.length)
                     * 100);
+                category.percentage = QuestionUtil.validatePercentage(category.percentage);
             }
             PersistenceService.getInstance().saveCategories(this._categories);
         }

@@ -60,7 +60,8 @@ export class ResultViewModel extends Observable {
                 wrong = wrong + 1;
             }
         }
-        const percentage = Math.floor(correct * 100 / this._state.questions.length);
+        let percentage = this._state.questions.length === 0 ? 0 : Math.floor(correct * 100 / this._state.questions.length);
+        percentage = QuestionUtil.validatePercentage(percentage);
         const percentageString: string = String(percentage);
         this._result = {
             itemType: this._state.mode,
