@@ -2,6 +2,10 @@ import { IQuestion } from "../shared/questions.model";
 
 export class QuestionUtil {
 
+    static allOptionSelected(question: IQuestion): boolean {
+        return QuestionUtil.countCorrectOptions(question) === QuestionUtil.countSelectedOption(question);
+    }
+
     static isCorrect(question: IQuestion) {
         let isCorrect = false;
         for (const option of question.options) {
@@ -12,6 +16,17 @@ export class QuestionUtil {
         }
 
         return isCorrect;
+    }
+
+    static countCorrectOptions(question: IQuestion) {
+        let count = 0;
+        for (const option of question.options) {
+            if (option.correct) {
+                count = count + 1;
+            }
+        }
+
+        return count;
     }
 
     static isSkipped(question: IQuestion) {
@@ -32,6 +47,17 @@ export class QuestionUtil {
 
     static isOptionUpdated(question: IQuestion) {
         return !this.isCorrect(question);
+    }
+
+    static countSelectedOption(question: IQuestion): number {
+        let count = 0;
+        for (const option of question.options) {
+            if (option.selected) {
+                count = count + 1;
+            }
+        }
+
+        return count;
     }
 
     static validatePercentage(percentage: number): number {

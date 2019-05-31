@@ -5,6 +5,7 @@ import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { AdService } from "~/services/ad.service";
 import { QuestionService } from "~/services/question.service";
+import { QuestionUtil } from "~/services/question.util";
 import { SettingsService } from "~/services/settings.service";
 import { StatsService } from "~/services/stats.service";
 import { IOption, IQuestion, IState } from "~/shared/questions.model";
@@ -123,7 +124,7 @@ export class QuestionViewModel extends Observable {
 
     flag(): void {
         this._questionService.handleFlagQuestion(this._question);
-        this.publish();
+        this.saveAndPublish(this._mode, this._state);
     }
 
     alreadyAsked(newQuestion: IQuestion): boolean {
@@ -193,6 +194,12 @@ export class QuestionViewModel extends Observable {
         navigationModule.gotoResultPage(this._state);
     }
 
+    showIfSelected() {
+        if (this.allOptionSelected()) {
+            this.showAnswer();
+        }
+    }
+
     showAnswer(): void {
         this.question.options.forEach((option) => option.show = true);
         this.question.show = true;
@@ -216,6 +223,10 @@ export class QuestionViewModel extends Observable {
         }
         this.saveAndPublish(this._mode, this._state);
         QuestionService.getInstance().handleWrongQuestions(this.question);
+    }
+
+    allOptionSelected(): boolean {
+        return QuestionUtil.allOptionSelected(this.question);
     }
 
     saveAndPublish(_mode: string, _state: IState) {

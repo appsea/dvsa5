@@ -41,7 +41,7 @@ export class EditQuestionViewModel extends Observable {
                         } else if (this._question.explanation !== this._originalQuestion.explanation) {
                             this._question.suggestionHint = "Explanation Updated";
                         }
-                        QuestionService.getInstance().update(this._question);
+                        QuestionService.getInstance().updateSuggestion(this._question);
                     }
                     Toast.makeText("Thanks a ton. Your changes will be reviewed and included asap.", "long")
                         .show();

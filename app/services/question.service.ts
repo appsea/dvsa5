@@ -69,12 +69,24 @@ export class QuestionService {
         }
     }
 
+    update(key: string, question: IQuestion) {
+        let questions: Array<IQuestion>;
+        if (constantsModule.FLAG_QUESTION === key) {
+            questions = PersistenceService.getInstance().readFlaggedQuestions();
+        } else if (constantsModule.WRONG_QUESTION === key) {
+            questions = PersistenceService.getInstance().readWrongQuestions();
+        }
+        const filteredRecords: Array<IQuestion> = questions.filter((item) => item.number !== question.number);
+        filteredRecords.push(question);
+        PersistenceService.getInstance().addQuestions(key, filteredRecords);
+    }
+
     remove(key: string, question: IQuestion, questions: Array<IQuestion>) {
         const filteredRecords: Array<IQuestion> = questions.filter((item) => item.number !== question.number);
         PersistenceService.getInstance().addQuestions(key, filteredRecords);
     }
 
-    update(question: IQuestion) {
+    updateSuggestion(question: IQuestion) {
         const url = "suggestions.json";
         const questionWithDate = {question, date: QuizUtil.getDate()};
         HttpService.getInstance().httpPost(url, questionWithDate);

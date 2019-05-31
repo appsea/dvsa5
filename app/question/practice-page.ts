@@ -78,6 +78,7 @@ export function onNavigatingTo(args) {
     scrollView = page.getViewById("scrollView");
     vm = new QuestionViewModel(constantsModule.PRACTICE);
     page.bindingContext = vm;
+    vm.showIfSelected();
     SelectedPageService.getInstance().updateSelectedPage("practice");
     explanationHeader = page.getViewById("explanationHeader");
     defaultExplanation = page.getViewById("defaultExplanation");
