@@ -195,7 +195,7 @@ export class QuestionViewModel extends Observable {
     }
 
     showIfSelected() {
-        if (this.allOptionSelected()) {
+        if (this._question && this._question.prashna && this.allOptionSelected()) {
             this.showAnswer();
         }
     }
