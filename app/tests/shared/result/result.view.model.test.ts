@@ -7,7 +7,7 @@ describe("Result View Model calculateResult", () => {
         const questions: Array<IQuestion> = createQuestions();
         const state: IState = {questionNumber: 0, questions, totalQuestions: questions.length};
         const vm: ResultViewModel  = new ResultViewModel(state);
-        const result: IResult = vm.result;
+        const result: IResult = vm.resultInstance;
         TKUnit.assert(result.total === 5, "Expected Total Questions 5 but were "  + result.total);
         TKUnit.assert(result.correct === 2, "Expected Correct 2 but was "  + result.correct);
         TKUnit.assert(result.wrong === 1, "Expected Wrong 1 but was "  + result.wrong);
