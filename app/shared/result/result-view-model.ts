@@ -32,7 +32,7 @@ export class ResultViewModel extends Observable {
         return this._result.pass;
     }
 
-    get result() {
+    get resultInstance() {
         return this._result;
     }
 
