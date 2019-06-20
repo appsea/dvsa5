@@ -59,7 +59,7 @@
             <StackLayout id="banner">
             </StackLayout>
         </StackLayout>
-        <ScrollView id="scrollView">
+        <ScrollView id="scrollView" onswipe="handleSwipe">
             <StackLayout class="margin">
                 <Label text="{{ question.prashna.text }}" textWrap="true"/>
                 <image src="{{ question.prashna.image }}" minHeight="40%" class="question-image m-y-10"  visibility="{{ question.prashna.image ? 'visible' : 'collapsed' }}" stretch="aspectFit"/>

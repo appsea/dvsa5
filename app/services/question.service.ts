@@ -124,7 +124,8 @@ export class QuestionService {
     readAllQuestions(): Promise<void> {
         return HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
             const oldQuestionSize: number = this.readQuestionSize();
-            this.questions = questions;
+            console.log("Correcting Image..........");
+            questions.forEach((q) => QuizUtil.correctImagePath(q));
             this.saveQuestions(questions);
             CategoryService.getInstance().readCategoriesFromFirebase();
             if (PersistenceService.getInstance().isPremium()) {

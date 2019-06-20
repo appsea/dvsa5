@@ -136,7 +136,7 @@ export class SettingsService {
             return appSettings.getString(constantsModule.ROUTE);
         }
 
-        return "question/practice-page";
+        return "category/category-page";
     }
 
     hasQuestions(): boolean {

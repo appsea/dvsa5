@@ -71,10 +71,10 @@ export function onNavigatingTo(args: NavigatedData) {
     * Skipping the re-initialization on back navigation means the user will see the
     * page in the same data state that he left it in before navigating.
     *************************************************************/
+    SelectedPageService.getInstance().updateSelectedPage("quick");
     if (args.isBackNavigation) {
         return;
     }
-    SelectedPageService.getInstance().updateSelectedPage("quick");
     const page = <Page>args.object;
     page.on(AndroidApplication.activityBackPressedEvent, onActivityBackPressedEvent, this);
     optionList = page.getViewById("optionList");

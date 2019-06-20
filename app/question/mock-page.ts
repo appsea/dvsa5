@@ -69,6 +69,7 @@ export function onNavigatingTo(args: NavigatedData) {
     * Skipping the re-initialization on back navigation means the user will see the
     * page in the same data state that he left it in before navigating.
     *************************************************************/
+    SelectedPageService.getInstance().updateSelectedPage("mock");
     if (args.isBackNavigation) {
         vm.startTimer();
 
@@ -81,7 +82,6 @@ export function onNavigatingTo(args: NavigatedData) {
     banner = page.getViewById("banner");
     vm = new TimerViewModel(constantsModule.MOCK);
     page.bindingContext = vm;
-    SelectedPageService.getInstance().updateSelectedPage("mock");
 }
 
 export function handleSwipe(args) {

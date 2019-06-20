@@ -2,6 +2,7 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
+import { ListView } from "tns-core-modules/ui/list-view/list-view";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/services/ad.service";
 import { CategoryService } from "~/services/category.service";
@@ -44,7 +45,7 @@ export class CategoryListViewModel extends Observable {
     }
 
     selectCategory(args: any) {
-        const selectedCategory = args.view.bindingContext;
+        const selectedCategory = args.view.bindingContext as ICategory;
         selectedCategory.selected = selectedCategory.selected ? false : true;
         this.publish();
     }
@@ -101,6 +102,12 @@ export class CategoryListViewModel extends Observable {
             eventName: Observable.propertyChangeEvent,
             propertyName: "selected",
             value: this.selected
+        });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "total",
+            value: this.total
         });
     }
 

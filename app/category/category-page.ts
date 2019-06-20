@@ -1,7 +1,7 @@
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { AndroidActivityBackPressedEventData, AndroidApplication } from "tns-core-modules/application";
-import { EventData, Observable } from "tns-core-modules/data/observable";
-import { isAndroid, screen } from "tns-core-modules/platform";
+import { EventData } from "tns-core-modules/data/observable";
+import { isAndroid } from "tns-core-modules/platform";
 import { AnimationCurve } from "tns-core-modules/ui/enums";
 import { topmost } from "tns-core-modules/ui/frame";
 import { Label } from "tns-core-modules/ui/label";
@@ -48,6 +48,7 @@ export function onNavigatingTo(args: NavigatedData) {
     * page in the same data state that he left it in before navigating.
     *************************************************************/
 
+    SelectedPageService.getInstance().updateSelectedPage("category");
     if (args.isBackNavigation) {
         return;
     }
@@ -57,7 +58,6 @@ export function onNavigatingTo(args: NavigatedData) {
     categoryList = _page.getViewById("categoryList");
     startButton = page.getViewById("startButton");
     startButton.visibility = "collapsed";
-    SelectedPageService.getInstance().updateSelectedPage("category");
     vm = new CategoryListViewModel();
     page.bindingContext = vm;
 }
@@ -89,11 +89,6 @@ export function selectCategory(args): void {
         startButton.animate({ translate: { x: 0, y: 300 }, opacity: 1, duration: 500  }).then(() => {
             startButton.visibility = "collapsed";
         });
-        // startButton.animate({ translate: { x: 0, y: -200 }, opacity: 1, duration: 500 });
-        // startButton.translateY = 0;
-        // startButton.visibility = "collapsed";
-        // startButton.opacity = 0;
-        // startButton.visibility = "collapsed";
     }
 }
 

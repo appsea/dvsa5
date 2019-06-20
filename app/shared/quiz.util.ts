@@ -1,4 +1,7 @@
 import { File, Folder, knownFolders } from "tns-core-modules/file-system";
+import { isAndroid, isIOS } from "tns-core-modules/platform";
+import * as frame from "tns-core-modules/ui/frame";
+import * as utils from "tns-core-modules/utils/utils";
 import { IQuestion } from "~/shared/questions.model";
 
 export class QuizUtil {
@@ -18,7 +21,6 @@ export class QuizUtil {
         dateString += QuizUtil.days[date.getDay()];
         dateString += " " + QuizUtil.months[date.getMonth()];
         dateString += " " + date.getDate();
-        // dateString += " " + date.getFullYear().toString().substr(2,2);
         dateString += ", " + date.getHours();
         const minutes: number = date.getMinutes();
         dateString += ":" + (minutes < 10 ? "0" + minutes : minutes);
@@ -49,6 +51,14 @@ export class QuizUtil {
         const exists = File.exists(currentAppFolder.path + path);
 
         return exists;
+    }
+
+    static hideKeyboard() {
+        if (isAndroid) {
+            utils.ad.dismissSoftInput();
+        } else if (isIOS) {
+            frame.topmost().nativeView.endEditing(true);
+        }
     }
 
     private constructor() {

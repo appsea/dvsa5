@@ -4,8 +4,8 @@ import { IState, ISubTopic } from "./questions.model";
 
 export function route() {
     let path = SettingsService.getInstance().getRoute();
-    if (!path) {
-        path = "question/practice-page";
+    if (!path || path === "question/practice-page") {
+        path = "category/category-page";
     }
     toPage(path);
 }

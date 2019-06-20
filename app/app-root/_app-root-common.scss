@@ -9,7 +9,7 @@ $sidedrawer-list-item-offset-left: 15;
 $sidedrawer-list-icon-offset: 10;
 $sidedrawer-list-icon-size: 20;
 .sidedrawer {
-    &.sidedrawer-left {
+    .sidedrawer-left {
         background-color: $ab-background;
 
         .sidedrawer-header-image {
@@ -52,7 +52,7 @@ $sidedrawer-list-icon-size: 20;
             margin-right: $sidedrawer-list-icon-offset;
         }
 
-        &.selected {
+        .selected {
             background-color: $item-active-background;
 
             Label {

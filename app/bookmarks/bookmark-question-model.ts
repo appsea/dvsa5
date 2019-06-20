@@ -89,7 +89,7 @@ export class BookmarkQuestionModel extends Observable {
         } else {
             dialogs.confirm(this._message).then((proceed) => {
                 if (proceed || this.length < 1) {
-                    navigationModule.toPage("question/practice-page");
+                    navigationModule.toPage("category/category-page");
                 }
             });
         }

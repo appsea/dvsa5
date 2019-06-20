@@ -13,12 +13,6 @@ Feel free to customize layouts and components to change how your app drawer look
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'category' ? ' selected': '') }}"
                         route="category/category-page" params="category" tap="onNavigationItemTap">
-                <Label row="0" col="0" text="&#xf0c9;" class="fa t-14"/>
-                <Label row="0" col="1" text="Categories" class="p-r-10" />
-            </GridLayout>
-
-            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'practice' ? ' selected': '') }}"
-                        route="question/practice-page" params="practice" tap="onNavigationItemTap">
                 <Label row="0" col="0" text="&#xf005;" class="fa t-14"/>
                 <Label row="0" col="1" text="Practice" class="p-r-10" />
             </GridLayout>
@@ -45,6 +39,12 @@ Feel free to customize layouts and components to change how your app drawer look
                         route="bookmarks/flag-page" params="flag"  tap="navigate">
                 <Label row="0" col="0" text="&#xf024;" class="fa t-14"/>
                 <Label row="0" col="1" text="Flagged Questions" class="p-r-10" />
+            </GridLayout>
+
+            <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'search' ? ' selected': '') }}"
+                        route="search/search-page" title="Search" tap="onNavigationItemTap">
+                <Label row="0" col="0" text="&#xf002;" class="fa" />
+                <Label row="0" col="1" text="Search" class="p-r-10" />
             </GridLayout>
 
             <GridLayout columns="auto, *" class="{{ 'sidedrawer-list-item' + (selectedPage === 'stats' ? ' selected': '') }}"
