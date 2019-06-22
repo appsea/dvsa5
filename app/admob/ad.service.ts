@@ -1,3 +1,6 @@
+import { Observable } from "tns-core-modules/data/observable";
+import { isIOS, screen } from "tns-core-modules/platform";
+import { PersistenceService } from "~/services/persistence.service";
 import {
     AD_SIZE,
     createBanner,
@@ -6,11 +9,8 @@ import {
     preloadInterstitial,
     showInterstitial
 } from "../admob/ads.js";
-import { Observable } from "tns-core-modules/data/observable";
-import { isIOS, screen } from "tns-core-modules/platform";
-import { PersistenceService } from "~/services/persistence.service";
-import * as constantsModule from "../shared/constants";
 import { HttpService } from "../services/http.service";
+import * as constantsModule from "../shared/constants";
 
 export class AdService {
 

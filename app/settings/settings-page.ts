@@ -6,8 +6,8 @@ import { isAndroid } from "tns-core-modules/platform";
 import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
-import { QuestionViewModel } from "~/question/question-view-model";
 import { AdService } from "~/admob/ad.service";
+import { QuestionViewModel } from "~/question/question-view-model";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import { SettingsViewModel } from "./settings-view-model";
 
