@@ -10,7 +10,7 @@ import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { QuestionViewModel } from "~/question/question-view-model";
-import { AdService } from "~/services/ad.service";
+import { AdService } from "~/admob/ad.service";
 import { ConnectionService } from "~/shared/connection.service";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";

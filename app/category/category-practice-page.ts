@@ -12,7 +12,7 @@ import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { Repeater } from "tns-core-modules/ui/repeater";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { TextView } from "tns-core-modules/ui/text-view";
-import { AdService } from "../services/ad.service";
+import { AdService } from "../admob/ad.service";
 import { ConnectionService } from "../shared/connection.service";
 import { CategoryPracticeViewModel } from "./category-practice-view-model";
 

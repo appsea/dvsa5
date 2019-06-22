@@ -3,7 +3,7 @@ import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { QuestionViewModel } from "~/question/question-view-model";
-import { AdService } from "~/services/ad.service";
+import { AdService } from "~/admob/ad.service";
 import { QuestionService } from "~/services/question.service";
 import { IOption, IQuestion, IState } from "~/shared/questions.model";
 import * as constantsModule from "../shared/constants";

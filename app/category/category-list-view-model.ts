@@ -4,7 +4,7 @@ import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { ListView } from "tns-core-modules/ui/list-view/list-view";
 import { QuestionViewModel } from "~/question/question-view-model";
-import { AdService } from "~/services/ad.service";
+import { AdService } from "~/admob/ad.service";
 import { CategoryService } from "~/services/category.service";
 import { QuestionService } from "~/services/question.service";
 import { ICategory } from "~/shared/questions.model";

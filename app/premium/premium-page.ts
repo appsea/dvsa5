@@ -12,7 +12,7 @@ import { ItemEventData } from "tns-core-modules/ui/list-view";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { QuestionViewModel } from "~/question/question-view-model";
-import { AdService } from "~/services/ad.service";
+import { AdService } from "~/admob/ad.service";
 import { QuestionService } from "~/services/question.service";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import * as constantsModule from "../shared/constants";

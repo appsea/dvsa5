@@ -2,7 +2,7 @@ import * as purchase from "nativescript-purchase";
 import * as appSettings from "tns-core-modules/application-settings";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import { AdService } from "~/services/ad.service";
+import { AdService } from "~/admob/ad.service";
 import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
 import * as constantsModule from "../shared/constants";

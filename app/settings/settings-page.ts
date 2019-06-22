@@ -7,7 +7,7 @@ import { topmost } from "tns-core-modules/ui/frame";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { QuestionViewModel } from "~/question/question-view-model";
-import { AdService } from "~/services/ad.service";
+import { AdService } from "~/admob/ad.service";
 import { SelectedPageService } from "~/shared/selected-page-service";
 import { SettingsViewModel } from "./settings-view-model";
 

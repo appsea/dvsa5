@@ -5,12 +5,12 @@ import {
     hideBanner,
     preloadInterstitial,
     showInterstitial
-} from "nativescript-admob";
+} from "../admob/ads.js";
 import { Observable } from "tns-core-modules/data/observable";
 import { isIOS, screen } from "tns-core-modules/platform";
 import { PersistenceService } from "~/services/persistence.service";
 import * as constantsModule from "../shared/constants";
-import { HttpService } from "./http.service";
+import { HttpService } from "../services/http.service";
 
 export class AdService {
 

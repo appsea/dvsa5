@@ -2,7 +2,7 @@ import * as Toast from "nativescript-toast";
 import { EventData, Observable } from "tns-core-modules/data/observable";
 import { setTimeout } from "tns-core-modules/timer";
 import * as dialogs from "tns-core-modules/ui/dialogs";
-import { AdService } from "~/services/ad.service";
+import { AdService } from "~/admob/ad.service";
 import { HttpService } from "~/services/http.service";
 import { PersistenceService } from "~/services/persistence.service";
 import { QuestionService } from "~/services/question.service";
@@ -10,7 +10,7 @@ import { QuestionUtil } from "~/services/question.util";
 import { ConnectionService } from "~/shared/connection.service";
 import { IPracticeStats, IResult } from "~/shared/questions.model";
 import { QuizUtil } from "~/shared/quiz.util";
-import * as rewardModule from "../services/ads.js";
+import * as rewardModule from "../admob/ads.js";
 import * as constantsModule from "../shared/constants";
 import * as navigationModule from "../shared/navigation";
 
@@ -111,9 +111,6 @@ export class SummaryViewModel extends Observable {
         super();
         this.load();
         this.preloadVideoAd();
-        /*setTimeout(() => {
-            this.publish();
-        }, 5000);*/
     }
 
     load(): any {
