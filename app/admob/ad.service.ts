@@ -1,3 +1,5 @@
+import { isIOS, screen } from "tns-core-modules/platform";
+import { PersistenceService } from "~/services/persistence.service";
 import {
     AD_SIZE,
     createBanner,
@@ -6,10 +8,8 @@ import {
     preloadInterstitial,
     showInterstitial
 } from "../admob/ads.js";
-import { isIOS, screen } from "tns-core-modules/platform";
-import { PersistenceService } from "~/services/persistence.service";
-import * as constantsModule from "../shared/constants";
 import { HttpService } from "../services/http.service";
+import * as constantsModule from "../shared/constants";
 
 export class AdService {
 
@@ -21,7 +21,7 @@ export class AdService {
         this._showAd = showAd;
     }
 
-    static _testing = false;
+    static _testing = true;
 
     static getInstance(): AdService {
         return AdService._instance;

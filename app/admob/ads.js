@@ -1,5 +1,7 @@
+var utils = require("tns-core-modules/utils/utils");
 var application = require("tns-core-modules/application");
 var admob = require("./admob-common");
+var frame = require("tns-core-modules/ui/frame");
 
 // need to cache this baby since after an Interstitial was shown a second won't resolve the activity
 admob.activity = null;
@@ -26,6 +28,30 @@ admob._md5 = function (input) {
 
     } catch (noSuchAlgorithmException) {
         console.log("error generating md5: " + noSuchAlgorithmException);
+        return null;
+    }
+};
+
+admob._getBannerType = function (size) {
+    if (size == admob.AD_SIZE.BANNER) {
+        return com.google.android.gms.ads.AdSize.BANNER;
+    } else if (size == admob.AD_SIZE.LARGE_BANNER) {
+        return com.google.android.gms.ads.AdSize.LARGE_BANNER;
+    } else if (size == admob.AD_SIZE.MEDIUM_RECTANGLE) {
+        return com.google.android.gms.ads.AdSize.MEDIUM_RECTANGLE;
+    } else if (size == admob.AD_SIZE.FULL_BANNER) {
+        return com.google.android.gms.ads.AdSize.FULL_BANNER;
+    } else if (size == admob.AD_SIZE.FLUID) {
+        return com.google.android.gms.ads.AdSize.FLUID;
+    } else if (size == admob.AD_SIZE.LEADERBOARD) {
+        // doesn't seem to work on Android - using large instead
+        //return com.google.android.gms.ads.AdSize.LEADERBOARD;
+        return com.google.android.gms.ads.AdSize.LARGE_BANNER;
+    } else if (size == admob.AD_SIZE.SKYSCRAPER) {
+        return com.google.android.gms.ads.AdSize.WIDE_SKYSCRAPER;
+    } else if (size == admob.AD_SIZE.SMART_BANNER) {
+        return com.google.android.gms.ads.AdSize.SMART_BANNER;
+    } else {
         return null;
     }
 };
@@ -139,7 +165,7 @@ admob.showVideoAd = function () {
 
 admob.adLoaded = function() {
     return !!admob.videoView;
-}
+};
 
 admob.createBanner = function (arg) {
     return new Promise(function (resolve, reject) {
@@ -207,7 +233,8 @@ admob.createBanner = function (arg) {
   
         resolve();
       } catch (ex) {
-        console.log("Error in admob.createBanner: " + ex);
+        console.log("Error in admob.createBanner: ", ex);
+        console.error(ex.stack);
         reject(ex);
       }
     });

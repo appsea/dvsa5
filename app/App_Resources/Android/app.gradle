@@ -1,5 +1,8 @@
 // Add your native dependencies here:
 
+dependencies {
+    implementation "com.google.android.gms:play-services-ads:17.2.0"
+}
 // Uncomment to add recyclerview-v7 dependency
 //dependencies {
 //	implementation 'com.android.support:recyclerview-v7:+'
