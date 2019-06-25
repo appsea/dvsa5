@@ -122,22 +122,23 @@ export class QuestionService {
     }
 
     readAllQuestions(): Promise<void> {
-        return HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
+        return CategoryService.getInstance().readCategoriesFromFirebase().then(() => HttpService.getInstance().getQuestions<Array<IQuestion>>().then((questions: Array<IQuestion>) => {
             const oldQuestionSize: number = this.readQuestionSize();
-            console.log("Correcting Image..........");
             questions.forEach((q) => QuizUtil.correctImagePath(q));
             this.saveQuestions(questions);
-            CategoryService.getInstance().readCategoriesFromFirebase();
             if (PersistenceService.getInstance().isPremium()) {
-                return HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>()
+                HttpService.getInstance().getPremiumQuestions<Array<IQuestion>>()
                     .then((premiumQuestions: Array<IQuestion>) => {
+                        premiumQuestions.forEach((q) => QuizUtil.correctImagePath(q));
                         const updatedQuestions: Array<IQuestion> = questions.concat(premiumQuestions);
                         this.saveQuestions(updatedQuestions);
                     });
             } else if (oldQuestionSize > questions.length) {
-                return this.findPremiumRange(questions.length + 1, oldQuestionSize).then(() => console.log("Loaded Premium Range", questions.length + 1, oldQuestionSize),
+                this.findPremiumRange(questions.length + 1, oldQuestionSize).then(() => console.log("Loaded Premium Range", questions.length + 1, oldQuestionSize),
                     (error) => console.error("Error loading premium range", error));
             }
+        })).catch((error) => {
+            dialogs.alert("Something went wrong fetching the question. Please relaunch the application!");
         });
     }
 
@@ -148,6 +149,9 @@ export class QuestionService {
 
     getQuestion(value: number): Promise<IQuestion> {
         return new Promise<IQuestion>((resolve, reject) => {
+            if (this.questions.length === 0) {
+                this.questions = this._settingsService.readQuestions();
+            }
             resolve(JSON.parse(JSON.stringify(this.questions[value - 1])));
         });
     }

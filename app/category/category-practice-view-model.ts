@@ -219,12 +219,15 @@ export class CategoryPracticeViewModel extends Observable {
                 questionNumber = this._numbers[randomIndex];
             }
             QuestionService.getInstance().getQuestion(questionNumber).then((que: IQuestion) => {
-                this._questionNumber = this._questionNumber + 1;
-                this._question = que;
-                QuizUtil.correctImagePath(this._question);
-                this._cache.push(this._question);
-                this.publish();
-            });
+                    this._questionNumber = this._questionNumber + 1;
+                    this._question = que;
+                    QuizUtil.correctImagePath(this._question);
+                    this._cache.push(this._question);
+                    this.publish();
+                },
+                (error) => {
+                    console.error("Got error", error);
+                });
             this.increment();
             this.showInterstitial();
         } else {

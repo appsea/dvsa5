@@ -66,8 +66,8 @@ export class CategoryService {
         return categories;
     }
 
-    readCategoriesFromFirebase(): void {
-        HttpService.getInstance().getCategories<Array<ICategory>>().then((categories: Array<ICategory>) => {
+    readCategoriesFromFirebase(): Promise<void> {
+        return HttpService.getInstance().getCategories<Array<ICategory>>().then((categories: Array<ICategory>) => {
             for (const category of categories) {
                 if (!category.wronglyAnswered) {
                     category.wronglyAnswered = [];

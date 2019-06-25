@@ -2,6 +2,7 @@ import { AES, enc } from "crypto-js";
 import { Observable } from "tns-core-modules/data/observable";
 import * as httpModule from "tns-core-modules/http";
 import { GUPIT, MONICA } from "~/shared/constants";
+
 export class HttpService {
 
     static getInstance(): HttpService {
