@@ -23,7 +23,7 @@ export class AdService {
     }
 
 
-    static _testing = true;
+    static _testing = false;
 
     static getInstance(): AdService {
         return AdService._instance;
