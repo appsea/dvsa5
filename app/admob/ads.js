@@ -4,7 +4,7 @@ var admob = require("./admob-common");
 var frame = require("tns-core-modules/ui/frame");
 
 // need to cache this baby since after an Interstitial was shown a second won't resolve the activity
-admob.activity = null;
+admob.activity = application.android.foregroundActivity;
 
 admob._md5 = function (input) {
     try {
@@ -57,7 +57,7 @@ admob._getBannerType = function (size) {
 };
 
 admob._getActivity = function () {
-    if (admob.activity === null) {
+    if (admob.activity === null || typeof admob.activity === 'undefined') {
         admob.activity = application.android.foregroundActivity;
     }
     return admob.activity;

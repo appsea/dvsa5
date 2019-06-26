@@ -16,7 +16,7 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
             Learn more about custom components and how they can be used in this documentation article:
             http://docs.nativescript.org/ui/basics#custom-components
             -->
-            <myDrawer:MyDrawer selectedPage="practice"/>
+            <myDrawer:MyDrawer selectedPage="category"/>
         </StackLayout>
     </nsDrawer:RadSideDrawer.drawerContent>
 

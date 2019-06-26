@@ -35,16 +35,6 @@ application.on(application.uncaughtErrorEvent, (args) => {
     }
 });
 
-setTimeout(() => {
-    if (!PersistenceService.getInstance().isPremium()) {
-        AdService.getInstance().doPreloadInterstitial(() => {
-                QuestionViewModel._errorLoading = false;
-            },
-            () => {
-                QuestionViewModel._errorLoading = true;
-            });
-    }
-}, 1000);
 application.run({moduleName: "app-root/app-root"});
 /*
 Do not place any code after the application has been started as it will not

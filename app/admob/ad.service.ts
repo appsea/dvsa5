@@ -1,4 +1,5 @@
 import { isIOS, screen } from "tns-core-modules/platform";
+import { QuestionViewModel } from "~/question/question-view-model";
 import { PersistenceService } from "~/services/persistence.service";
 import {
     AD_SIZE,
@@ -20,6 +21,7 @@ export class AdService {
     set showAd(showAd: boolean) {
         this._showAd = showAd;
     }
+
 
     static _testing = true;
 
@@ -148,6 +150,18 @@ export class AdService {
         }
     }
 
+    delayedPreloadInterstitial(): void {
+        setTimeout(() => {
+            if (!PersistenceService.getInstance().isPremium()) {
+                AdService.getInstance().doPreloadInterstitial(() => {
+                        QuestionViewModel._errorLoading = false;
+                    },
+                    () => {
+                        QuestionViewModel._errorLoading = true;
+                    });
+            }
+        }, 2000);
+    }
     private createBanner(size: AD_SIZE): Promise<void> {
         return createBanner({
             testing: AdService._testing,
