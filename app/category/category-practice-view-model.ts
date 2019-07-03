@@ -180,7 +180,6 @@ export class CategoryPracticeViewModel extends Observable {
         }
         QuestionService.getInstance().handleWrongQuestions(this.question);
         CategoryService.getInstance().attemptQuestion(this.question);
-        console.log("selectOption", this.question.options);
     }
 
     getTotalQuestions(): number {

@@ -22,7 +22,6 @@ export class AdService {
         this._showAd = showAd;
     }
 
-
     static _testing = false;
 
     static getInstance(): AdService {
@@ -162,6 +161,7 @@ export class AdService {
             }
         }, 2000);
     }
+
     private createBanner(size: AD_SIZE): Promise<void> {
         return createBanner({
             testing: AdService._testing,
