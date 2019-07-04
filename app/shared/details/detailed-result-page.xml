@@ -2,6 +2,7 @@
         class="page"
         loaded="onPageLoaded"
         navigatingTo="onNavigatingTo"
+        navigatedFrom="onNavigatedFrom"
         xmlns="http://schemas.nativescript.org/tns.xsd">
 
     <ActionBar class="action-bar">
@@ -35,7 +36,7 @@
     </ActionBar>
 
     <GridLayout rows="auto, *, auto">
-        <SearchBar row="0" hint="Search Questions..." id="searchBar" text="{{ searchPhrase }}" submit="{{ onSearchSubmit }}" clear="{{ clear }}" class="{{ searching ? 'searching search-bar' : 'not-searching search-bar' }}" visibility="{{ searching ? 'visible': 'collapsed'}}"/>
+        <SearchBar row="0" hint="Search Questions..." id="searchBar" loaded="{{ searchBarLoaded }}" text="{{ searchPhrase }}" submit="{{ onSearchSubmit }}" clear="{{ clear }}" class="{{ searching ? 'searching search-bar' : 'not-searching search-bar' }}" visibility="{{ searching ? 'visible': 'collapsed'}}"/>
         <GridLayout row="1" rows="auto, *">
             <TextField height="0" loaded="{{ textFieldLoaded }}"></TextField>
             <ListView  row="1" id="listView" class="margin" items="{{ questions }}" separatorColor="blue" itemTemplateSelector="$index">

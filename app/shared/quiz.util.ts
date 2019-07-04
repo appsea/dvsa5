@@ -61,6 +61,20 @@ export class QuizUtil {
         }
     }
 
+    static showKeyboard(myTextfield) {
+        if (myTextfield.ios) {
+            myTextfield.focus();
+        }
+
+        if (myTextfield.android) {
+            setTimeout(function() {
+                myTextfield.android.requestFocus();
+                var imm = utils.ad.getInputMethodManager();
+                imm.showSoftInput(myTextfield.android, 0);
+            }, 300);
+        }
+    }
+
     private constructor() {
     }
 }

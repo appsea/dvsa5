@@ -4,6 +4,7 @@ import { TextField } from "tns-core-modules/ui/text-field";
 import { QuestionUtil } from "~/services/question.util";
 import { ObservableProperty } from "../observable-property-decorator";
 import { IQuestion, IState } from "../questions.model";
+import {QuizUtil} from "~/shared/quiz.util";
 
 export class DetailedResultViewModel extends Observable {
 
@@ -14,6 +15,8 @@ export class DetailedResultViewModel extends Observable {
     private readonly CORRECT: string = "Correct";
     private readonly SKIPPED: string = "Skipped";
     private _searching: boolean = false;
+    private searchBar: SearchBar;
+    private textField: TextField;
 
     get size() {
         return this._size;
@@ -82,12 +85,16 @@ export class DetailedResultViewModel extends Observable {
         searchBar.dismissSoftInput();
     }
 
+    searchBarLoaded(args): void {
+        this.searchBar = <SearchBar>args.object;
+    }
+
     textFieldLoaded(args): void {
-        const textField: TextField = <TextField>args.object;
+        this.textField = <TextField>args.object;
         setTimeout(() => {
             {
-                textField.focus();
-                textField.dismissSoftInput();
+                this.textField.focus();
+                this.textField.dismissSoftInput();
             }
         }, 100);
     }
@@ -119,6 +126,9 @@ export class DetailedResultViewModel extends Observable {
 
     toggleSearch(): void {
         this._searching = !this._searching;
+        if(this._searching){
+            QuizUtil.showKeyboard(this.searchBar);
+        }
         this.publish();
     }
 

@@ -9,6 +9,7 @@ import { QuestionViewModel } from "~/question/question-view-model";
 import * as navigationModule from "../navigation";
 import { IState } from "../questions.model";
 import { DetailedResultViewModel } from "./detailed-result-view-model";
+import {QuizUtil} from "~/shared/quiz.util";
 
 let page: Page;
 let vm: DetailedResultViewModel;
@@ -33,6 +34,10 @@ export function onNavigatingTo(args: NavigatedData): void {
     const state: IState = <IState> page.navigationContext;
     vm = new DetailedResultViewModel(state);
     page.bindingContext = vm;
+}
+
+export function onNavigatedFrom(args): void {
+    QuizUtil.hideKeyboard();
 }
 
 export function onDrawerButtonTap(args: EventData) {
