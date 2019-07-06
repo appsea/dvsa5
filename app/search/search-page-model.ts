@@ -17,17 +17,12 @@ export class SearchPageModel extends Observable {
         return this._size;
     }
 
-    get message() {
-        return this._message;
-    }
-
     get questions() {
         return this._questions;
     }
 
     private _questions: Array<IQuestion> = [];
     private allQuestions: Array<IQuestion>;
-    private _message: string;
     private _size: number;
 
     constructor() {
@@ -57,7 +52,7 @@ export class SearchPageModel extends Observable {
     }
 
     clear(): void {
-        this.all();
+        this._questions = [];
     }
 
     refilter() {

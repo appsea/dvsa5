@@ -26,12 +26,17 @@ export class DetailedResultViewModel extends Observable {
         return this._message;
     }
 
+    get type() {
+        return this._type;
+    }
+
     get questions() {
         return this._questions;
     }
 
     private _questions: Array<IQuestion> = [];
     private allQuestions: Array<IQuestion>;
+    private _type: string;
     private _message: string;
     private _size: number;
     private state: IState;
@@ -49,33 +54,41 @@ export class DetailedResultViewModel extends Observable {
     }
 
     all(): void {
-        this._message = this.ALL;
+        this._type = this.ALL;
+        this._message = "found";
         this.allQuestions.forEach((question) => {
             question.skipped = QuestionUtil.isSkipped(question);
         });
         this._questions = this.allQuestions;
         this._size = this._questions.length;
+        this.searchPhrase = "";
         this.publish();
     }
 
     correct(): void {
-        this._message = this.CORRECT;
+        this._type = this.CORRECT;
+        this._message = "were correct!";
         this._questions = this.allQuestions.filter((question) => QuestionUtil.isCorrect(question));
         this._size = this._questions.length;
+        this.searchPhrase = "";
         this.publish();
     }
 
     incorrect(): void {
         this._questions = this.allQuestions.filter((question) => QuestionUtil.isWrong(question));
-        this._message = this.INCORRECT;
+        this._type = this.INCORRECT;
+        this._message = "were incorrect!";
         this._size = this._questions.length;
+        this.searchPhrase = "";
         this.publish();
     }
 
     skipped(): void {
-        this._message = this.SKIPPED;
+        this._type = this.SKIPPED;
+        this._message = "were skipped!";
         this._questions = this.allQuestions.filter((question) => QuestionUtil.isSkipped(question));
         this._size = this._questions.length;
+        this.searchPhrase = "";
         this.publish();
     }
 
@@ -113,7 +126,8 @@ export class DetailedResultViewModel extends Observable {
 
     refilter() {
         const f = this.searchPhrase.trim().toLowerCase();
-
+        this._type = "Searched";
+        this._message = "matched!";
         this._questions = this.allQuestions.filter((q) => q.prashna.text.toLowerCase().includes(f)
             || q.options.filter((o) => o.description && o.description.toLowerCase().includes(f)).length > 0
             || q.explanation.toLowerCase().includes(f));
@@ -144,6 +158,12 @@ export class DetailedResultViewModel extends Observable {
             eventName: Observable.propertyChangeEvent,
             propertyName: "size",
             value: this._size
+        });
+        this.notify({
+            object: this,
+            eventName: Observable.propertyChangeEvent,
+            propertyName: "type",
+            value: this._type
         });
         this.notify({
             object: this,

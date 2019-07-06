@@ -27,7 +27,7 @@
             <label.formattedText>
                 <formattedString>
                     <formattedString.spans>
-                        <span text="{{ message }}"/>
+                        <span text="{{ type }}"/>
                         <span text=" Questions"/>
                     </formattedString.spans>
                 </formattedString>
@@ -119,7 +119,7 @@
                     <formattedString>
                         <formattedString.spans>
                             <span text="No Questions "/>
-                            <span text="{{ searching? 'matched': 'were ' + message }}"/>
+                            <span text="{{ message }}"/>
                         </formattedString.spans>
                     </formattedString>
                 </label.formattedText>

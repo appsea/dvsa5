@@ -27,8 +27,7 @@
             <label.formattedText>
                 <formattedString>
                     <formattedString.spans>
-                        <span text="{{ message }}"/>
-                        <span text=" Questions"/>
+                        <span text="Search Questions"/>
                     </formattedString.spans>
                 </formattedString>
             </label.formattedText>
