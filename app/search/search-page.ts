@@ -51,8 +51,3 @@ export function toggleSearch(args: EventData) {
 export function clear() {
     vm.clear();
 }
-
-export function all(): void {
-    vm.all();
-    list.scrollToIndex(0);
-}
