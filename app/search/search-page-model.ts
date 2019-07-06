@@ -90,12 +90,6 @@ export class SearchPageModel extends Observable {
         this.notify({
             object: this,
             eventName: Observable.propertyChangeEvent,
-            propertyName: "message",
-            value: this._message
-        });
-        this.notify({
-            object: this,
-            eventName: Observable.propertyChangeEvent,
             propertyName: "searching",
             value: this._searching
         });
