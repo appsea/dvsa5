@@ -33,12 +33,6 @@ export class SearchPageModel extends Observable {
                 this.refilter();
             }
         });
-        this.all();
-    }
-
-    all(): void {
-        this._message = this.ALL;
-        this.publish();
     }
 
     onSearchSubmit(args): void {
