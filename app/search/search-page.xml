@@ -23,15 +23,7 @@
                 </StackLayout>
             </ActionItem.actionView>
         </ActionItem>
-        <Label class="action-bar-title">
-            <label.formattedText>
-                <formattedString>
-                    <formattedString.spans>
-                        <span text="Search Questions"/>
-                    </formattedString.spans>
-                </formattedString>
-            </label.formattedText>
-        </Label>
+        <Label class="action-bar-title" text="Search Questions"></Label>
     </ActionBar>
 
     <GridLayout rows="auto, *, auto">
