@@ -69,7 +69,7 @@ export class QuizUtil {
         if (myTextfield.android) {
             setTimeout(function() {
                 myTextfield.android.requestFocus();
-                var imm = utils.ad.getInputMethodManager();
+                const imm = utils.ad.getInputMethodManager();
                 imm.showSoftInput(myTextfield.android, 0);
             }, 300);
         }

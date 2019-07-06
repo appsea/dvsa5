@@ -6,10 +6,10 @@ import { topmost } from "tns-core-modules/ui/frame";
 import * as ListView from "tns-core-modules/ui/list-view";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { QuestionViewModel } from "~/question/question-view-model";
+import { QuizUtil } from "~/shared/quiz.util";
 import * as navigationModule from "../navigation";
 import { IState } from "../questions.model";
 import { DetailedResultViewModel } from "./detailed-result-view-model";
-import {QuizUtil} from "~/shared/quiz.util";
 
 let page: Page;
 let vm: DetailedResultViewModel;
