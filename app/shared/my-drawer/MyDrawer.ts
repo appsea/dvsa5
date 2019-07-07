@@ -58,8 +58,8 @@ export function navigate(args: EventData): void {
 }
 
 export function share(args: EventData): void {
-    SocialShare.shareText("https://goo.gl/KgZQhA\n" +
-        "Hi there, Take a look at UK Driving Theory Quiz which I am using for preparing for the test!!!");
+    SocialShare.shareText("http://bit.ly/cartheory\n" +
+        "Hi there, Take a look at UK Driving Theory Quiz which I am using for cracking the test!!!");
 }
 
 export function goPremium(args: EventData): void {
