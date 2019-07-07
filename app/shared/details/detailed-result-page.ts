@@ -41,6 +41,7 @@ export function onNavigatedFrom(args): void {
 }
 
 export function onDrawerButtonTap(args: EventData) {
+    QuizUtil.hideKeyboard();
     QuestionViewModel.showDrawer();
 }
 
