@@ -1,4 +1,4 @@
-import { EventData, Observable, PropertyChangeData  } from "tns-core-modules/data/observable";
+import { EventData, Observable, PropertyChangeData } from "tns-core-modules/data/observable";
 import { SearchBar } from "tns-core-modules/ui/search-bar";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { QuestionUtil } from "~/services/question.util";
@@ -14,7 +14,14 @@ export class DetailedResultViewModel extends Observable {
     private readonly INCORRECT: string = "Incorrect";
     private readonly CORRECT: string = "Correct";
     private readonly SKIPPED: string = "Skipped";
+
     private _searching: boolean = false;
+    private _questions: Array<IQuestion> = [];
+    private allQuestions: Array<IQuestion>;
+    private _type: string;
+    private _message: string;
+    private _size: number;
+    private state: IState;
     private searchBar: SearchBar;
     private textField: TextField;
 
@@ -34,12 +41,9 @@ export class DetailedResultViewModel extends Observable {
         return this._questions;
     }
 
-    private _questions: Array<IQuestion> = [];
-    private allQuestions: Array<IQuestion>;
-    private _type: string;
-    private _message: string;
-    private _size: number;
-    private state: IState;
+    get searching() {
+        return this._searching;
+    }
 
     constructor(state: IState) {
         super();
@@ -62,6 +66,7 @@ export class DetailedResultViewModel extends Observable {
         this._questions = this.allQuestions;
         this._size = this._questions.length;
         this.searchPhrase = "";
+        this._searching = false;
         this.publish();
     }
 
@@ -71,6 +76,7 @@ export class DetailedResultViewModel extends Observable {
         this._questions = this.allQuestions.filter((question) => QuestionUtil.isCorrect(question));
         this._size = this._questions.length;
         this.searchPhrase = "";
+        this._searching = false;
         this.publish();
     }
 
@@ -80,6 +86,7 @@ export class DetailedResultViewModel extends Observable {
         this._message = "were incorrect!";
         this._size = this._questions.length;
         this.searchPhrase = "";
+        this._searching = false;
         this.publish();
     }
 
@@ -89,6 +96,7 @@ export class DetailedResultViewModel extends Observable {
         this._questions = this.allQuestions.filter((question) => QuestionUtil.isSkipped(question));
         this._size = this._questions.length;
         this.searchPhrase = "";
+        this._searching = false;
         this.publish();
     }
 
@@ -98,8 +106,28 @@ export class DetailedResultViewModel extends Observable {
         searchBar.dismissSoftInput();
     }
 
-    searchBarLoaded(args): void {
-        this.searchBar = <SearchBar>args.object;
+    clear(): void {
+        if (this._type === this.CORRECT) {
+            this.correct();
+        } else if (this._type === this.INCORRECT) {
+            this.incorrect();
+        } else if (this._type === this.SKIPPED) {
+            this.skipped();
+        } else {
+            this.all();
+        }
+    }
+
+    refilter() {
+        if (this.searchPhrase && this.searchPhrase !== "") {
+            const f = this.searchPhrase.trim().toLowerCase();
+            this._type = "Searched";
+            this._message = "matched!";
+            this._questions = this.allQuestions.filter((q) => q.prashna.text.toLowerCase().includes(f)
+                || q.options.filter((o) => o.description && o.description.toLowerCase().includes(f)).length > 0
+                || q.explanation.toLowerCase().includes(f));
+            this.publish();
+        }
     }
 
     textFieldLoaded(args): void {
@@ -112,30 +140,8 @@ export class DetailedResultViewModel extends Observable {
         }, 100);
     }
 
-    clear(): void {
-        if (this._message === this.CORRECT) {
-            this.correct();
-        } else if (this._message === this.INCORRECT) {
-            this.incorrect();
-        } else if (this._message === this.SKIPPED) {
-            this.skipped();
-        } else {
-            this.all();
-        }
-    }
-
-    refilter() {
-        const f = this.searchPhrase.trim().toLowerCase();
-        this._type = "Searched";
-        this._message = "matched!";
-        this._questions = this.allQuestions.filter((q) => q.prashna.text.toLowerCase().includes(f)
-            || q.options.filter((o) => o.description && o.description.toLowerCase().includes(f)).length > 0
-            || q.explanation.toLowerCase().includes(f));
-        this.publish();
-    }
-
-    get searching() {
-        return this._searching;
+    searchBarLoaded(args): void {
+        this.searchBar = <SearchBar>args.object;
     }
 
     toggleSearch(): void {
