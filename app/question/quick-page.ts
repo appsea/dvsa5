@@ -6,6 +6,7 @@ import * as dialogs from "tns-core-modules/ui/dialogs";
 import { topmost } from "tns-core-modules/ui/frame";
 import { SwipeDirection, SwipeGestureEventData } from "tns-core-modules/ui/gestures";
 import * as ListView from "tns-core-modules/ui/list-view";
+import { CreateViewEventData } from "tns-core-modules/ui/placeholder";
 import { NavigatedData, Page } from "tns-core-modules/ui/page";
 import { ScrollView } from "tns-core-modules/ui/scroll-view";
 import { AdService } from "~/admob/ad.service";
@@ -54,14 +55,6 @@ export function onActivityBackPressedEvent(args: AndroidActivityBackPressedEvent
     args.cancel = true;
 }
 
-export function handleSwipe(args) {
-    if (args.direction === SwipeDirection.left) {
-        next();
-    } else if (args.direction === SwipeDirection.right) {
-        previous();
-    }
-}
-
 /* ***********************************************************
 * Use the "onNavigatingTo" handler to initialize the page binding context.
 *************************************************************/
@@ -82,6 +75,18 @@ export function onNavigatingTo(args: NavigatedData) {
     banner = page.getViewById("banner");
     vm = new QuestionViewModel(constantsModule.QUICK);
     page.bindingContext = vm;
+}
+
+export function handleSwipe(args) {
+    if (args.direction === SwipeDirection.left) {
+        next();
+    } else if (args.direction === SwipeDirection.right) {
+        previous();
+    }
+}
+
+export function showMap(): void {
+    vm.showMap();
 }
 
 /* ***********************************************************
@@ -113,6 +118,7 @@ export function next(): void {
         if (scrollView) {
             scrollView.scrollToVerticalOffset(0, false);
         }
+        vm.showInterstitial();
     }
 }
 
@@ -122,10 +128,6 @@ export function submit(): void {
 
 export function quit(): void {
     vm.quit();
-}
-
-export function showMap(): void {
-    vm.showMap();
 }
 
 export function showAnswer(): void {
@@ -139,4 +141,22 @@ export function selectOption(args): void {
 
 export function goToEditPage(): void {
     vm.goToEditPage();
+}
+
+export function firstOption(args) {
+    divert(0);
+}
+export function secondOption(args: CreateViewEventData) {
+    divert(1);
+}
+export function thirdOption(args: CreateViewEventData) {
+    divert(2);
+}
+export function fourthOption(args: CreateViewEventData) {
+    divert(3);
+}
+
+export function divert(index: number) {
+    vm.selectIndex(index);
+    optionList.refresh();
 }
