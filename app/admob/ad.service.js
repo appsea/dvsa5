@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ads_js_1 = require("../admob/ads.js");
 var platform_1 = require("tns-core-modules/platform");
+var coolAds_1 = require("~/admob/coolAds");
+var question_view_model_1 = require("~/question/question-view-model");
+var http_service_1 = require("~/services/http.service");
 var persistence_service_1 = require("~/services/persistence.service");
+var admob_common_js_1 = require("../admob/admob-common.js");
 var constantsModule = require("../shared/constants");
-var http_service_1 = require("../services/http.service");
 var AdService = /** @class */ (function () {
     function AdService() {
         var _this = this;
@@ -43,7 +45,7 @@ var AdService = /** @class */ (function () {
     };
     AdService.prototype.hideAd = function () {
         if (this._showAd) {
-            ads_js_1.hideBanner().then(function () { return console.log("Banner hidden"); }, function (error) { return console.error("Error hiding banner: " + error); });
+            coolAds_1.CoolAds.getInstance().hideBanner().then(function () { return console.log("Banner hidden"); }, function (error) { return console.error("Error hiding banner: " + error); });
         }
     };
     AdService.prototype.getAdHeight = function () {
@@ -60,7 +62,7 @@ var AdService = /** @class */ (function () {
         return height;
     };
     AdService.prototype.doCreateSmartBanner = function () {
-        return this.createBanner(ads_js_1.AD_SIZE.SMART_BANNER);
+        return this.createBanner(admob_common_js_1.AD_SIZE.SMART_BANNER);
     };
     /*doCreateSkyscraperBanner(): void {
         this.createBanner(AD_SIZE.SKYSCRAPER);
@@ -83,13 +85,13 @@ var AdService = /** @class */ (function () {
     }*/
     AdService.prototype.doShowInterstitial = function () {
         if (this._showAd) {
-            ads_js_1.showInterstitial().then(function () { return console.log("Shown interstetial..."); }, function (error) { return console.log("Error showing interstitial", error); });
+            coolAds_1.CoolAds.getInstance().showInterstitial().then(function () { return console.log("Shown interstetial..."); }, function (error) { return console.log("Error showing interstitial", error); });
         }
     };
     AdService.prototype.doPreloadInterstitial = function (resolve, reject) {
         var _this = this;
         if (this._showAd) {
-            ads_js_1.preloadInterstitial({
+            coolAds_1.CoolAds.getInstance().preloadInterstitial({
                 testing: AdService._testing,
                 iosInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
                 androidInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
@@ -107,7 +109,7 @@ var AdService = /** @class */ (function () {
     };
     AdService.prototype.doCreateInterstitial = function () {
         if (this._showAd) {
-            ads_js_1.createInterstitial({
+            coolAds_1.CoolAds.getInstance().createInterstitial({
                 testing: AdService._testing,
                 iosInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
                 androidInterstitialId: constantsModule.INTERSTITIAL_AD_ID,
@@ -117,8 +119,28 @@ var AdService = /** @class */ (function () {
             }).then(function () { return console.log("Interstitial created"); }, function (error) { return console.error("Error creating interstitial: " + error); });
         }
     };
+    AdService.prototype.delayedPreloadInterstitial = function () {
+        setTimeout(function () {
+            if (!persistence_service_1.PersistenceService.getInstance().isPremium()) {
+                AdService.getInstance().doPreloadInterstitial(function () {
+                    question_view_model_1.QuestionViewModel._errorLoading = false;
+                }, function () {
+                    question_view_model_1.QuestionViewModel._errorLoading = true;
+                });
+            }
+        }, 2000);
+    };
+    AdService.prototype.preloadVideoAd = function (arg, rewardCB, reload, afterAdLoaded) {
+        return coolAds_1.CoolAds.getInstance().preloadVideoAd(arg, rewardCB, reload, afterAdLoaded);
+    };
+    AdService.prototype.showVideoAd = function () {
+        return coolAds_1.CoolAds.getInstance().showVideoAd();
+    };
+    AdService.prototype.adLoaded = function () {
+        return coolAds_1.CoolAds.getInstance().adLoaded();
+    };
     AdService.prototype.createBanner = function (size) {
-        return ads_js_1.createBanner({
+        return coolAds_1.CoolAds.getInstance().createBanner({
             testing: AdService._testing,
             // if this 'view' property is not set, the banner is overlayed on the current top most view
             // view: ..,
