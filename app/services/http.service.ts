@@ -1,7 +1,8 @@
 import { AES, enc } from "crypto-js";
 import { Observable } from "tns-core-modules/data/observable";
 import * as httpModule from "tns-core-modules/http";
-import { GUPIT, MONICA } from "~/shared/constants";
+
+declare let myGlobal: any;
 
 export class HttpService {
 
@@ -14,7 +15,7 @@ export class HttpService {
     private static url: string;
 
     private constructor() {
-        const bytes  = AES.decrypt(MONICA, GUPIT);
+        const bytes  = AES.decrypt(myGlobal.monica, myGlobal.gupit);
         HttpService.url = bytes.toString(enc.Utf8);
     }
 
