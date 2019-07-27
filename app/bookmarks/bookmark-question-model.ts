@@ -136,8 +136,7 @@ export class BookmarkQuestionModel extends Observable {
         this.selectedOption(this._question.options[index]);
     }
 
-    selectOption(args: any) {
-        const selectedOption: IOption = args.view.bindingContext;
+    private selectedOption(selectedOption: IOption) {
         if (selectedOption.selected) {
             selectedOption.selected = false;
             this.question.skipped = true;
