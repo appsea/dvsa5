@@ -68,7 +68,6 @@ export class BookmarkQuestionModel extends Observable {
 
     showDrawer() {
         QuestionViewModel.showDrawer();
-        AdService.getInstance().hideAd();
     }
 
     previous(): void {
@@ -151,8 +150,12 @@ export class BookmarkQuestionModel extends Observable {
         QuestionService.getInstance().handleWrongQuestions(this.question);
     }
 
-    selectOption(args: any) {
-        const selectedOption: IOption = args.view.bindingContext;
+    goToEditPage() {
+        const state: IState = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
+        navigationModule.gotoEditPage(state);
+    }
+
+    private selectedOption(selectedOption: IOption) {
         if (selectedOption.selected) {
             selectedOption.selected = false;
             this.question.skipped = true;
@@ -164,11 +167,6 @@ export class BookmarkQuestionModel extends Observable {
         }
         this.publish();
         QuestionService.getInstance().handleWrongQuestions(this.question);
-    }
-
-    goToEditPage() {
-        const state: IState = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
-        navigationModule.gotoEditPage(state);
     }
 
     private increment() {

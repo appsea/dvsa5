@@ -156,7 +156,6 @@ export function selectOption(args): void {
     optionList.refresh();
 }
 
-
 export function firstOption(args) {
     divert(0);
 }

@@ -155,6 +155,25 @@ export function selectOption(args): void {
     optionList.refresh();
 }
 
+export function firstOption(args) {
+    divert(0);
+}
+export function secondOption(args: CreateViewEventData) {
+    divert(1);
+}
+export function thirdOption(args: CreateViewEventData) {
+    divert(2);
+}
+export function fourthOption(args: CreateViewEventData) {
+    divert(3);
+}
+
+export function divert(index: number) {
+    vm.showAnswer();
+    vm.selectIndex(index);
+    optionList.refresh();
+}
+
 
 export function firstOption(args) {
     divert(0);
