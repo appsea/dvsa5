@@ -43,12 +43,6 @@ export class HttpService {
         return httpModule.getString(url);
     }
 
-    findPremiumQuestionVersion(): Promise<string> {
-        const url = HttpService.url + "premiumVersion.json";
-
-        return httpModule.getString(url);
-    }
-
     findPremiumRange<T>(orderBy: string, startAt: number, endAt: number): Promise<T> {
         const url = HttpService.url + "premium.json" + "?orderBy=\"" + orderBy
             + "\"&startAt=" + startAt + "&endAt=" + endAt;

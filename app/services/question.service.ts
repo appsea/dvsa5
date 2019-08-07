@@ -5,6 +5,7 @@ import * as appVersion from "nativescript-appversion";
 import * as Toast from "nativescript-toast";
 import * as appSettings from "tns-core-modules/application-settings";
 import { Observable } from "tns-core-modules/data/observable";
+import { isAndroid } from "tns-core-modules/platform";
 import * as dialogs from "tns-core-modules/ui/dialogs";
 import * as utils from "tns-core-modules/utils/utils";
 import { ConnectionService } from "~/shared/connection.service";
@@ -266,7 +267,11 @@ export class QuestionService {
                             cancelButtonText: "Remind me Later"
                         }).then((proceed) => {
                             if (proceed) {
-                                utils.openUrl("https://play.google.com/store/apps/details?id=exuberant.dvsa.cttk");
+                                if (isAndroid) {
+                                    utils.openUrl("https://play.google.com/store/apps/details?id=exuberant.dvsa.cttk");
+                                } else {
+                                    utils.openUrl("https://apps.apple.com/app/dvsa-lgv/id310633997");
+                                }
                             }
                         });
                     }
