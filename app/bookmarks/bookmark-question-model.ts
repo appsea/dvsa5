@@ -136,20 +136,6 @@ export class BookmarkQuestionModel extends Observable {
         this.selectedOption(this._question.options[index]);
     }
 
-    private selectedOption(selectedOption: IOption) {
-        if (selectedOption.selected) {
-            selectedOption.selected = false;
-            this.question.skipped = true;
-        } else {
-            this.question.options.forEach((item, index) => {
-                item.selected = item.tag === selectedOption.tag;
-            });
-            this.question.skipped = false;
-        }
-        this.publish();
-        QuestionService.getInstance().handleWrongQuestions(this.question);
-    }
-
     selectOption(args: any) {
         const selectedOption: IOption = args.view.bindingContext;
         if (selectedOption.selected) {
@@ -168,6 +154,20 @@ export class BookmarkQuestionModel extends Observable {
     goToEditPage() {
         const state: IState = {questions: [this.question], questionNumber: 1, totalQuestions: 1, mode: this._mode};
         navigationModule.gotoEditPage(state);
+    }
+
+    private selectedOption(selectedOption: IOption) {
+        if (selectedOption.selected) {
+            selectedOption.selected = false;
+            this.question.skipped = true;
+        } else {
+            this.question.options.forEach((item, index) => {
+                item.selected = item.tag === selectedOption.tag;
+            });
+            this.question.skipped = false;
+        }
+        this.publish();
+        QuestionService.getInstance().handleWrongQuestions(this.question);
     }
 
     private increment() {
