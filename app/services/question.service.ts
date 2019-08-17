@@ -144,7 +144,7 @@ export class QuestionService {
                     (error) => console.error("Error loading premium range", error));
             }
         })).catch((error) => {
-            dialogs.alert("Something went wrong fetching the question. Please relaunch the application!");
+            dialogs.alert("Something went wrong fetching the questions. Please relaunch the application!");
         });
     }
 
