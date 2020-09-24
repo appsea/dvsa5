@@ -1,4 +1,13 @@
 {
+  "nativescript": {
+    "id": "exuberant.dvsa.cttk",
+    "tns-ios": {
+      "version": "6.5.0"
+    },
+    "tns-android": {
+      "version": "6.5.0"
+    }
+  },
   "description": "Dvsa Theory Test",
   "license": "SEE LICENSE IN <your-license-filename>",
   "repository": "<fill-your-repository-here>",
