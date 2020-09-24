@@ -3,6 +3,7 @@ import { PersistenceService } from "~/services/persistence.service";
 import { QuestionUtil } from "~/services/question.util";
 import { IResult } from "~/shared/questions.model";
 import { QuizUtil } from "~/shared/quiz.util";
+import {PASSING_PERCENTAGE} from "~/shared/constants";
 
 export class ProgressViewModel extends Observable {
 
@@ -35,7 +36,7 @@ export class ProgressViewModel extends Observable {
             total,
             totalExams,
             percentage: percentageString,
-            pass: percentage > 70
+            pass: percentage > PASSING_PERCENTAGE
         };
         overall.push(result);
 
