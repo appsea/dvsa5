@@ -5,10 +5,10 @@ purpose of the file is to pass control to the app’s first module.
 */
 
 import * as purchase from "nativescript-purchase";
-import * as application from "tns-core-modules/application";
-import { isAndroid } from "tns-core-modules/platform";
-import { setTimeout } from "tns-core-modules/timer";
-import * as frame from "tns-core-modules/ui/frame";
+import * as application from "@nativescript/core/application";
+import { isAndroid } from "@nativescript/core/platform";
+import { setTimeout } from "@nativescript/core/timer";
+import * as frame from "@nativescript/core/ui/frame";
 
 require("~/utils/converters");
 

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var platform_1 = require("tns-core-modules/platform");
+exports.AdService = void 0;
+var platform_1 = require("@nativescript/core/platform");
 var coolAds_1 = require("~/admob/coolAds");
 var question_view_model_1 = require("~/question/question-view-model");
 var http_service_1 = require("~/services/http.service");
@@ -27,7 +28,7 @@ var AdService = /** @class */ (function () {
         set: function (showAd) {
             this._showAd = showAd;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AdService.getInstance = function () {
@@ -51,7 +52,7 @@ var AdService = /** @class */ (function () {
     AdService.prototype.getAdHeight = function () {
         var height = 0;
         if (this._showAd) {
-            var screenHeight = platform_1.screen.mainScreen.heightDIPs;
+            var screenHeight = platform_1.Screen.mainScreen.heightDIPs;
             if (screenHeight > 400 && screenHeight < 721) {
                 height = 50;
             }
