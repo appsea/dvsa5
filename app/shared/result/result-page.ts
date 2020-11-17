@@ -1,4 +1,3 @@
-import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { AndroidActivityBackPressedEventData, AndroidApplication } from "@nativescript/core/application";
 import { EventData, Observable } from "@nativescript/core/data/observable";
 import { isAndroid } from "@nativescript/core/platform";
@@ -6,6 +5,7 @@ import * as dialogs from "@nativescript/core/ui/dialogs";
 import { topmost } from "@nativescript/core/ui/frame";
 import { StackLayout } from "@nativescript/core/ui/layouts/stack-layout";
 import { NavigatedData, Page } from "@nativescript/core/ui/page";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { AdService } from "~/admob/ad.service";
 import { QuestionViewModel } from "~/question/question-view-model";
 import * as navigationModule from "../navigation";

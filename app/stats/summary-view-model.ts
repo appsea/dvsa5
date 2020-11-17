@@ -1,7 +1,7 @@
-import * as Toast from "nativescript-toast";
 import { EventData, Observable } from "@nativescript/core/data/observable";
 import { setTimeout } from "@nativescript/core/timer";
 import * as dialogs from "@nativescript/core/ui/dialogs";
+import * as Toast from "nativescript-toast";
 import { AdService } from "~/admob/ad.service";
 import { HttpService } from "~/services/http.service";
 import { PersistenceService } from "~/services/persistence.service";

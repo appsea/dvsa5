@@ -1,6 +1,6 @@
-import { AES, enc } from "crypto-js";
 import { Observable } from "@nativescript/core/data/observable";
 import * as httpModule from "@nativescript/core/http";
+import { AES, enc } from "crypto-js";
 
 declare let myGlobal: any;
 

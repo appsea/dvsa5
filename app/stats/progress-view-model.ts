@@ -1,9 +1,9 @@
 import { EventData, Observable } from "@nativescript/core/data/observable";
 import { PersistenceService } from "~/services/persistence.service";
 import { QuestionUtil } from "~/services/question.util";
+import { PASSING_PERCENTAGE } from "~/shared/constants";
 import { IResult } from "~/shared/questions.model";
 import { QuizUtil } from "~/shared/quiz.util";
-import {PASSING_PERCENTAGE} from "~/shared/constants";
 
 export class ProgressViewModel extends Observable {
 

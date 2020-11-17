@@ -1,4 +1,3 @@
-import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { AndroidActivityBackPressedEventData, AndroidApplication } from "@nativescript/core/application";
 import { EventData, Observable } from "@nativescript/core/data/observable";
 import { isAndroid, Screen } from "@nativescript/core/platform";
@@ -12,6 +11,7 @@ import { CreateViewEventData } from "@nativescript/core/ui/placeholder";
 import { Repeater } from "@nativescript/core/ui/repeater";
 import { ScrollView } from "@nativescript/core/ui/scroll-view";
 import { TextView } from "@nativescript/core/ui/text-view";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { AdService } from "../admob/ad.service";
 import { ConnectionService } from "../shared/connection.service";
 import { CategoryPracticeViewModel } from "./category-practice-view-model";

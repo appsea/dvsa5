@@ -1,6 +1,6 @@
-import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { EventData } from "@nativescript/core/data/observable";
 import { View } from "@nativescript/core/ui/core/view";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 
 let drawerComponent: RadSideDrawer;
 

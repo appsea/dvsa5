@@ -1,8 +1,8 @@
-import * as purchase from "nativescript-purchase";
 import * as appSettings from "@nativescript/core/application-settings";
 import { EventData, Observable } from "@nativescript/core/data/observable";
 import * as dialogs from "@nativescript/core/ui/dialogs";
 import { TextField } from "@nativescript/core/ui/text-field";
+import * as purchase from "nativescript-purchase";
 import { AdService } from "~/admob/ad.service";
 import { HttpService } from "~/services/http.service";
 import { PersistenceService } from "~/services/persistence.service";

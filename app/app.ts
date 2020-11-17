@@ -4,11 +4,10 @@ You can use this file to perform app-level initialization, but the primary
 purpose of the file is to pass control to the app’s first module.
 */
 
-import * as purchase from "nativescript-purchase";
 import * as application from "@nativescript/core/application";
 import { isAndroid } from "@nativescript/core/platform";
-import { setTimeout } from "@nativescript/core/timer";
 import * as frame from "@nativescript/core/ui/frame";
+import * as purchase from "nativescript-purchase";
 
 require("~/utils/converters");
 

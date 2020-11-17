@@ -1,7 +1,3 @@
-import * as purchase from "nativescript-purchase";
-import { Product } from "nativescript-purchase/product";
-import { Transaction, TransactionState } from "nativescript-purchase/transaction";
-import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { AndroidActivityBackPressedEventData, AndroidApplication } from "@nativescript/core/application";
 import * as appSettings from "@nativescript/core/application-settings";
 import { EventData, Observable } from "@nativescript/core/data/observable";
@@ -11,6 +7,10 @@ import { topmost } from "@nativescript/core/ui/frame";
 import { ItemEventData } from "@nativescript/core/ui/list-view";
 import { NavigatedData, Page } from "@nativescript/core/ui/page";
 import { CreateViewEventData } from "@nativescript/core/ui/placeholder";
+import * as purchase from "nativescript-purchase";
+import { Product } from "nativescript-purchase/product";
+import { Transaction, TransactionState } from "nativescript-purchase/transaction";
+import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { AdService } from "~/admob/ad.service";
 import { QuestionViewModel } from "~/question/question-view-model";
 import { QuestionService } from "~/services/question.service";
