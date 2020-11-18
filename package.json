@@ -7,7 +7,7 @@
     "lintfix": "tslint --fix app/**/*.ts{,x}",
     "test": "mocha --require ts-node/register app/tests/**/*.ts",
     "tsc": "tsc",
-    "android": "tsc && tns run android --env.monica=\"U2FsdGVkX19nkBB0UlfAbkMH2Q9mdPbzxihVPwKZKOPiwXD7JdMMIbH3d4vvic+23mrDENjaEn5mZnB4a+HkBQ==\" --env.gupit=\"dvsatheorykit\""
+    "android": "tsc && tns run android"
   },
   "dependencies": {
     "@nativescript/appversion": "^2.0.0",
